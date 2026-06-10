@@ -1124,6 +1124,21 @@
       color: var(--gray);
     }
 
+    .footer-credit {
+      width: 100%;
+      text-align: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      color: var(--gray);
+    }
+    .footer-credit a {
+      color: var(--blue-light);
+      text-decoration: none;
+    }
+    .footer-credit a:hover { color: var(--white); }
+
     .footer-bottom-right {
       display: flex;
       gap: 1.5rem;
@@ -1153,6 +1168,122 @@
     .animate-in.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* ─── Page Entry Overlay ──────────────────────── */
+    #page-entry-overlay {
+      position: fixed;
+      inset: 0;
+      background: #0A0A0F;
+      z-index: 99998;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+    #page-entry-overlay.done { opacity: 0; }
+
+    /* ─── Scroll Progress Bar ─────────────────────── */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--blue), var(--purple));
+      z-index: 10001;
+      transition: width 0.1s linear;
+    }
+
+    /* ─── Particle Canvas ────────────────────────── */
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ─── Hero Text Slide-Up ─────────────────────── */
+    .hero-word {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: bottom;
+    }
+    .hero-word-inner {
+      display: inline-block;
+      transform: translateY(100%);
+      opacity: 0;
+      transition: transform 0.7s cubic-bezier(0.22,1,0.36,1), opacity 0.5s ease;
+    }
+    .hero-word-inner.reveal-word {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ─── Floating WhatsApp Button ───────────────── */
+    #wa-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9000;
+      width: 56px;
+      height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    #wa-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 32px rgba(37,211,102,0.6);
+    }
+    #wa-btn svg { width: 28px; height: 28px; fill: white; }
+    #wa-btn::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid #25D366;
+      opacity: 0.5;
+      animation: waPulse 2s ease-out infinite;
+    }
+    #wa-btn::after {
+      content: '';
+      position: absolute;
+      inset: -14px;
+      border-radius: 50%;
+      border: 2px solid #25D366;
+      opacity: 0.25;
+      animation: waPulse 2s ease-out 0.4s infinite;
+    }
+    @keyframes waPulse {
+      0% { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+    .wa-tooltip {
+      position: absolute;
+      right: 68px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.85);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    #wa-btn:hover .wa-tooltip { opacity: 1; }
+
+    /* ─── Card Magnetic Hover ────────────────────── */
+    .magnetic-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      will-change: transform;
     }
 
     /* ─── Marquee band ───────────────────────────── */
@@ -1258,6 +1389,18 @@
 </head>
 <body>
 
+<!-- ─── PAGE ENTRY OVERLAY ──────────────────────── -->
+<div id="page-entry-overlay"></div>
+
+<!-- ─── SCROLL PROGRESS BAR ─────────────────────── -->
+<div id="scroll-progress"></div>
+
+<!-- ─── FLOATING WHATSAPP BUTTON ────────────────── -->
+<a id="wa-btn" href="https://wa.me/919XXXXXXXXX" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+  <span class="wa-tooltip">Chat on WhatsApp</span>
+</a>
+
 <!-- ─── NAVBAR ──────────────────────────────────── -->
 <nav id="navbar">
   <a href="#" class="nav-logo">NEXUS</a>
@@ -1286,6 +1429,7 @@
 
 <!-- ─── HERO ─────────────────────────────────────── -->
 <section class="hero" id="home">
+  <canvas id="hero-canvas"></canvas>
   <div class="hero-bg">
     <div class="hero-grid-overlay"></div>
   </div>
@@ -1297,7 +1441,13 @@
       <span class="hero-badge-dot"></span>
       Bangalore's #1 Digital Agency · Now Booking Q3
     </div>
-    <h1>We Build<br/><span class="accent">Brands That</span><br/>Dominate</h1>
+    <h1 id="hero-headline">
+      <span class="hero-word"><span class="hero-word-inner">We</span></span>
+      <span class="hero-word"><span class="hero-word-inner"> Build</span></span><br/>
+      <span class="hero-word"><span class="hero-word-inner accent" style="background:linear-gradient(135deg,var(--blue-light),var(--purple-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Brands</span></span>
+      <span class="hero-word"><span class="hero-word-inner accent" style="background:linear-gradient(135deg,var(--blue-light),var(--purple-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"> That</span></span><br/>
+      <span class="hero-word"><span class="hero-word-inner">Dominate</span></span>
+    </h1>
     <p class="hero-sub">Bangalore's fastest-growing digital agency — where strategy meets obsession, and good enough never is.</p>
     <div class="hero-ctas">
       <a href="#contact" class="btn-primary">Start a Project <span class="hero-arrow">→</span></a>
@@ -1348,37 +1498,37 @@
     <p class="section-desc animate-in" style="margin-bottom:0;">Every service we offer is engineered for one outcome — measurable growth for your brand.</p>
   </div>
   <div class="services-grid animate-in">
-    <div class="service-card">
+    <div class="service-card magnetic-card">
       <div class="service-icon">🎨</div>
       <h3>Web Design & Dev</h3>
       <p>Pixel-perfect websites that load fast, convert hard, and look better than anything your competitors will ever ship.</p>
       <span class="service-tag">→ UI/UX · Webflow · React</span>
     </div>
-    <div class="service-card">
+    <div class="service-card magnetic-card">
       <div class="service-icon">📈</div>
       <h3>SEO & Growth</h3>
       <p>Data-driven SEO strategies that push you to page one and keep you there — organic traffic that actually converts.</p>
       <span class="service-tag">→ On-page · Technical · Link Building</span>
     </div>
-    <div class="service-card">
+    <div class="service-card magnetic-card">
       <div class="service-icon">📱</div>
       <h3>Social Media</h3>
       <p>Content that stops the scroll, builds community, and turns followers into revenue. Every post earns its place.</p>
       <span class="service-tag">→ Strategy · Content · Management</span>
     </div>
-    <div class="service-card">
+    <div class="service-card magnetic-card">
       <div class="service-icon">💎</div>
       <h3>Brand Identity</h3>
       <p>Logos, systems, and visual languages built to last decades — the kind of brand that commands premium pricing.</p>
       <span class="service-tag">→ Logo · Guidelines · Collateral</span>
     </div>
-    <div class="service-card">
+    <div class="service-card magnetic-card">
       <div class="service-icon">⚡</div>
       <h3>Paid Ads</h3>
       <p>Performance campaigns across Meta, Google, and YouTube. We spend your budget like it's our own money.</p>
       <span class="service-tag">→ Meta Ads · Google Ads · YouTube</span>
     </div>
-    <div class="service-card">
+    <div class="service-card magnetic-card">
       <div class="service-icon">🎬</div>
       <h3>Video Production</h3>
       <p>Reels, explainers, ads, and brand films crafted for maximum impact — storytelling that makes people feel things.</p>
@@ -1396,7 +1546,7 @@
       <p class="animate-in">We don't do vanity metrics. Every project we take on is held to one standard — did it move the needle for our client's business?</p>
       <div class="stats-grid animate-in">
         <div class="stat-card">
-          <div class="stat-num">200+</div>
+          <div class="stat-num" data-count="200" data-suffix="+">200+</div>
           <div class="stat-label">Projects Delivered</div>
         </div>
         <div class="stat-card">
@@ -1404,11 +1554,11 @@
           <div class="stat-label">Client Revenue Generated</div>
         </div>
         <div class="stat-card">
-          <div class="stat-num">98%</div>
+          <div class="stat-num" data-count="98" data-suffix="%">98%</div>
           <div class="stat-label">Client Retention Rate</div>
         </div>
         <div class="stat-card">
-          <div class="stat-num">5 Yrs</div>
+          <div class="stat-num" data-count="5" data-suffix=" Yrs">5 Yrs</div>
           <div class="stat-label">In the Business</div>
         </div>
       </div>
@@ -1428,7 +1578,7 @@
     <p class="section-desc animate-in">A curated selection of projects that went beyond the brief and delivered beyond expectations.</p>
   </div>
   <div class="work-grid animate-in">
-    <div class="work-card">
+    <div class="work-card magnetic-card">
       <div class="work-card-img">
         <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&w=900&q=80" alt="Krava Brand Relaunch" loading="lazy" />
         <div class="work-card-overlay"></div>
@@ -1440,7 +1590,7 @@
         <p>A full visual identity overhaul that tripled brand recognition in 90 days.</p>
       </div>
     </div>
-    <div class="work-card">
+    <div class="work-card magnetic-card">
       <div class="work-card-img">
         <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80" alt="Zyloft SEO Growth Campaign" loading="lazy" />
         <div class="work-card-overlay"></div>
@@ -1452,7 +1602,7 @@
         <p>From 3,000 to 31,000 monthly visitors in under 6 months through strategic SEO.</p>
       </div>
     </div>
-    <div class="work-card">
+    <div class="work-card magnetic-card">
       <div class="work-card-img">
         <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80" alt="Truestack Web Platform" loading="lazy" />
         <div class="work-card-overlay"></div>
@@ -1464,7 +1614,7 @@
         <p>A conversion-optimised site that cut cost-per-acquisition by 42%.</p>
       </div>
     </div>
-    <div class="work-card">
+    <div class="work-card magnetic-card">
       <div class="work-card-img">
         <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=80" alt="BloomCo Social Campaign" loading="lazy" />
         <div class="work-card-overlay"></div>
@@ -1729,41 +1879,109 @@
       <a href="#">Sitemap</a>
     </div>
   </div>
+  <div class="footer-credit">
+    Website designed &amp; built by S. Srivarsan &nbsp;|&nbsp; <a href="https://wa.me/919XXXXXXXXX" target="_blank" rel="noopener">wa.me/919XXXXXXXXX</a>
+  </div>
 </footer>
 
 <!-- ─── JS ────────────────────────────────────────── -->
 <script>
-  // Mobile menu toggle
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-
-  hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
+  /* ── PAGE ENTRY OVERLAY ── */
+  window.addEventListener('load', () => {
+    requestAnimationFrame(() => {
+      document.getElementById('page-entry-overlay').classList.add('done');
+    });
+    /* Hero word animations */
+    const words = document.querySelectorAll('.hero-word-inner');
+    words.forEach((w, i) => {
+      setTimeout(() => w.classList.add('reveal-word'), 200 + i * 120);
+    });
   });
 
+  /* ── SCROLL PROGRESS BAR ── */
+  const progressBar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = (docH > 0 ? (scrollTop / docH) * 100 : 0) + '%';
+  }, { passive: true });
+
+  /* ── PARTICLE CANVAS ── */
+  (function() {
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+    const ACCENT = '107, 132, 255';
+    const NUM = 65;
+
+    function resize() {
+      W = canvas.width = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function Particle() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.vy = (Math.random() - 0.5) * 0.5;
+      this.r = Math.random() * 2 + 1;
+    }
+    for (let i = 0; i < NUM; i++) particles.push(new Particle());
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${ACCENT}, 0.55)`;
+        ctx.fill();
+      });
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(${ACCENT}, ${0.18 * (1 - dist / 120)})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  /* ── MOBILE MENU ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
   hamburger.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') mobileMenu.classList.toggle('open');
   });
+  function closeMobile() { mobileMenu.classList.remove('open'); }
 
-  function closeMobile() {
-    mobileMenu.classList.remove('open');
-  }
-
-  // Scroll animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+  /* ── SCROLL REVEAL ── */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, 80);
-        observer.unobserve(entry.target);
+        setTimeout(() => entry.target.classList.add('visible'), 80);
+        revealObserver.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1 });
+  document.querySelectorAll('.animate-in').forEach(el => revealObserver.observe(el));
 
-  document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
-
-  // Stagger service cards
+  /* ── STAGGER SERVICE CARDS ── */
   const serviceCards = document.querySelectorAll('.service-card');
   const cardObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -1778,26 +1996,63 @@
       }
     });
   }, { threshold: 0.1 });
-
   serviceCards.forEach(c => {
     c.style.opacity = '0';
     c.style.transform = 'translateY(20px)';
-    c.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    c.style.transition = 'opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease';
   });
-
   if (serviceCards.length) cardObserver.observe(serviceCards[0]);
 
-  // Navbar scroll effect
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      navbar.style.background = 'rgba(10,10,15,0.95)';
-    } else {
-      navbar.style.background = 'rgba(10,10,15,0.75)';
+  /* ── COUNTER ANIMATION ── */
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.count, 10);
+    const suffix = el.dataset.suffix || '';
+    const prefix = el.dataset.prefix || '';
+    const duration = 1600;
+    const start = performance.now();
+    function step(now) {
+      const elapsed = Math.min(now - start, duration);
+      const progress = elapsed / duration;
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = prefix + Math.floor(eased * target) + suffix;
+      if (elapsed < duration) requestAnimationFrame(step);
+      else el.textContent = prefix + target + suffix;
     }
+    requestAnimationFrame(step);
+  }
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.target.dataset.count) {
+        animateCounter(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+  /* ── CARD MAGNETIC HOVER ── */
+  document.querySelectorAll('.magnetic-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / (rect.width / 2);
+      const dy = (e.clientY - cy) / (rect.height / 2);
+      card.style.transform = `perspective(600px) rotateX(${-dy * 5}deg) rotateY(${dx * 5}deg) translateY(-4px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
   });
 
-  // Form handler
+  /* ── NAVBAR SCROLL EFFECT ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.style.background = window.scrollY > 50
+      ? 'rgba(10,10,15,0.95)' : 'rgba(10,10,15,0.75)';
+  }, { passive: true });
+
+  /* ── FORM HANDLER ── */
   function handleSubmit(e) {
     e.preventDefault();
     const btn = e.target;
@@ -1811,5 +2066,6 @@
     }, 3500);
   }
 </script>
+<script src="../srivarsan-fx.js"></script>
 </body>
 </html>

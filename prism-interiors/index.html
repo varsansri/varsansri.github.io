@@ -38,6 +38,82 @@
     ::-webkit-scrollbar-track { background: var(--beige); }
     ::-webkit-scrollbar-thumb { background: var(--terra); border-radius: 3px; }
 
+    /* ─── SCROLL PROGRESS BAR ─── */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: var(--terra);
+      z-index: 9999;
+      transition: width 0.05s linear;
+    }
+
+    /* ─── PAGE ENTRY OVERLAY ─── */
+    #page-entry-overlay {
+      position: fixed;
+      inset: 0;
+      background: #1A1A1A;
+      z-index: 9998;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+    #page-entry-overlay.hidden {
+      opacity: 0;
+    }
+
+    /* ─── CURSOR TRAIL ─── */
+    .cursor-dot {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--terra);
+      pointer-events: none;
+      z-index: 9997;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.6s ease;
+    }
+
+    /* ─── FLOATING WHATSAPP BUTTON ─── */
+    #float-wa {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 3000;
+      width: 58px;
+      height: 58px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      text-decoration: none;
+      color: #fff;
+    }
+    #float-wa::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid rgba(37,211,102,0.5);
+      animation: wa-pulse 2s ease-out infinite;
+    }
+    #float-wa::after {
+      content: '';
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      border: 2px solid rgba(37,211,102,0.25);
+      animation: wa-pulse 2s ease-out infinite 0.4s;
+    }
+    @keyframes wa-pulse {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
     /* ─── NAV ─── */
     nav {
       position: fixed;
@@ -154,6 +230,13 @@
       align-items: center;
       overflow: hidden;
     }
+    /* Particle canvas sits behind content */
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
     .hero-bg {
       position: absolute;
       inset: 0;
@@ -176,7 +259,7 @@
     }
     .hero-content {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       padding: 0 8%;
       max-width: 860px;
     }
@@ -190,6 +273,10 @@
       margin-bottom: 1.4rem;
       padding: 0.4rem 0;
       border-top: 1px solid rgba(212,196,176,0.5);
+      /* Hero entry animation */
+      opacity: 0;
+      transform: translateY(24px);
+      animation: hero-line-up 0.7s ease forwards 0.4s;
     }
     .hero-title {
       font-family: 'DM Serif Display', serif;
@@ -198,10 +285,23 @@
       color: var(--white);
       margin-bottom: 1.5rem;
       letter-spacing: -0.01em;
+      overflow: hidden;
     }
     .hero-title em {
       font-style: italic;
       color: #E8C9B0;
+    }
+    /* Each line of the hero title animates independently */
+    .hero-line {
+      display: block;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: hero-line-up 0.75s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+    .hero-line:nth-child(1) { animation-delay: 0.55s; }
+    .hero-line:nth-child(2) { animation-delay: 0.75s; }
+    @keyframes hero-line-up {
+      to { opacity: 1; transform: translateY(0); }
     }
     .hero-sub {
       font-size: 1.1rem;
@@ -210,11 +310,17 @@
       margin-bottom: 2.5rem;
       font-weight: 300;
       line-height: 1.75;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: hero-line-up 0.7s ease forwards 1s;
     }
     .hero-actions {
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: hero-line-up 0.7s ease forwards 1.2s;
     }
     .btn-primary {
       display: inline-block;
@@ -467,10 +573,14 @@
     .service-card {
       background: var(--cream);
       padding: 2.5rem 2rem;
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease;
       cursor: default;
     }
-    .service-card:hover { background: var(--beige); }
+    .service-card:hover {
+      background: var(--beige);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(26,26,26,0.10);
+    }
     .service-icon {
       width: 44px;
       height: 44px;
@@ -542,6 +652,11 @@
       aspect-ratio: 4/3;
       cursor: pointer;
       border-radius: 2px;
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.45);
     }
     .project-card:first-child {
       grid-column: span 1;
@@ -554,7 +669,7 @@
       object-fit: cover;
       transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-    .project-card:hover .project-img { transform: scale(1.06); }
+    .project-card:hover .project-img { transform: scale(1.08); }
     .project-overlay {
       position: absolute;
       inset: 0;
@@ -908,6 +1023,19 @@
       font-size: 0.78rem;
       color: rgba(212,196,176,0.3);
     }
+    /* Footer credit */
+    .footer-credit {
+      font-size: 0.72rem;
+      color: rgba(212,196,176,0.25);
+      margin-top: 0.75rem;
+      text-align: center;
+    }
+    .footer-credit a {
+      color: rgba(212,196,176,0.35);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-credit a:hover { color: var(--terra); }
 
     /* ─── DIVIDERS ─── */
     .marquee-strip {
@@ -987,10 +1115,22 @@
       .footer-top { grid-template-columns: 1fr; }
       .about-pillars { grid-template-columns: 1fr 1fr; }
       .about-image-stack { height: 340px; }
+      #float-wa { bottom: 1.25rem; right: 1.25rem; width: 50px; height: 50px; }
     }
   </style>
 </head>
 <body>
+
+  <!-- ═══ SCROLL PROGRESS BAR ═══ -->
+  <div id="scroll-progress"></div>
+
+  <!-- ═══ PAGE ENTRY OVERLAY ═══ -->
+  <div id="page-entry-overlay"></div>
+
+  <!-- ═══ FLOATING WHATSAPP BUTTON ═══ -->
+  <a id="float-wa" href="https://wa.me/919XXXXXXXXX" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
 
   <!-- ═══ NAV ═══ -->
   <nav id="navbar">
@@ -1017,11 +1157,15 @@
 
   <!-- ═══ HERO ═══ -->
   <section id="hero">
+    <canvas id="hero-canvas"></canvas>
     <div class="hero-bg" id="heroBg"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <span class="hero-eyebrow">Bangalore's Premier Interior Studio</span>
-      <h1 class="hero-title">Spaces That<br/><em>Tell Your Story</em></h1>
+      <h1 class="hero-title">
+        <span class="hero-line">Spaces That</span>
+        <span class="hero-line"><em>Tell Your Story</em></span>
+      </h1>
       <p class="hero-sub">We craft interiors that feel deeply personal — where beauty is intentional, every corner considered, and your life finds its fullest expression.</p>
       <div class="hero-actions">
         <a href="#portfolio" class="btn-primary">View Our Work</a>
@@ -1034,15 +1178,15 @@
     </div>
     <div class="hero-stats">
       <div class="stat-item">
-        <span class="stat-num">150+</span>
+        <span class="stat-num" data-count="150" data-suffix="+">150+</span>
         <span class="stat-label">Spaces Designed</span>
       </div>
       <div class="stat-item">
-        <span class="stat-num">11</span>
+        <span class="stat-num" data-count="11">11</span>
         <span class="stat-label">Years in Bangalore</span>
       </div>
       <div class="stat-item">
-        <span class="stat-num">98%</span>
+        <span class="stat-num" data-count="98" data-suffix="%">98%</span>
         <span class="stat-label">Client Satisfaction</span>
       </div>
     </div>
@@ -1103,19 +1247,19 @@
         </div>
         <div class="about-pillars">
           <div class="pillar">
-            <span class="pillar-num">150+</span>
+            <span class="pillar-num" data-count="150" data-suffix="+">150+</span>
             <span class="pillar-label">Projects Done</span>
           </div>
           <div class="pillar">
-            <span class="pillar-num">11</span>
+            <span class="pillar-num" data-count="11">11</span>
             <span class="pillar-label">Years of Craft</span>
           </div>
           <div class="pillar">
-            <span class="pillar-num">4</span>
+            <span class="pillar-num" data-count="4">4</span>
             <span class="pillar-label">Design Awards</span>
           </div>
           <div class="pillar">
-            <span class="pillar-num">100%</span>
+            <span class="pillar-num" data-count="100" data-suffix="%">100%</span>
             <span class="pillar-label">Custom Work</span>
           </div>
         </div>
@@ -1471,7 +1615,7 @@
           </div>
         </div>
 
-        <a href="https://wa.me/919900000000?text=Hi%2C%20I%27d%20like%20to%20discuss%20a%20design%20project" class="whatsapp-btn" target="_blank" rel="noopener">
+        <a href="https://wa.me/919XXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20discuss%20a%20design%20project" class="whatsapp-btn" target="_blank" rel="noopener">
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Chat on WhatsApp
         </a>
@@ -1530,7 +1674,7 @@
           <li><a href="tel:+919900000000">+91 99000 00000</a></li>
           <li><a href="#">14, Defence Colony</a></li>
           <li><a href="#">Indiranagar, Bangalore</a></li>
-          <li><a href="https://wa.me/919900000000" target="_blank">WhatsApp Us</a></li>
+          <li><a href="https://wa.me/919XXXXXXXXX" target="_blank">WhatsApp Us</a></li>
         </ul>
       </div>
     </div>
@@ -1538,29 +1682,39 @@
       <p class="footer-copy">© 2025 Prism Interiors. All rights reserved. Bangalore, India.</p>
       <p class="footer-copy">Crafted with care · <a href="#" style="color:rgba(212,196,176,0.3);text-decoration:none;">Privacy Policy</a> · <a href="#" style="color:rgba(212,196,176,0.3);text-decoration:none;">Terms</a></p>
     </div>
+    <p class="footer-credit">Website designed &amp; built by S. Srivarsan | <a href="https://wa.me/919XXXXXXXXX" target="_blank" rel="noopener">wa.me/919XXXXXXXXX</a></p>
   </footer>
 
   <script>
+    // ── Page entry overlay fade-out ──
+    const overlay = document.getElementById('page-entry-overlay');
+    window.addEventListener('load', () => {
+      overlay.classList.add('hidden');
+      setTimeout(() => { overlay.style.display = 'none'; }, 900);
+    });
+
+    // ── Scroll progress bar ──
+    const progressBar = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = pct + '%';
+    }, { passive: true });
+
     // ── Navbar scroll effect ──
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 60) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-    });
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
 
     // ── Hero parallax bg loader ──
     const heroBg = document.getElementById('heroBg');
-    window.addEventListener('load', () => {
-      heroBg.classList.add('loaded');
-    });
+    window.addEventListener('load', () => { heroBg.classList.add('loaded'); });
 
     // ── Mobile menu ──
     function toggleMenu() {
-      const menu = document.getElementById('mobileMenu');
-      menu.classList.toggle('open');
+      document.getElementById('mobileMenu').classList.toggle('open');
     }
     document.addEventListener('click', (e) => {
       const menu = document.getElementById('mobileMenu');
@@ -1569,8 +1723,11 @@
         menu.classList.remove('open');
       }
     });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) document.getElementById('mobileMenu').classList.remove('open');
+    });
 
-    // ── Scroll reveal ──
+    // ── Scroll reveal (IntersectionObserver) ──
     const reveals = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1581,6 +1738,128 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     reveals.forEach(el => revealObserver.observe(el));
+
+    // ── Counter animations ──
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.count, 10);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1600;
+      const start = performance.now();
+      function tick(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // ease-out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target) + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    const counterEls = document.querySelectorAll('[data-count]');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    counterEls.forEach(el => counterObserver.observe(el));
+
+    // ── Particle canvas on hero ──
+    (function initParticles() {
+      const canvas = document.getElementById('hero-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H, particles;
+
+      function resize() {
+        const hero = document.getElementById('hero');
+        W = canvas.width = hero.offsetWidth;
+        H = canvas.height = hero.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize, { passive: true });
+
+      particles = Array.from({ length: 60 }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        r: Math.random() * 2.5 + 1,
+      }));
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        // Update & draw dots
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) p.x = W;
+          if (p.x > W) p.x = 0;
+          if (p.y < 0) p.y = H;
+          if (p.y > H) p.y = 0;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(196,98,45,0.3)';
+          ctx.fill();
+        });
+        // Draw connecting lines for close pairs
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 100) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(196,98,45,${0.15 * (1 - dist / 100)})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    // ── Cursor trail ──
+    (function initCursorTrail() {
+      const dots = [];
+      const TRAIL = 10;
+      const positions = [];
+
+      for (let i = 0; i < TRAIL; i++) {
+        const d = document.createElement('div');
+        d.className = 'cursor-dot';
+        d.style.opacity = (1 - i / TRAIL) * 0.7;
+        d.style.width = d.style.height = Math.max(3, 8 - i * 0.5) + 'px';
+        document.body.appendChild(d);
+        dots.push(d);
+        positions.push({ x: -100, y: -100 });
+      }
+
+      window.addEventListener('mousemove', (e) => {
+        positions.unshift({ x: e.clientX, y: e.clientY });
+        if (positions.length > TRAIL) positions.pop();
+      }, { passive: true });
+
+      function render() {
+        dots.forEach((d, i) => {
+          const p = positions[i] || positions[positions.length - 1] || { x: -100, y: -100 };
+          d.style.left = p.x + 'px';
+          d.style.top = p.y + 'px';
+        });
+        requestAnimationFrame(render);
+      }
+      render();
+
+      // Hide on touch devices
+      window.addEventListener('touchstart', () => {
+        dots.forEach(d => d.style.display = 'none');
+      }, { passive: true, once: true });
+    })();
 
     // ── Form submit ──
     function handleFormSubmit(e) {
@@ -1594,13 +1873,7 @@
         e.target.reset();
       }, 3500);
     }
-
-    // ── Smooth nav link close on resize ──
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 900) {
-        document.getElementById('mobileMenu').classList.remove('open');
-      }
-    });
   </script>
+<script src="../srivarsan-fx.js"></script>
 </body>
 </html>
