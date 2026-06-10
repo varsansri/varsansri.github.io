@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindWell — Mental Health Care in Bangalore</title>
+  <meta name="description" content="MindWell is a warm, confidential mental health clinic in Jayanagar, Bangalore. Dr. Meera Iyer offers therapy for anxiety, depression, trauma, and more. You don't have to face it alone." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #FAFAF8;
+      color: #2D3748;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ── CSS Variables ─────────────────────────────── */
+    :root {
+      --sage:    #6B9E78;
+      --sage-light: #8BB897;
+      --sage-dark: #4e7a5a;
+      --lavender: #EEE9F5;
+      --lavender-mid: #D9CFED;
+      --warm-white: #FAFAF8;
+      --cream: #F5F0EB;
+      --dark: #2D3748;
+      --mid: #4A5568;
+      --soft: #718096;
+      --border: #E2DDF0;
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 32px;
+      --shadow-sm: 0 2px 12px rgba(107,158,120,0.10);
+      --shadow-md: 0 8px 32px rgba(107,158,120,0.13);
+      --shadow-lg: 0 20px 60px rgba(45,55,72,0.10);
+    }
+
+    /* ── Typography ─────────────────────────────────── */
+    h1, h2, h3, h4 { font-family: 'DM Serif Display', serif; line-height: 1.2; }
+    h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); }
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
+    h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
+    p { font-size: 1rem; color: var(--mid); }
+
+    /* ── Utility ─────────────────────────────────────── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--lavender); color: var(--sage-dark);
+      padding: 6px 16px; border-radius: 99px;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--sage); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 99px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500;
+      cursor: pointer; border: none; transition: all 0.25s ease;
+      text-decoration: none; white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--sage); color: #fff;
+      box-shadow: 0 4px 18px rgba(107,158,120,0.35);
+    }
+    .btn-primary:hover { background: var(--sage-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(107,158,120,0.45); }
+    .btn-secondary {
+      background: transparent; color: #fff;
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.15); }
+    .btn-outline {
+      background: transparent; color: var(--sage-dark);
+      border: 2px solid var(--sage);
+    }
+    .btn-outline:hover { background: var(--sage); color: #fff; transform: translateY(-2px); }
+
+    /* ── Navbar ──────────────────────────────────────── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 20px 0;
+      transition: all 0.35s ease;
+    }
+    #navbar.scrolled {
+      background: rgba(250,250,248,0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 14px 0;
+      box-shadow: 0 2px 24px rgba(45,55,72,0.08);
+    }
+    #navbar .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo-icon {
+      width: 38px; height: 38px; border-radius: 12px;
+      background: var(--sage);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo-icon svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2; }
+    .nav-logo-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.35rem; color: var(--dark);
+      transition: color 0.3s;
+    }
+    #navbar:not(.scrolled) .nav-logo-text { color: #fff; }
+    #navbar:not(.scrolled) .nav-logo-icon { background: rgba(255,255,255,0.25); }
+    .nav-links {
+      display: flex; align-items: center; gap: 36px;
+    }
+    .nav-links a {
+      font-size: 0.9rem; font-weight: 500; color: var(--mid);
+      transition: color 0.2s; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 2px; background: var(--sage); border-radius: 2px;
+      transform: scaleX(0); transition: transform 0.25s;
+    }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-links a:hover { color: var(--sage-dark); }
+    #navbar:not(.scrolled) .nav-links a { color: rgba(255,255,255,0.85); }
+    #navbar:not(.scrolled) .nav-links a:hover { color: #fff; }
+    #navbar:not(.scrolled) .nav-cta.btn-primary { background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.6); color: #fff; box-shadow: none; }
+    #navbar:not(.scrolled) .nav-cta.btn-primary:hover { background: rgba(255,255,255,0.3); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--dark); border-radius: 2px; transition: all 0.3s;
+    }
+    #navbar:not(.scrolled) .hamburger span { background: #fff; }
+    .mobile-menu {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(250,250,248,0.98); z-index: 999;
+      flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--dark);
+    }
+    .mobile-menu .close-btn {
+      position: absolute; top: 24px; right: 24px;
+      font-size: 1.5rem; cursor: pointer; color: var(--soft);
+    }
+
+    /* ── Hero ────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      background: url('https://images.unsplash.com/photo-1474631245212-32dc3c8310c6?w=1600&q=80') center center / cover no-repeat;
+      position: relative;
+      display: flex; align-items: center;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(45, 55, 72, 0.62) 0%,
+        rgba(107, 158, 120, 0.48) 60%,
+        rgba(107, 158, 120, 0.25) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 700px;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.18); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff; padding: 7px 18px; border-radius: 99px;
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em;
+      margin-bottom: 28px;
+    }
+    .hero-tag span.dot { width: 7px; height: 7px; border-radius: 50%; background: #a3e4b0; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+    #hero h1 { color: #fff; margin-bottom: 22px; text-shadow: 0 2px 24px rgba(0,0,0,0.15); }
+    #hero h1 em { font-style: italic; color: #c8e6ce; }
+    .hero-sub {
+      font-size: 1.15rem; color: rgba(255,255,255,0.88); max-width: 520px;
+      margin-bottom: 36px; line-height: 1.75;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 52px; }
+    .trust-badges {
+      display: flex; flex-wrap: wrap; gap: 18px;
+    }
+    .trust-badge {
+      display: flex; align-items: center; gap: 9px;
+      background: rgba(255,255,255,0.14); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 99px; padding: 8px 18px;
+      color: rgba(255,255,255,0.92); font-size: 0.82rem; font-weight: 500;
+    }
+    .trust-badge svg { width: 16px; height: 16px; stroke: #a3e4b0; }
+    .hero-scroll {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.6); font-size: 0.75rem; letter-spacing: 0.1em;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+    .hero-scroll-arrow { width: 1px; height: 36px; background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent); }
+
+    /* ── About ───────────────────────────────────────── */
+    #about {
+      padding: 100px 0;
+      background: var(--warm-white);
+    }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-main {
+      width: 100%; aspect-ratio: 4/5; object-fit: cover;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+    }
+    .about-img-float {
+      position: absolute; bottom: -28px; right: -28px;
+      width: 180px; aspect-ratio: 1; object-fit: cover;
+      border-radius: var(--radius-md); border: 5px solid var(--warm-white);
+      box-shadow: var(--shadow-md);
+    }
+    .about-badge {
+      position: absolute; top: 24px; left: -20px;
+      background: var(--sage); color: #fff;
+      padding: 12px 20px; border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-md);
+      font-size: 0.82rem; font-weight: 600; line-height: 1.4;
+      max-width: 150px; text-align: center;
+    }
+    .about-badge strong { display: block; font-size: 1.5rem; font-family: 'DM Serif Display', serif; }
+    .about-text h2 { color: var(--dark); margin-bottom: 20px; }
+    .about-text p { margin-bottom: 18px; font-size: 1.02rem; }
+    .about-credentials {
+      display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0;
+    }
+    .cred-pill {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--lavender); color: var(--sage-dark);
+      padding: 7px 16px; border-radius: 99px;
+      font-size: 0.83rem; font-weight: 500;
+    }
+    .cred-pill svg { width: 14px; height: 14px; stroke: var(--sage); }
+    .about-langs {
+      display: flex; align-items: center; gap: 10px; margin-top: 8px;
+      font-size: 0.88rem; color: var(--soft);
+    }
+    .lang-chip {
+      background: var(--cream); padding: 4px 14px; border-radius: 99px;
+      font-weight: 500; color: var(--mid);
+    }
+
+    /* ── Services ─────────────────────────────────────── */
+    #services {
+      padding: 100px 0;
+      background: var(--lavender);
+    }
+    .services-header { text-align: center; max-width: 580px; margin: 0 auto 60px; }
+    .services-header h2 { color: var(--dark); margin-bottom: 14px; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .service-card {
+      background: var(--warm-white); border-radius: var(--radius-md);
+      padding: 36px 28px; position: relative; overflow: hidden;
+      transition: all 0.3s ease; cursor: default;
+      border: 1px solid transparent;
+    }
+    .service-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(107,158,120,0.04), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--border);
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      background: var(--lavender);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 22px; transition: background 0.3s;
+    }
+    .service-card:hover .service-icon { background: var(--sage); }
+    .service-icon svg { width: 26px; height: 26px; stroke: var(--sage); transition: stroke 0.3s; }
+    .service-card:hover .service-icon svg { stroke: #fff; }
+    .service-card h3 { color: var(--dark); margin-bottom: 10px; font-size: 1.15rem; }
+    .service-card p { font-size: 0.9rem; line-height: 1.65; }
+    .service-card .learn-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      margin-top: 18px; font-size: 0.85rem; font-weight: 500;
+      color: var(--sage-dark); transition: gap 0.2s;
+    }
+    .service-card:hover .learn-link { gap: 9px; }
+
+    /* ── Approach ─────────────────────────────────────── */
+    #approach {
+      padding: 100px 0;
+      background: var(--warm-white);
+    }
+    .approach-wrap {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    }
+    .approach-img {
+      position: relative;
+    }
+    .approach-img-main {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+    }
+    .approach-img-accent {
+      position: absolute; bottom: -20px; left: -20px;
+      width: 150px; aspect-ratio: 1; object-fit: cover;
+      border-radius: var(--radius-md); border: 5px solid var(--warm-white);
+      box-shadow: var(--shadow-md);
+    }
+    .approach-text h2 { color: var(--dark); margin-bottom: 12px; }
+    .approach-text > p { margin-bottom: 42px; font-size: 1.03rem; }
+    .pillar-list { display: flex; flex-direction: column; gap: 26px; }
+    .pillar {
+      display: flex; gap: 18px;
+      background: var(--lavender); border-radius: var(--radius-sm);
+      padding: 22px 24px;
+      transition: box-shadow 0.3s;
+    }
+    .pillar:hover { box-shadow: var(--shadow-sm); }
+    .pillar-icon {
+      width: 48px; height: 48px; flex-shrink: 0;
+      border-radius: 14px; background: var(--sage);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pillar-icon svg { width: 22px; height: 22px; stroke: #fff; }
+    .pillar-body h3 { color: var(--dark); margin-bottom: 5px; font-size: 1.05rem; }
+    .pillar-body p { font-size: 0.88rem; line-height: 1.6; }
+
+    /* ── Testimonials ─────────────────────────────────── */
+    #testimonials {
+      padding: 100px 0;
+      background: linear-gradient(160deg, #3d5a44 0%, #2a4035 100%);
+      position: relative; overflow: hidden;
+    }
+    #testimonials::before {
+      content: '"'; position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+      font-family: 'DM Serif Display', serif; font-size: 22rem; color: rgba(255,255,255,0.04);
+      line-height: 1; pointer-events: none;
+    }
+    .testimonials-header { text-align: center; margin-bottom: 60px; }
+    .testimonials-header .section-tag { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85); }
+    .testimonials-header .section-tag::before { background: #a3e4b0; }
+    .testimonials-header h2 { color: #fff; }
+    .testi-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .testi-card {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-md); padding: 36px;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .testi-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.12); }
+    .stars {
+      display: flex; gap: 4px; margin-bottom: 20px;
+    }
+    .stars svg { width: 16px; height: 16px; fill: #fbbf24; stroke: none; }
+    .testi-card blockquote {
+      font-size: 0.97rem; line-height: 1.75; color: rgba(255,255,255,0.85);
+      margin-bottom: 28px; font-style: italic;
+    }
+    .testi-author {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .testi-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--sage); display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif; font-size: 1rem; color: #fff; flex-shrink: 0;
+    }
+    .testi-info strong { display: block; color: #fff; font-size: 0.9rem; }
+    .testi-info span { font-size: 0.8rem; color: rgba(255,255,255,0.55); }
+
+    /* ── Gallery Strip ────────────────────────────────── */
+    #gallery {
+      padding: 0;
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      height: 220px; overflow: hidden;
+    }
+    .gallery-item { overflow: hidden; }
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+      filter: brightness(0.88) saturate(0.8);
+    }
+    .gallery-item:hover img { transform: scale(1.07); filter: brightness(1) saturate(1); }
+
+    /* ── Contact ──────────────────────────────────────── */
+    #contact {
+      padding: 100px 0;
+      background: var(--warm-white);
+    }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px; align-items: start;
+    }
+    .contact-info h2 { color: var(--dark); margin-bottom: 14px; }
+    .contact-info > p { margin-bottom: 36px; font-size: 1.02rem; }
+    .contact-detail-list { display: flex; flex-direction: column; gap: 20px; margin-bottom: 36px; }
+    .contact-detail {
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .contact-icon {
+      width: 44px; height: 44px; border-radius: 13px; flex-shrink: 0;
+      background: var(--lavender);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-icon svg { width: 20px; height: 20px; stroke: var(--sage); }
+    .contact-detail strong { display: block; color: var(--dark); font-size: 0.88rem; font-weight: 600; margin-bottom: 2px; }
+    .contact-detail span { font-size: 0.9rem; color: var(--soft); }
+    .confidentiality-note {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: var(--lavender); border-radius: var(--radius-sm);
+      padding: 18px 20px; margin-bottom: 28px;
+    }
+    .confidentiality-note svg { width: 20px; height: 20px; stroke: var(--sage); flex-shrink: 0; margin-top: 1px; }
+    .confidentiality-note p { font-size: 0.85rem; color: var(--mid); line-height: 1.55; margin: 0; }
+    .contact-form {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 42px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border);
+    }
+    .contact-form h3 { color: var(--dark); margin-bottom: 6px; font-size: 1.35rem; }
+    .contact-form > p { font-size: 0.88rem; margin-bottom: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
+    .form-group label {
+      font-size: 0.83rem; font-weight: 500; color: var(--mid); letter-spacing: 0.02em;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 13px 16px; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--warm-white);
+      font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--dark);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none; width: 100%;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--sage); box-shadow: 0 0 0 3px rgba(107,158,120,0.15);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-group select { appearance: none; cursor: pointer; }
+    .form-submit {
+      width: 100%; padding: 16px; justify-content: center;
+      font-size: 1rem; font-weight: 500;
+    }
+    .form-note {
+      text-align: center; margin-top: 14px;
+      font-size: 0.8rem; color: var(--soft);
+    }
+    .form-note svg { width: 13px; height: 13px; stroke: var(--sage); vertical-align: middle; }
+
+    /* ── Footer ───────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      padding: 72px 0 28px;
+      color: rgba(255,255,255,0.75);
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 48px;
+      margin-bottom: 56px;
+    }
+    .footer-brand p {
+      font-size: 0.88rem; line-height: 1.7; color: rgba(255,255,255,0.55);
+      margin: 14px 0 24px;
+    }
+    .footer-brand .nav-logo-text { color: #fff; }
+    .footer-socials { display: flex; gap: 12px; }
+    .social-btn {
+      width: 38px; height: 38px; border-radius: 11px;
+      background: rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .social-btn:hover { background: var(--sage); }
+    .social-btn svg { width: 17px; height: 17px; stroke: rgba(255,255,255,0.7); }
+    .footer-col h4 {
+      font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+      margin-bottom: 18px;
+    }
+    .footer-col ul { display: flex; flex-direction: column; gap: 11px; }
+    .footer-col ul li a {
+      font-size: 0.88rem; color: rgba(255,255,255,0.6); transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: #fff; }
+    .footer-hours li {
+      display: flex; justify-content: space-between; gap: 16px;
+      font-size: 0.85rem;
+    }
+    .footer-hours li span:first-child { color: rgba(255,255,255,0.45); }
+    .footer-hours li span:last-child { color: rgba(255,255,255,0.7); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 26px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: gap-16px;
+      gap: 16px;
+    }
+    .footer-bottom p { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+    .footer-bottom a { color: rgba(255,255,255,0.5); transition: color 0.2s; }
+    .footer-bottom a:hover { color: #fff; }
+    .footer-disclaimer {
+      font-size: 0.75rem; color: rgba(255,255,255,0.3); line-height: 1.6;
+      max-width: 600px; margin-top: 10px;
+    }
+
+    /* ── Floating CTA ────────────────────────────────── */
+    .floating-cta {
+      position: fixed; bottom: 28px; right: 28px; z-index: 900;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+    }
+    .floating-cta-tooltip {
+      background: var(--dark); color: #fff;
+      padding: 8px 14px; border-radius: 8px;
+      font-size: 0.78rem; white-space: nowrap;
+      opacity: 0; transform: translateX(8px);
+      transition: all 0.25s;
+    }
+    .floating-cta-btn {
+      width: 58px; height: 58px; border-radius: 50%;
+      background: var(--sage); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 24px rgba(107,158,120,0.45);
+      transition: transform 0.25s, box-shadow 0.25s; cursor: pointer;
+      border: none;
+    }
+    .floating-cta-btn svg { width: 26px; height: 26px; stroke: #fff; }
+    .floating-cta:hover .floating-cta-btn { transform: scale(1.08); box-shadow: 0 10px 32px rgba(107,158,120,0.5); }
+    .floating-cta:hover .floating-cta-tooltip { opacity: 1; transform: translateX(0); }
+
+    /* ── Section Divider ──────────────────────────────── */
+    .wave-divider { line-height: 0; overflow: hidden; }
+    .wave-divider svg { display: block; width: 100%; }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .about-grid, .approach-wrap, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-img-float, .about-badge, .approach-img-accent { display: none; }
+      .services-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      #gallery { grid-template-columns: repeat(3, 1fr); }
+      #gallery .gallery-item:nth-child(4),
+      #gallery .gallery-item:nth-child(5) { display: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form { padding: 28px 22px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .hero-actions { flex-direction: column; }
+      .hero-actions .btn { text-align: center; justify-content: center; }
+      .trust-badges { flex-direction: column; gap: 10px; }
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.6rem; }
+      .container { padding: 0 18px; }
+      #gallery { height: 160px; }
+    }
+
+    /* ── Scroll animation ─────────────────────────────── */
+    .fade-up {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up-delay-1 { transition-delay: 0.1s; }
+    .fade-up-delay-2 { transition-delay: 0.2s; }
+    .fade-up-delay-3 { transition-delay: 0.3s; }
+    .fade-up-delay-4 { transition-delay: 0.4s; }
+    .fade-up-delay-5 { transition-delay: 0.5s; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ NAVBAR ═══════════════════ -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+      </div>
+      <span class="nav-logo-text">MindWell</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#about">About Dr. Meera</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#approach">Our Approach</a></li>
+      <li><a href="#testimonials">Stories</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <a href="#contact" class="btn btn-primary nav-cta">Start Your Journey</a>
+
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <span class="close-btn" onclick="toggleMenu()">✕</span>
+  <a href="#about" onclick="toggleMenu()">About Dr. Meera</a>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#approach" onclick="toggleMenu()">Our Approach</a>
+  <a href="#testimonials" onclick="toggleMenu()">Stories</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <a href="#contact" class="btn btn-primary" onclick="toggleMenu()">Start Your Journey</a>
+</div>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section id="hero">
+  <div class="hero-overlay"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span class="dot"></span>
+        Welcoming new clients in Bangalore
+      </div>
+      <h1>You Don't Have to<br /><em>Face It Alone.</em></h1>
+      <p class="hero-sub">
+        A gentle, confidential space to heal, grow, and find your way back to yourself — with evidence-based care that truly listens.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          Book a Session
+        </a>
+        <a href="#about" class="btn btn-secondary">
+          Meet Dr. Meera
+        </a>
+      </div>
+      <div class="trust-badges">
+        <div class="trust-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          Strictly Confidential
+        </div>
+        <div class="trust-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+          Non-Judgmental Care
+        </div>
+        <div class="trust-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Flexible Timings
+        </div>
+        <div class="trust-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          12+ Years Experience
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <div class="hero-scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ ABOUT ═══════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap fade-up">
+        <img
+          src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80"
+          alt="Dr. Meera Iyer in a warm therapy session"
+          class="about-img-main"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80"
+          alt="Peaceful nature"
+          class="about-img-float"
+        />
+        <div class="about-badge">
+          <strong>12+</strong>
+          Years of Compassionate Care
+        </div>
+      </div>
+
+      <div class="about-text">
+        <div class="section-tag fade-up">About Dr. Meera</div>
+        <h2 class="fade-up fade-up-delay-1">A Doctor Who Listens With Her Heart</h2>
+        <p class="fade-up fade-up-delay-2">
+          Dr. Meera Iyer is a Bangalore-based psychiatrist with over 12 years of experience helping people through anxiety, depression, relationship difficulties, trauma, and life transitions.
+        </p>
+        <p class="fade-up fade-up-delay-2">
+          She founded MindWell on a simple belief: that healing begins when someone truly feels heard. Her sessions are warm, unhurried, and free from judgment — a space where you can say what you've never been able to say out loud.
+        </p>
+        <p class="fade-up fade-up-delay-3">
+          Whether you're facing a crisis or simply feel stuck, Dr. Meera works alongside you — not above you — using evidence-based approaches tailored to your life, your culture, and your pace.
+        </p>
+
+        <div class="about-credentials fade-up fade-up-delay-3">
+          <div class="cred-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            MD Psychiatry
+          </div>
+          <div class="cred-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            DPM
+          </div>
+          <div class="cred-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            NIMHANS Trained
+          </div>
+          <div class="cred-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            1400+ Clients Helped
+          </div>
+        </div>
+
+        <div class="about-langs fade-up fade-up-delay-4">
+          <span style="font-size:0.85rem; color:var(--soft);">Speaks:</span>
+          <span class="lang-chip">English</span>
+          <span class="lang-chip">ಕನ್ನಡ</span>
+          <span class="lang-chip">தமிழ்</span>
+        </div>
+
+        <div style="margin-top:32px;" class="fade-up fade-up-delay-4">
+          <a href="#contact" class="btn btn-outline">Book a Consultation</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave divider -->
+<div class="wave-divider" style="background:var(--warm-white);">
+  <svg viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 30 C200 60 400 0 600 30 C800 60 1000 0 1200 30 L1200 60 L0 60 Z" fill="#EEE9F5"/>
+  </svg>
+</div>
+
+<!-- ═══════════════════ SERVICES ═══════════════════ -->
+<section id="services">
+  <div class="container">
+    <div class="services-header">
+      <div class="section-tag fade-up">What We Offer</div>
+      <h2 class="fade-up fade-up-delay-1">Support for Every Chapter of Life</h2>
+      <p class="fade-up fade-up-delay-2">Whatever you're carrying, there's a gentle path forward. Our services are designed to meet you exactly where you are.</p>
+    </div>
+
+    <div class="services-grid">
+      <!-- Card 1 -->
+      <div class="service-card fade-up">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9.5 2A7.5 7.5 0 0 1 17 9.5c0 4.142-3.358 7.5-7.5 7.5S2 13.642 2 9.5 5.358 2 9.5 2z"/><path d="M14.5 14.5L22 22"/></svg>
+        </div>
+        <h3>Anxiety & Stress</h3>
+        <p>Racing thoughts, constant worry, panic attacks — we help you understand your anxiety and build real, lasting calm into your everyday life.</p>
+        <span class="learn-link">Learn more <span>→</span></span>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="service-card fade-up fade-up-delay-1">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+        </div>
+        <h3>Depression Care</h3>
+        <p>Feeling empty, exhausted, or hopeless? Depression is treatable. Together, we gently find your way back to meaning, connection, and lightness.</p>
+        <span class="learn-link">Learn more <span>→</span></span>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="service-card fade-up fade-up-delay-2">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Relationship Counselling</h3>
+        <p>Conflict, disconnection, loneliness within a relationship — whether couples or individual work, we rebuild understanding and emotional safety.</p>
+        <span class="learn-link">Learn more <span>→</span></span>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="service-card fade-up fade-up-delay-1">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Trauma Therapy</h3>
+        <p>Trauma lives in the body and the memory. In a safe, paced environment, we gently process what happened so it no longer controls your present.</p>
+        <span class="learn-link">Learn more <span>→</span></span>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="service-card fade-up fade-up-delay-2">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <h3>Child & Teen Therapy</h3>
+        <p>Behavioural concerns, school stress, social anxiety — we create a child-friendly space where young minds can be heard, supported, and celebrated.</p>
+        <span class="learn-link">Learn more <span>→</span></span>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="service-card fade-up fade-up-delay-3">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </div>
+        <h3>Corporate Wellness</h3>
+        <p>Burnout, imposter syndrome, workplace stress — we partner with teams and individuals to build mental resilience at work.</p>
+        <span class="learn-link">Learn more <span>→</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave divider -->
+<div class="wave-divider" style="background:var(--lavender);">
+  <svg viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0 30 C300 0 600 60 900 30 C1050 15 1150 45 1200 30 L1200 60 L0 60 Z" fill="#FAFAF8"/>
+  </svg>
+</div>
+
+<!-- ═══════════════════ APPROACH ═══════════════════ -->
+<section id="approach">
+  <div class="container">
+    <div class="approach-wrap">
+      <div class="approach-img fade-up">
+        <img
+          src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80"
+          alt="Peaceful meditation and wellness"
+          class="approach-img-main"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=400&q=80"
+          alt="Warm clinic office"
+          class="approach-img-accent"
+        />
+      </div>
+
+      <div class="approach-text">
+        <div class="section-tag fade-up">Our Philosophy</div>
+        <h2 class="fade-up fade-up-delay-1">Why MindWell<br />is Different</h2>
+        <p class="fade-up fade-up-delay-2">We built MindWell around one question: <em>"What would it take for someone in real pain to actually walk through that door?"</em> Every detail of how we work comes from that answer.</p>
+
+        <div class="pillar-list">
+          <div class="pillar fade-up fade-up-delay-2">
+            <div class="pillar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="pillar-body">
+              <h3>A Truly Safe Space</h3>
+              <p>No pressure, no diagnoses on day one, no rushing. Our sessions move at your pace. You are always in control of what you share and when.</p>
+            </div>
+          </div>
+
+          <div class="pillar fade-up fade-up-delay-3">
+            <div class="pillar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <div class="pillar-body">
+              <h3>Evidence-Based Methods</h3>
+              <p>We use CBT, EMDR, mindfulness-based approaches, and psychodynamic therapy — not one-size-fits-all, but carefully chosen for <em>you</em>.</p>
+            </div>
+          </div>
+
+          <div class="pillar fade-up fade-up-delay-4">
+            <div class="pillar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="pillar-body">
+              <h3>Complete Confidentiality</h3>
+              <p>What you share stays here. We follow strict ethical and legal confidentiality standards. Your privacy is sacred — not a policy footnote.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ GALLERY ═══════════════════ -->
+<div id="gallery">
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1474631245212-32dc3c8310c6?w=400&q=75" alt="Calm nature light" />
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=75" alt="Therapy session" />
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&q=75" alt="Meditation and peace" />
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=400&q=75" alt="Welcoming office" />
+  </div>
+  <div class="gallery-item">
+    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=75" alt="Healing nature" />
+  </div>
+</div>
+
+<!-- ═══════════════════ TESTIMONIALS ═══════════════════ -->
+<section id="testimonials">
+  <div class="container">
+    <div class="testimonials-header">
+      <div class="section-tag fade-up">Real Stories</div>
+      <h2 class="fade-up fade-up-delay-1" style="color:#fff;">Moments of Courage,<br />Paths of Healing</h2>
+    </div>
+
+    <div class="testi-grid">
+      <!-- Testimonial 1 -->
+      <div class="testi-card fade-up">
+        <div class="stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>"I came in barely able to get through the day. Dr. Meera never made me feel broken. She helped me understand myself — not just manage symptoms. For the first time in years, I feel like myself again."</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar">A.R.</div>
+          <div class="testi-info">
+            <strong>A. R.</strong>
+            <span>Anxiety & Burnout • Koramangala</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="testi-card fade-up fade-up-delay-1">
+        <div class="stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>"My husband and I were on the edge of giving up. After a few sessions of couples counselling with Dr. Meera, we finally learned to hear each other again. She has a way of making you both feel safe at the same time."</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:#9b7fc0;">S.K.</div>
+          <div class="testi-info">
+            <strong>S. K.</strong>
+            <span>Relationship Counselling • Indiranagar</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="testi-card fade-up fade-up-delay-2">
+        <div class="stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <blockquote>"I brought my 14-year-old here when nothing else was working. Dr. Meera spoke to her as an equal — not as a problem to fix. Three months later, my daughter is thriving. I'm beyond grateful."</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:#c08060;">P.N.</div>
+          <div class="testi-info">
+            <strong>P. N.</strong>
+            <span>Child & Teen Therapy • Jayanagar</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CONTACT ═══════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="section-tag fade-up">Get in Touch</div>
+        <h2 class="fade-up fade-up-delay-1">Taking the First Step Is the Hardest Part</h2>
+        <p class="fade-up fade-up-delay-2">
+          You don't have to know exactly what to say. Just reach out — we'll figure out the rest together. We typically respond within a few hours, and your first call is completely free.
+        </p>
+
+        <div class="contact-detail-list fade-up fade-up-delay-2">
+          <div class="contact-detail">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <strong>Our Clinic</strong>
+              <span>14, 2nd Floor, 11th Cross, Jayanagar 4th Block,<br/>Bangalore — 560041</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 15.92z"/></svg>
+            </div>
+            <div>
+              <strong>Phone & WhatsApp</strong>
+              <span>+91 98456 70123</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <strong>Email</strong>
+              <span>hello@mindwellbangalore.com</span>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div>
+              <strong>Hours</strong>
+              <span>Mon–Fri: 9 AM – 7 PM &nbsp;|&nbsp; Sat: 9 AM – 2 PM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="confidentiality-note fade-up fade-up-delay-3">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <p><strong style="color:var(--dark);">Your privacy is our promise.</strong> Everything you share — during booking, in sessions, and in follow-ups — is held in strict confidence and protected under Indian medical ethics guidelines. We will never share your information without your explicit consent.</p>
+        </div>
+      </div>
+
+      <div class="contact-form fade-up fade-up-delay-1">
+        <h3>Request a Session</h3>
+        <p>Fill this in and we'll reach out to confirm a time that works for you — no pressure, no commitment.</p>
+
+        <form onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone / WhatsApp</label>
+              <input type="tel" id="phone" placeholder="+91 98xxx xxxxx" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email (optional)</label>
+            <input type="email" id="email" placeholder="you@example.com" />
+          </div>
+
+          <div class="form-group">
+            <label for="service">What brings you here?</label>
+            <select id="service">
+              <option value="">I'd prefer to explain when we talk</option>
+              <option>Anxiety or Stress</option>
+              <option>Depression or Low Mood</option>
+              <option>Relationship Difficulties</option>
+              <option>Trauma or Past Experiences</option>
+              <option>For My Child or Teen</option>
+              <option>Work or Career Stress</option>
+              <option>Something Else</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="prefer">Preferred Session Format</label>
+            <select id="prefer">
+              <option>In-Clinic (Jayanagar)</option>
+              <option>Online (Video Call)</option>
+              <option>Either works for me</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Anything you'd like us to know? (optional)</label>
+            <textarea id="message" placeholder="You can share as little or as much as you feel comfortable with..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary form-submit" id="submitBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send My Request
+          </button>
+          <p class="form-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            100% confidential. We respond within a few hours.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">
+          <div class="nav-logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+          </div>
+          <span class="nav-logo-text">MindWell</span>
+        </a>
+        <p>A warm, confidential mental health clinic in Jayanagar, Bangalore. You deserve to feel well — and we're here to help you get there, one step at a time.</p>
+        <div class="footer-socials">
+          <a class="social-btn" href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a class="social-btn" href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a class="social-btn" href="#" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-1.96C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.4 19.54C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Anxiety & Stress</a></li>
+          <li><a href="#services">Depression Care</a></li>
+          <li><a href="#services">Relationship Counselling</a></li>
+          <li><a href="#services">Trauma Therapy</a></li>
+          <li><a href="#services">Child & Teen Therapy</a></li>
+          <li><a href="#services">Corporate Wellness</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Clinic</h4>
+        <ul>
+          <li><a href="#about">About Dr. Meera</a></li>
+          <li><a href="#approach">Our Approach</a></li>
+          <li><a href="#testimonials">Patient Stories</a></li>
+          <li><a href="#contact">Book a Session</a></li>
+          <li><a href="#">Online Therapy</a></li>
+          <li><a href="#">Crisis Support</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Hours</h4>
+        <ul class="footer-hours">
+          <li><span>Monday</span><span>9 AM – 7 PM</span></li>
+          <li><span>Tuesday</span><span>9 AM – 7 PM</span></li>
+          <li><span>Wednesday</span><span>9 AM – 7 PM</span></li>
+          <li><span>Thursday</span><span>9 AM – 7 PM</span></li>
+          <li><span>Friday</span><span>9 AM – 7 PM</span></li>
+          <li><span>Saturday</span><span>9 AM – 2 PM</span></li>
+          <li><span>Sunday</span><span>Closed</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>
+        <p>© 2025 MindWell Mental Health Clinic. All rights reserved. &nbsp;|&nbsp; <a href="#">Privacy Policy</a> &nbsp;|&nbsp; <a href="#">Terms</a></p>
+        <p class="footer-disclaimer">MindWell provides professional mental health support. If you are in immediate danger or experiencing a psychiatric emergency, please call iCall: 9152987821 or Vandrevala Foundation: 1860-2662-345 (24x7). This website is not a crisis service.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════ FLOATING CTA ═══════════════════ -->
+<div class="floating-cta" id="floatingCta" style="opacity:0; transition: opacity 0.4s;">
+  <div class="floating-cta-tooltip">Book a free call</div>
+  <a href="#contact" class="floating-cta-btn" aria-label="Book a session">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 15.92z"/></svg>
+  </a>
+</div>
+
+<!-- ═══════════════════ SCRIPTS ═══════════════════ -->
+<script>
+  // Navbar scroll behavior
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+    // Show floating CTA after scrolling past hero
+    const floatingCta = document.getElementById('floatingCta');
+    if (window.scrollY > window.innerHeight * 0.7) {
+      floatingCta.style.opacity = '1';
+    } else {
+      floatingCta.style.opacity = '0';
+    }
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('open');
+    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Form submit handler
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Request Sent!`;
+    btn.style.background = '#4e7a5a';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send My Request`;
+      btn.style.background = '';
+      btn.disabled = false;
+      e.target.reset();
+    }, 3500);
+  }
+</script>
+</body>
+</html>
