@@ -1,0 +1,2620 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+<head>
+  
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WXNGDDWF');</script>
+<!-- End Google Tag Manager -->
+
+  <script type="text/javascript">
+  // * Theme file for custom changes
+  try {
+      // * Listening for the event "zecpeThemeScriptLoaded" on the document and executing the code
+      window.zecpeCustomCode = function (){
+        // * Custom code goes here
+      }
+  } catch (err) {
+      console.log(err)
+  }
+    // * Adding the touchmove event listener and preventing the propagation if zecpe checkout is initiated
+    try {
+    document.addEventListener(
+      "touchmove",
+      (e) => {
+        if (window.isZecpeCheckoutInitiated) {
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        }
+      },
+      true
+    );
+  } catch (err) {
+    console.log(
+      `Error in adding touchmove event listener :: ${err?.message}`
+    );
+  }
+</script>
+
+<script>
+  
+  window.storeShopifyDomain = "eeb865.myshopify.com";
+  window.Shopify = {
+    ...window.Shopify,
+    shop: storeShopifyDomain,
+  };
+  window.onload = () => {
+    let shopifyObjectDomain = window?.Shopify?.shop;
+    if (!window.Shopify.shop || !Shopify.shop.includes("myshopify.com")) {
+      window.Shopify = {
+        ...window.Shopify,
+        shop: shopifyObjectDomain,
+      };
+    }
+  };
+  window.triggerSentry = (message) => {
+  try {
+    message = `[theme-script] :: ${message} :: ${window.location.href}`;
+    fetch(`${window.zecpeHostName}/api/utils/sentry`, {
+      method: "POST",
+      body: JSON.stringify({ message, type: "error", sentry: true }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (err) {
+    console.error(`Zecpe sentry error :: ${err?.message}`);
+  }
+};
+window.zecpeCheckFunctionAndCall = function (func, ...args) {
+  try {
+    let button = args[0];
+    // * Checking if button is a valid HTML element
+    if (button instanceof HTMLElement) {
+      if (button && button.children) {
+        if (Array.from(button.children).length === 2) {
+          Array.from(button.children)[0].style.display = "grid";
+          Array.from(button.children)[1].style.display = "none";
+        }
+        button.disabled = true;
+        button.style.cursor = "not-allowed";
+        // * Re-enabling button after 6 seconds
+        setTimeout(() => {
+          if (Array.from(button.children).length === 2) {
+            Array.from(button.children)[0].style.display = "none";
+            Array.from(button.children)[1].style.display = "flex";
+          }
+          button.removeAttribute("disabled");
+          button.style.cursor = "pointer";
+        }, 6000);
+      }
+    }
+    if (typeof window[func] === "function") {
+      window[func](...args);
+    } else {
+      let isZecpeThemeScriptLoaded = false;
+      let script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "https://cdn.zecpe.com/payModal/themeScript.js";
+      script.id = "zecpe-theme-script";
+      document.getElementsByTagName("head")[0].appendChild(script);
+      // * Wait for 2 seconds, if script is not loaded redirect to /cart/checkout
+      setTimeout(() => {
+        if (!isZecpeThemeScriptLoaded) {
+          window.location.href = "/cart/checkout";
+        }
+      }, 2000);
+      script.onload = function () {
+        isZecpeThemeScriptLoaded = true;
+        // * Triggering the custom code handler to overrwite the default code
+        window.zecpeCustomCode();
+        window[func](...args);
+      };
+    }
+  } catch (err) {
+    window.triggerSentry(`zecpeCheckFunctionAndCall :: ${err?.message}`);
+  }
+};
+window.ZecpeCheckVariant = (element, formElement = null) => {
+  try {
+    let addToCartBtn = element.closest("button");
+    if (
+      addToCartBtn &&
+      addToCartBtn.textContent?.trim()?.toLowerCase() === "add to cart" &&
+      addToCartBtn.disabled
+    ) {
+      return;
+    }
+    let productForm = formElement || element.closest("form");
+
+    if (productForm) {
+      let formObject = new Object();
+      let formEntries = new FormData(productForm).entries();
+      if (formEntries) {
+        for (let entry of formEntries) formObject[entry[0]] = entry[1];
+      }
+      if (!formObject.id) {
+        console.log(`Zecpe :: Id not found in form object`);
+        return;
+      }
+      HandleBuyNowZecpe(element, productForm);
+      return;
+    }
+  } catch (err) {
+    window.triggerSentry(`ZecpeCheckVariant :: ${err?.message}`);
+  }
+};
+
+
+</script>
+
+<script type="text/javascript">
+try {
+  const buttonInnerHTML = `<div id="lds-ring"><div>&nbsp;</div><div>&nbsp;</div><div>&nbsp;</div><div>&nbsp;</div></div>
+              <span class="occ-btn-text" style="display : flex;align-items : center;justify-content : center;">
+                { ButtonText }
+              </span>`;
+
+  const checkoutButtonElementTypes = ["BUTTON", "A", "INPUT"];
+  const checkoutButtonAllowedText = ["checkout", "placeorder"];
+  const buyNowButtonAllowedText = ["buynow", "buyitnow"];
+
+  document.addEventListener(
+    "click",
+    (e) => {
+      try {
+        let clickTarget = e.target;
+        if (typeof clickTarget?.closest === "function") {
+          clickTarget = clickTarget.closest(".zecpe-btn");
+        }
+        if (
+          clickTarget?.classList?.contains("zecpe-btn") &&
+          clickTarget?.dataset?.function
+        ) {
+          let checkoutBtn = clickTarget;
+          let functionToBeInvoked = checkoutBtn.dataset.function;
+          // * Replacing the button innerHTML with buttonInnerHTML
+          checkoutBtn.innerHTML = buttonInnerHTML.replace(
+            "{ ButtonText }",
+            checkoutBtn.innerHTML.trim()
+          );
+          checkoutBtn.classList.add("zecpe-btn-clicked");
+
+          // * Stopping the event propagation
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          if (window.zecpeCheckFunctionAndCall) {
+            window.zecpeCheckFunctionAndCall(functionToBeInvoked, checkoutBtn);
+          } else {
+            window.location.href = "/cart/checkout";
+          }
+        }
+      } catch (err) {
+        window.triggerSentry(
+          `Error in click event listener :: ${err?.message}`
+        );
+      }
+    },
+    true
+  );
+
+  window.ZecpeCheckoutEventListenerHandler = (
+    checkoutBtn,
+    functionToBeInvoked
+  ) => {
+    try {
+      // * If element is Anchor tag, then checking if it has a valid href attribute, if yes return
+      if (
+        checkoutBtn.nodeName === "A" &&
+        checkoutBtn?.href?.length &&
+        !checkoutBtn?.href?.includes("checkout")
+      ) {
+        return;
+      }
+      // * Checking if button has zecpe-btn class
+      if (!checkoutBtn.classList.contains("zecpe-btn")) {
+        // * Checking if checkoutBtn is input tag
+        if (checkoutBtn.nodeName === "INPUT") {
+          // * Changing the checkoutBtn to a button tag
+          const newCheckoutBtn = document.createElement("button");
+          newCheckoutBtn.innerHTML = checkoutBtn.value;
+          // * Apply all styles to the new button
+          if (window.getComputedStyle) {
+            const styles = window.getComputedStyle(checkoutBtn);
+            for (let i = 0; i < styles.length; i++) {
+              const style = styles[i];
+              newCheckoutBtn.style[style] = styles.getPropertyValue(style);
+            }
+          }
+
+          // * Assigning the same attributes to the new button
+          for (let i = 0; i < checkoutBtn.attributes.length; i++) {
+            newCheckoutBtn.setAttribute(
+              checkoutBtn.attributes[i].name,
+              checkoutBtn.attributes[i].value
+            );
+          }
+          if (checkoutBtn?.parentNode) {
+            checkoutBtn.parentNode.insertBefore(newCheckoutBtn, checkoutBtn);
+            checkoutBtn.parentNode.removeChild(checkoutBtn);
+            checkoutBtn = newCheckoutBtn;
+          }
+        }
+        // * Adding zecpe-btn class to the button
+        checkoutBtn.classList.add("zecpe-btn");
+        let eventCaptured = false;
+        checkoutBtn.type = "button";
+        checkoutBtn.setAttribute("data-function", functionToBeInvoked);
+      }
+    } catch (err) {
+      window.triggerSentry(
+        `Error in ZecpeCheckoutEventListenerHandler :: ${err?.message}`
+      );
+    }
+  };
+  const automateThemeSetup = () => {
+    try {
+      if (window.zecpeAutomatedThemeSetupDone) return;
+      window.zecpeAutomatedThemeSetupDone = true;
+      // * Adding mutation observer to handle the case when the checkout button is added dynamically
+      // * select the node to observe for mutations (in this case, the body element)
+      const targetNode = document.querySelector("body");
+
+      // create a new instance of the MutationObserver
+      const observer = new MutationObserver(function (mutationsList) {
+        // loop through each mutation that has occurred
+        for (let mutation of mutationsList) {
+          // check if any nodes have been added
+          if (mutation.type === "childList" || mutation.type === "attributes") {
+            // * Function to add event listener to the node
+            const addEventListener = (node) => {
+              // check if the node is a button with textContent "Checkout"
+              if (
+                checkoutButtonElementTypes.includes(node.nodeName) &&
+                (checkoutButtonAllowedText.some((text) =>
+                  node.textContent
+                    ?.replace(/\s/g, "")
+                    ?.toLowerCase()
+                    ?.includes(text)
+                ) ||
+                  checkoutButtonAllowedText.some((text) =>
+                    node.value
+                      ?.replace(/\s/g, "")
+                      ?.toLowerCase()
+                      ?.includes(text)
+                  ))
+              ) {
+                // * perform any necessary action
+                ZecpeCheckoutEventListenerHandler(node, "handleOcc");
+              } else if (
+                checkoutButtonElementTypes.includes(node.nodeName) &&
+                (buyNowButtonAllowedText.some((text) =>
+                  node.textContent
+                    ?.replace(/\s/g, "")
+                    ?.toLowerCase()
+                    ?.includes(text)
+                ) ||
+                  buyNowButtonAllowedText.some((text) =>
+                    node.value
+                      ?.replace(/\s/g, "")
+                      ?.toLowerCase()
+                      ?.includes(text)
+                  ))
+              ) {
+                // * perform any necessary action
+                ZecpeCheckoutEventListenerHandler(node, "ZecpeCheckVariant");
+              }
+            };
+
+            // * Checking if the mutation is of type attributes and the attribute is class
+            if (
+              mutation.type === "attributes" &&
+              mutation.attributeName === "class"
+            ) {
+              let node = mutation.target;
+              // * Checking if the node is a button or anchor tag or input tag
+              if (
+                node.nodeName === "BUTTON" ||
+                node.nodeName === "A" ||
+                node.nodeName === "INPUT"
+              ) {
+                addEventListener(node);
+              }
+            }
+
+            // loop through each added node
+            for (let node of mutation.addedNodes) {
+              // * Getting all the buttons and anchor tags from node and checking if the node itself is a button or anchor tag
+              if (typeof node?.querySelectorAll !== "function") continue;
+              let nodes = node.querySelectorAll("button, a, input");
+              if (
+                node &&
+                (node.nodeName === "BUTTON" ||
+                  node.nodeName === "A" ||
+                  node.nodeName === "INPUT")
+              ) {
+                nodes = [node, ...nodes];
+              }
+
+              for (let node of nodes) {
+                addEventListener(node);
+              }
+            }
+          }
+        }
+      });
+
+      // * configure the observer to watch for childList mutations and subtree mutations
+      const observerConfig = {
+        childList: true,
+        subtree: true,
+        attributes: true,
+      };
+
+      // * start observing the target node for mutations
+      if (targetNode) {
+        observer.observe(targetNode, observerConfig);
+      }
+
+      // * Code to get all the buttons that have Checkout text on them
+      let checkoutButtons = Array.from(
+        document.querySelectorAll("button, a, input")
+      ).filter((button) => {
+        if (button.nodeName === "INPUT") {
+          const buttonText = button.value.replace(/\s/g, "").toLowerCase();
+          return checkoutButtonAllowedText.some((text) =>
+            buttonText?.includes(text)
+          );
+        } else {
+          const buttonText = button.textContent
+            .replace(/\s/g, "")
+            .toLowerCase();
+          return checkoutButtonAllowedText.some((text) =>
+            buttonText?.includes(text)
+          );
+        }
+      });
+
+      if (checkoutButtons.length) {
+        checkoutButtons.forEach((checkoutBtn) => {
+          ZecpeCheckoutEventListenerHandler(checkoutBtn, "handleOcc");
+        });
+      }
+      let buyNowButtons = Array.from(
+        document.querySelectorAll("button, a, input")
+      ).filter((button) => {
+        // Checking if button is input type
+        if (button.nodeName === "INPUT") {
+          const buttonText = button.value.replace(/\s/g, "").toLowerCase();
+          return buyNowButtonAllowedText.some((text) =>
+            buttonText?.includes(text)
+          );
+        } else {
+          const buttonText = button.textContent
+            .replace(/\s/g, "")
+            .toLowerCase();
+          return buyNowButtonAllowedText.some((text) =>
+            buttonText?.includes(text)
+          );
+        }
+      });
+      if (buyNowButtons.length) {
+        buyNowButtons.forEach((buyNowBtn) => {
+          ZecpeCheckoutEventListenerHandler(buyNowBtn, "ZecpeCheckVariant");
+        });
+      }
+    } catch (err) {
+      window.triggerSentry(`Error in automateThemeSetup :: ${err?.message}`);
+    }
+  };
+  window.addEventListener("DOMContentLoaded", automateThemeSetup);
+  // window.addEventListener("load", automateThemeSetup);
+} catch (err) {
+  window.triggerSentry(
+    `Error in doing automated theme setup :: ${err?.message}`
+  );
+}
+</script>
+
+<script async type="text/javascript">
+    let themeScriptLoaded = false;
+     // * Define a function to load the script with retries
+  function loadScriptWithRetries(url, retries) {
+    // * Checking if script is already loaded or retries are over
+    if(retries <=0 || themeScriptLoaded) return;
+    // * Creating a new script element
+    let script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url;
+    script.id = "zecpe-theme-script";
+    script.async = true;
+    script.onload = function() {
+      // * Script loaded successfully
+      themeScriptLoaded = true;
+      // * Triggering the custom code handler to overrwite the default code
+       window.zecpeCustomCode();
+    };
+
+    // * Append the script to the document head
+    document.head.appendChild(script);
+
+    // * Retrying after 2 seconds
+    setTimeout(function() {
+      loadScriptWithRetries(url, retries - 1);
+    }, 2000);
+  }
+  // * Call the loadScriptWithRetries function with the script URL and retries count
+  loadScriptWithRetries('https://cdn.zecpe.com/payModal/themeScript.js', 3);
+</script>
+
+<style>
+  #occ-payment-loader {
+    width: 40px;
+    height: 40px;
+    margin: auto !important;
+    color: #000 !important;
+    background: linear-gradient(currentColor 0 0), linear-gradient(currentColor 0 0), linear-gradient(currentColor 0 0), linear-gradient(currentColor 0 0);
+    background-size: 21px 21px;
+    background-repeat: no-repeat;
+    animation: sh5 1.5s infinite cubic-bezier(0.3, 1, 0, 1);
+  }
+  @keyframes sh5 {
+    0% {
+      background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+    }
+    33% {
+      background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+      width: 60px;
+      height: 60px;
+    }
+    66% {
+      background-position: 100% 0, 100% 100%, 0 100%, 0 0;
+      width: 60px;
+      height: 60px;
+    }
+    100% {
+      background-position: 100% 0, 100% 100%, 0 100%, 0 0;
+    }
+  }
+
+  #occ-payment-loader-container {
+    min-height: 60px;
+    height: 60px;
+    display: grid;
+    place-items: center;
+  }
+  .zecpe-btn-clicked::after, .zecpe-btn-clicked::before {
+    content : "" !important;
+  }
+  #zecpe-overlay {
+    display: grid;
+    position: fixed;
+    top: 0;
+    place-items: center;
+    left: 0;
+    z-index: 99999999999999;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+  }
+
+  #zecpe-btn-text {
+    line-height: 18px;
+    text-align: left;
+  }
+
+  #zecpe-btn-header {
+    font-weight: 600;
+  }
+  #zecpe-btn-desc {
+    font-weight: 600;
+    font-size: 11px;
+  }
+  #zecpe-arrow-icon {
+    display: inline
+  }
+
+  .zecpe-buy-now {
+    background: #000;
+    width: 100%;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 13px;
+    font-family: Montserrat, sans-serif;
+    color: #fff;
+    height: 46px;
+    max-height: 46px;
+    position: relative;
+  }
+  #lds-ring {
+    display: none;
+    position : relative;
+    width: 100%;
+    height: 30px;
+    place-items: center;
+    text-align: center;
+    max-height: 100%;
+  }
+  #lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    width: 24px;
+    position : absolute;
+    height: 24px;
+    margin: 3px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+  }
+  #lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  #lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  #lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .zecpe-buy-now {
+      font-size: 11px;
+    }
+    #zecpe-btn-header {
+      font-size: 14px
+    }
+    #zecpe-arrow-icon {
+      display: none
+    }
+    #zecpe-btn-text {
+      font-size: 14px;
+    }
+    #zecpe-btn-desc {
+      font-size: 7px;
+    }
+  }
+</style>
+
+  <script>
+  // THIS MUST RUN IMMEDIATELY - PLACE IN THE <head> SECTION
+  (function() {
+    // Check if URL has our filter parameter with + encoding
+    if (window.location.href.includes('filter.v.option.dispatch+time=')) {
+      console.log('Fixing filter encoding immediately');
+      
+      // Fix the URL with %20 encoding
+      const fixedUrl = window.location.href.replace(
+        /filter\.v\.option\.dispatch\+time=/g, 
+        'filter.v.option.dispatch%20time='
+      );
+      
+      // Only redirect if the URL actually changed
+      if (fixedUrl !== window.location.href) {
+        window.location.replace(fixedUrl);
+      }
+    }
+  })();
+</script>
+<script> window.Shopflo = { ...(window.Shopflo ?? {}), autoOnboarding: true} </script>
+
+<script src='https://d24sh1msnqkirc.cloudfront.net/shopflo.bundle.js' async></script>
+
+
+  <!-- Gokwik theme code start -->
+
+
+
+<!-- Gokwik theme code End -->
+
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16563853107"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-16563853107');
+</script>
+
+
+
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#111111">
+  <link rel="canonical" href="/preethiwear/pages/exchange-policy">
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+  <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">
+  <link rel="dns-prefetch" href="https://ajax.googleapis.com">
+  <link rel="dns-prefetch" href="https://maps.googleapis.com">
+  <link rel="dns-prefetch" href="https://maps.gstatic.com"><link rel="shortcut icon" href="/preethiwear/cdn/shop/files/WhatsApp_Image_2023-08-10_at_7.01.28_PM_e77ff565-fe31-4bd7-90d6-b7c8c6fc5820-removebg-preview_32x32.png?v=1713068632" type="image/png" /><title>Exchange Policy
+&ndash; The Maternity Store by Preethiwear
+</title>
+<meta name="description" content="  Exchange Policy We aim to provide a hassle-free exchange experience to ensure customer satisfaction. Please review the guidelines below for our exchange process: Customer Support Office Hours:Monday to Saturday10:00 AM to 1:00 PM and 2:00 PM to 6:00 PM Customer Care Contacts: Calls: 7418325657 WhatsApp: 9056656698 Em"><meta property="og:site_name" content="The Maternity Store by Preethiwear">
+  <meta property="og:url" content="/preethiwear/pages/exchange-policy">
+  <meta property="og:title" content="Exchange Policy">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="  Exchange Policy We aim to provide a hassle-free exchange experience to ensure customer satisfaction. Please review the guidelines below for our exchange process: Customer Support Office Hours:Monday to Saturday10:00 AM to 1:00 PM and 2:00 PM to 6:00 PM Customer Care Contacts: Calls: 7418325657 WhatsApp: 9056656698 Em"><meta name="twitter:site" content="@">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Exchange Policy">
+  <meta name="twitter:description" content="  Exchange Policy We aim to provide a hassle-free exchange experience to ensure customer satisfaction. Please review the guidelines below for our exchange process: Customer Support Office Hours:Monday to Saturday10:00 AM to 1:00 PM and 2:00 PM to 6:00 PM Customer Care Contacts: Calls: 7418325657 WhatsApp: 9056656698 Em">
+<style data-shopify>@font-face {
+  font-family: Poppins;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("/preethiwear/cdn/fonts/poppins/poppins_n4.0ba78fa5af9b0e1a374041b3ceaadf0a43b41362.woff2") format("woff2"),
+       url("/preethiwear/cdn/fonts/poppins/poppins_n4.214741a72ff2596839fc9760ee7a770386cf16ca.woff") format("woff");
+}
+
+  @font-face {
+  font-family: Poppins;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("/preethiwear/cdn/fonts/poppins/poppins_n4.0ba78fa5af9b0e1a374041b3ceaadf0a43b41362.woff2") format("woff2"),
+       url("/preethiwear/cdn/fonts/poppins/poppins_n4.214741a72ff2596839fc9760ee7a770386cf16ca.woff") format("woff");
+}
+
+
+  @font-face {
+  font-family: Poppins;
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("/preethiwear/cdn/fonts/poppins/poppins_n6.aa29d4918bc243723d56b59572e18228ed0786f6.woff2") format("woff2"),
+       url("/preethiwear/cdn/fonts/poppins/poppins_n6.5f815d845fe073750885d5b7e619ee00e8111208.woff") format("woff");
+}
+
+  @font-face {
+  font-family: Poppins;
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url("/preethiwear/cdn/fonts/poppins/poppins_i4.846ad1e22474f856bd6b81ba4585a60799a9f5d2.woff2") format("woff2"),
+       url("/preethiwear/cdn/fonts/poppins/poppins_i4.56b43284e8b52fc64c1fd271f289a39e8477e9ec.woff") format("woff");
+}
+
+  @font-face {
+  font-family: Poppins;
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+  src: url("/preethiwear/cdn/fonts/poppins/poppins_i6.bb8044d6203f492888d626dafda3c2999253e8e9.woff2") format("woff2"),
+       url("/preethiwear/cdn/fonts/poppins/poppins_i6.e233dec1a61b1e7dead9f920159eda42280a02c3.woff") format("woff");
+}
+
+</style><link href="/preethiwear/cdn/shop/t/40/assets/theme.css?v=155419598046687120351779340051" rel="stylesheet" type="text/css" media="all" />
+  <link href="/preethiwear/cdn/shop/t/40/assets/style.css?v=14934473965352920241773407687" rel="stylesheet" type="text/css" media="all" />
+<style data-shopify>:root {
+    --typeHeaderPrimary: Poppins;
+    --typeHeaderFallback: sans-serif;
+    --typeHeaderSize: 24px;
+    --typeHeaderWeight: 400;
+    --typeHeaderLineHeight: 1.1;
+    --typeHeaderSpacing: 0.0em;
+
+    --typeBasePrimary:Poppins;
+    --typeBaseFallback:sans-serif;
+    --typeBaseSize: 15px;
+    --typeBaseWeight: 400;
+    --typeBaseSpacing: 0.025em;
+    --typeBaseLineHeight: 1.2;
+    --typeBaselineHeightMinus01: 1.1;
+
+    --typeCollectionTitle: 19px;
+
+    --iconWeight: 3px;
+    --iconLinecaps: miter;
+
+    
+        --buttonRadius: 3px;
+    
+
+    --colorGridOverlayOpacity: 0.1;
+    --colorAnnouncement: #a37121;
+    --colorAnnouncementText: #ffffff;
+
+    --colorBody: #ffffff;
+    --colorBodyAlpha05: rgba(255, 255, 255, 0.05);
+    --colorBodyDim: #f2f2f2;
+    --colorBodyLightDim: #fafafa;
+    --colorBodyMediumDim: #f5f5f5;
+
+
+    --colorBorder: #e8e8e1;
+
+    --colorBtnPrimary: #111111;
+    --colorBtnPrimaryLight: #2b2b2b;
+    --colorBtnPrimaryDim: #040404;
+    --colorBtnPrimaryText: #ffffff;
+
+    --colorCartDot: #a37121;
+
+    --colorDrawers: #ffffff;
+    --colorDrawersDim: #f2f2f2;
+    --colorDrawerBorder: #e8e8e1;
+    --colorDrawerText: #000000;
+    --colorDrawerTextDark: #000000;
+    --colorDrawerButton: #111111;
+    --colorDrawerButtonText: #ffffff;
+
+    --colorFooter: #a37121;
+    --colorFooterText: #ffffff;
+    --colorFooterTextAlpha01: #ffffff;
+
+    --colorGridOverlay: #000000;
+    --colorGridOverlayOpacity: 0.1;
+
+    --colorHeaderTextAlpha01: rgba(0, 0, 0, 0.1);
+
+    --colorHeroText: #ffffff;
+
+    --colorSmallImageBg: #ffffff;
+    --colorLargeImageBg: #0f0f0f;
+
+    --colorImageOverlay: #000000;
+    --colorImageOverlayOpacity: 0.1;
+    --colorImageOverlayTextShadow: 0.2;
+
+    --colorLink: #000000;
+
+    --colorModalBg: rgba(230, 230, 230, 0.6);
+
+    --colorNav: #ffffff;
+    --colorNavText: #000000;
+
+    --colorPrice: #1c1d1d;
+
+    --colorSaleTag: #1c1d1d;
+    --colorSaleTagText: #ffffff;
+
+    --colorTextBody: #000000;
+    --colorTextBodyAlpha015: rgba(0, 0, 0, 0.15);
+    --colorTextBodyAlpha005: rgba(0, 0, 0, 0.05);
+    --colorTextBodyAlpha008: rgba(0, 0, 0, 0.08);
+    --colorTextSavings: #a37121;
+
+    --urlIcoSelect: url(/preethiwear/cdn/shop/t/40/assets/ico-select.svg);
+    --urlIcoSelectFooter: url(/preethiwear/cdn/shop/t/40/assets/ico-select-footer.svg);
+    --urlIcoSelectWhite: url(/preethiwear/cdn/shop/t/40/assets/ico-select-white.svg);
+
+    --grid-gutter: 17px;
+    --drawer-gutter: 20px;
+
+    --sizeChartMargin: 25px 0;
+    --sizeChartIconMargin: 5px;
+
+    --newsletterReminderPadding: 40px;
+
+    /*Shop Pay Installments*/
+    --color-body-text: #000000;
+    --color-body: #ffffff;
+    --color-bg: #ffffff;
+    }
+
+    .placeholder-content {
+    background-image: linear-gradient(100deg, #ffffff 40%, #f7f7f7 63%, #ffffff 79%);
+    }
+    
+        .grid-product__price--original, .product__price--compare{
+            display:none !important;
+        }
+    
+</style><script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+    window.theme = window.theme || {};
+    theme.routes = {
+      home: "/",
+      cart: "/cart.js",
+      cartPage: "/cart",
+      cartAdd: "/cart/add.js",
+      cartChange: "/cart/change.js",
+      search: "/search",
+      predictiveSearch: "/search/suggest"
+    };
+    theme.strings = {
+      soldOut: "Sold Out",
+      unavailable: "Unavailable",
+      inStockLabel: "In stock",
+      oneStockLabel: "Low stock - [count] item left",
+      otherStockLabel: "Low stock - [count] items left",
+      willNotShipUntil: "Ready to ship [date]",
+      willBeInStockAfter: "Back in stock [date]",
+      waitingForStock: "Backordered, shipping soon",
+      savePrice: "Save [saved_amount]",
+      cartEmpty: "Your cart is currently empty.",
+      cartTermsConfirmation: "You must agree with the terms and conditions of sales to check out",
+      searchCollections: "Collections",
+      searchPages: "Pages",
+      searchArticles: "Articles",
+      productFrom: "from ",
+      maxQuantity: "You can only have [quantity] of [title] in your cart."
+    };
+    theme.settings = {
+      cartType: "drawer",
+      isCustomerTemplate: false,
+      moneyFormat: "Rs. {{amount_no_decimals}}",
+      saveType: "dollar",
+      productImageSize: "portrait",
+      productImageCover: true,
+      predictiveSearch: true,
+      predictiveSearchType: null,
+      predictiveSearchVendor: false,
+      predictiveSearchPrice: false,
+      quickView: true,
+      themeName: 'Impulse',
+      themeVersion: "8.0.0"
+    };
+  </script>
+
+  <script>window.performance && window.performance.mark && window.performance.mark('shopify.content_for_header.start');</script><meta name="google-site-verification" content="i2zxabiFUYkazTouq6NUxHK0YHftWU91SzYxSi8XNMo">
+<meta id="shopify-digital-wallet" name="shopify-digital-wallet" content="/80773349662/digital_wallets/dialog">
+<script async="async" src="/checkouts/internal/preloads.js?locale=en-IN&default_configuration_id=498663710"></script>
+<script id="shopify-features" type="application/json">{"accessToken":"ea92b00651b504653ba9283f48d54eeb","betas":["rich-media-storefront-analytics"],"domain":"preethiwear.in","predictiveSearch":true,"shopId":80773349662,"locale":"en"}</script>
+<script>var Shopify = Shopify || {};
+Shopify.shop = "eeb865.myshopify.com";
+Shopify.locale = "en";
+Shopify.currency = {"active":"INR","rate":"1.0"};
+Shopify.country = "IN";
+Shopify.theme = {"name":"Copy of Women's Day Theme Cashfree \u003c\u003e Ecom360 2...","id":186739589406,"schema_name":"Impulse","schema_version":"8.0.0","theme_store_id":857,"role":"main"};
+Shopify.theme.handle = "null";
+Shopify.theme.style = {"id":null,"handle":null};
+Shopify.cdnHost = "preethiwear.in/cdn";
+Shopify.routes = Shopify.routes || {};
+Shopify.routes.root = "/";
+Shopify.shopJsCdnBaseUrl = "/preethiwear/cdn/shopifycloud/shop-js";
+Shopify.SignInWithShop = Shopify.SignInWithShop || {};
+Shopify.SignInWithShop.User = Shopify.SignInWithShop.User || {};
+Shopify.SignInWithShop.User.recognized = false;</script>
+<script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script>
+<script>!function(o){function n(){var o=[];function n(){o.push(Array.prototype.slice.apply(arguments))}return n.q=o,n}var t=o.Shopify=o.Shopify||{};t.loadFeatures=n(),t.autoloadFeatures=n()}(window);</script>
+<script>
+  window.Shopify = window.Shopify || {};
+  window.Shopify.SignInWithShop = window.Shopify.SignInWithShop || {};
+  window.Shopify.SignInWithShop.assetMetrics = { sampleRate: 0.01 };
+  window.Shopify.SignInWithShop.eligible = true;
+</script>
+<script id="shop-js-analytics" type="application/json">{"pageType":"page"}</script>
+<script defer="defer" async type="module" src="/preethiwear/cdn/shopifycloud/shop-js/modules/v2/loader.init-shop-cart-sync.en.esm.js"></script>
+<script type="module">
+  await import("/preethiwear/cdn/shopifycloud/shop-js/modules/v2/loader.init-shop-cart-sync.en.esm.js");
+
+  window.Shopify.SignInWithShop?.initShopCartSync?.({"fedCMEnabled":true,"windoidEnabled":true,"transferSessionEnabled":true});
+
+</script>
+<script>
+  window.Shopify = window.Shopify || {};
+  if (!window.Shopify.featureAssets) window.Shopify.featureAssets = {};
+  window.Shopify.featureAssets['shop-js'] = {"shop-cash-offers":["modules/v2/loader.shop-cash-offers.en.esm.js"],"shop-button":["modules/v2/loader.shop-button.en.esm.js"],"shop-toast-manager":["modules/v2/loader.shop-toast-manager.en.esm.js"],"listener":["modules/v2/loader.listener.en.esm.js"],"init-shop-user-recognition":["modules/v2/loader.init-shop-user-recognition.en.esm.js"],"shop-login-button":["modules/v2/loader.shop-login-button.en.esm.js"],"checkout-modal":["modules/v2/loader.checkout-modal.en.esm.js"],"init-shop-email-lookup-coordinator":["modules/v2/loader.init-shop-email-lookup-coordinator.en.esm.js"],"avatar":["modules/v2/loader.avatar.en.esm.js"],"init-windoid":["modules/v2/loader.init-windoid.en.esm.js"],"init-fed-cm":["modules/v2/loader.init-fed-cm.en.esm.js"],"shop-user-recognition":["modules/v2/loader.shop-user-recognition.en.esm.js"],"init-shop-cart-sync":["modules/v2/loader.init-shop-cart-sync.en.esm.js"],"init-customer-accounts-sign-up":["modules/v2/loader.init-customer-accounts-sign-up.en.esm.js"],"shop-cart-sync":["modules/v2/loader.shop-cart-sync.en.esm.js"],"shop-login":["modules/v2/loader.shop-login.en.esm.js"],"pay-button":["modules/v2/loader.pay-button.en.esm.js"],"init-shop-for-new-customer-accounts":["modules/v2/loader.init-shop-for-new-customer-accounts.en.esm.js"],"init-customer-accounts":["modules/v2/loader.init-customer-accounts.en.esm.js"],"shop-follow-button":["modules/v2/loader.shop-follow-button.en.esm.js"],"lead-capture":["modules/v2/loader.lead-capture.en.esm.js"],"payment-terms":["modules/v2/loader.payment-terms.en.esm.js"]};
+</script>
+<script>(function() {
+  var isLoaded = false;
+  function asyncLoad() {
+    if (isLoaded) return;
+    isLoaded = true;
+    var urls = ["https:\/\/cdn.zecpe.com\/payModal\/events-embed.js?shop=eeb865.myshopify.com","https:\/\/cdn.zecpe.com\/payModal\/checkout.js?shop=eeb865.myshopify.com","https:\/\/s3.ap-south-1.amazonaws.com\/media.intelliticks.com\/company\/NJgMvGX4PZKTJWzzc_c\/shopify\/qr-tracking.js?shop=eeb865.myshopify.com","https:\/\/s3.ap-south-1.amazonaws.com\/media.intelliticks.com\/company\/NJgMvGX4PZKTJWzzc_c\/shopify\/qr-snippet.js?shop=eeb865.myshopify.com","https:\/\/svc.nitrocommerce.ai\/v1\/services\/shopify\/xshopify.js?_t=dc008dd9-e065-4051-8a4f-c1e8638b9ec2\u0026shop=eeb865.myshopify.com"];
+    for (var i = 0; i < urls.length; i++) {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = urls[i];
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+    }
+  };
+  if(window.attachEvent) {
+    window.attachEvent('onload', asyncLoad);
+  } else {
+    window.addEventListener('load', asyncLoad, false);
+  }
+})();</script>
+<script id="__st">var __st={"a":80773349662,"offset":19800,"reqid":"b4906bbc-3e49-45ab-8068-29bfec1b7690-1782142126","pageurl":"preethiwear.in\/pages\/exchange-policy","s":"pages-141896483102","u":"3a7397bd8fba","p":"page","rtyp":"page","rid":141896483102};</script>
+<script>window.ShopifyPaypalV4VisibilityTracking = true;</script>
+<script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='/preethiwear/cdn/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.2.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script>
+<script integrity="sha256-JjoPp5ZfB1sSAs5SQaol1x1GgvveM+BgmRzyDexInEQ=" data-source-attribution="shopify.loadfeatures" defer="defer" src="/preethiwear/cdn/shopifycloud/storefront/assets/storefront/load_feature-1bd60354.js" crossorigin="anonymous"></script>
+<script id="shopify-origin-trials" async="async" integrity="sha256-MrpR+SbfwphjsvuxKsSWA5xxY07P36eahsNLLXSgEwo=" src="/preethiwear/cdn/shopifycloud/storefront/assets/storefront/origin_trials-c173577b.js" crossorigin="anonymous" onload="window.__shopifyOriginTrialsDone = true" onerror="window.__shopifyOriginTrialsDone = true"></script>
+<script data-source-attribution="shopify.dynamic_checkout.dynamic.init">var Shopify=Shopify||{};Shopify.PaymentButton=Shopify.PaymentButton||{isStorefrontPortableWallets:!0,init:function(){window.Shopify.PaymentButton.init=function(){};var t=document.createElement("script");t.src="/preethiwear/cdn/shopifycloud/portable-wallets/latest/portable-wallets.en.js",t.type="module",document.head.appendChild(t)}};
+</script>
+<script data-source-attribution="shopify.dynamic_checkout.buyer_consent">
+  function portableWalletsHideBuyerConsent(e){var t=document.getElementById("shopify-buyer-consent"),n=document.getElementById("shopify-subscription-policy-button");t&&n&&(t.classList.add("hidden"),t.setAttribute("aria-hidden","true"),n.removeEventListener("click",e))}function portableWalletsShowBuyerConsent(e){var t=document.getElementById("shopify-buyer-consent"),n=document.getElementById("shopify-subscription-policy-button");t&&n&&(t.classList.remove("hidden"),t.removeAttribute("aria-hidden"),n.addEventListener("click",e))}window.Shopify?.PaymentButton&&(window.Shopify.PaymentButton.hideBuyerConsent=portableWalletsHideBuyerConsent,window.Shopify.PaymentButton.showBuyerConsent=portableWalletsShowBuyerConsent);
+</script>
+<script data-source-attribution="shopify.dynamic_checkout.cart.bootstrap">document.addEventListener("DOMContentLoaded",(function(){function t(){return document.querySelector("shopify-accelerated-checkout-cart, shopify-accelerated-checkout")}if(t())Shopify.PaymentButton.init();else{new MutationObserver((function(e,n){t()&&(Shopify.PaymentButton.init(),n.disconnect())})).observe(document.body,{childList:!0,subtree:!0})}}));
+</script>
+
+<script id="shopify-cfh-end">window.performance && window.performance.mark && window.performance.mark('shopify.content_for_header.end');</script>
+
+  <script src="/preethiwear/cdn/shop/t/40/assets/vendor-scripts-v11.js" defer="defer"></script><script src="/preethiwear/cdn/shop/t/40/assets/theme.js?v=47189680712710829421773407687" defer="defer"></script>
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "lxgoftc4j1");
+</script><!-- BEGIN app block: shopify://apps/instafeed/blocks/head-block/c447db20-095d-4a10-9725-b5977662c9d5 -->
+
+  
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var instafeedScript = document.createElement('script');
+        instafeedScript.async = true;
+        instafeedScript.src = "https:\/\/cdn.nfcube.com\/instafeed-0b084e4f650c4dce8c2bb0193551b3ff.js";
+        document.body.appendChild(instafeedScript);
+      });
+    </script>
+  
+
+
+
+
+
+<!-- END app block --><!-- BEGIN app block: shopify://apps/foxkit-upsell-bundles/blocks/foxkit-theme-helper/13f41957-6b79-47c1-99a2-e52431f06fff -->
+<style data-shopify>
+  
+  :root {
+  	--foxkit-border-radius-btn: 4px;
+  	--foxkit-height-btn: 45px;
+  	--foxkit-btn-primary-bg: #212121;
+  	--foxkit-btn-primary-text: #FFFFFF;
+  	--foxkit-btn-primary-hover-bg: #000000;
+  	--foxkit-btn-primary-hover-text: #FFFFFF;
+  	--foxkit-btn-secondary-bg: #FFFFFF;
+  	--foxkit-btn-secondary-text: #000000;
+  	--foxkit-btn-secondary-hover-bg: #000000;
+  	--foxkit-btn-secondary-hover-text: #FFFFFF;
+  	--foxkit-text-color: #666666;
+  	--foxkit-heading-text-color: #000000;
+  	--foxkit-prices-color: #000000;
+  	--foxkit-badge-color: #DA3F3F;
+  	--foxkit-border-color: #ebebeb;
+  }
+  
+  .foxkit-critical-hidden {
+  	display: none !important;
+  }
+</style>
+<script>
+   var ShopifyRootUrl = "\/";
+   var _useRootBaseUrl = null
+   window.FoxKitThemeHelperEnabled = true;
+   window.FoxKitPlugins = window.FoxKitPlugins || {}
+   window.FoxKitStrings = window.FoxKitStrings || {}
+   window.FoxKitAssets = window.FoxKitAssets || {}
+   window.FoxKitModules = window.FoxKitModules || {}
+   window.FoxKitSettings = {
+     discountPrefix: "FX",
+     showWaterMark: null,
+     multipleLanguages: false,
+     primaryLocale: true,
+     combineWithProductDiscounts: false,
+     enableAjaxAtc: true,
+     discountApplyBy: "shopify_functions",
+     foxKitBaseUrl: "foxkit.app",
+     shopDomain: "https:\/\/preethiwear.in",
+     baseUrl: _useRootBaseUrl ? "/" : ShopifyRootUrl.endsWith('/') ? ShopifyRootUrl : ShopifyRootUrl + '/',
+     currencyCode: "INR",
+     moneyFormat: !!window.MinimogTheme ? window.MinimogSettings.money_format : "Rs. {{amount_no_decimals}}",
+     moneyWithCurrencyFormat: "Rs. {{amount_no_decimals}}",
+     template: "page",
+     templateName: "page",
+     optimizePerformance: false,routes: {
+       root: "\/",
+       cart: "\/cart",
+       cart_add_url: '/cart/add',
+       cart_change_url: '/cart/change',
+       cart_update_url: '/cart/update'
+     },
+     dateNow: "2026\/06\/22 20:58:00+0530 (IST)",
+     isMinimogTheme: !!window.MinimogTheme,
+     designMode: false,
+     pageType: "page",
+     pageUrl: "\/pages\/exchange-policy",
+     selectors: null
+   };
+
+  FoxKitStrings = {"en":{"date_format":"MM\/dd\/yyyy","discount_summary":"You will get \u003cstrong\u003e{discount_value} OFF\u003c\/strong\u003e on each product","discount_title":"SPECIAL OFFER","free":"FREE","add_button":"Add","add_to_cart_button":"Add to cart","added_button":"Added","bundle_button":"Add selected item(s)","bundle_select":"Select","bundle_selected":"Selected","bundle_total":"Total price","bundle_saved":"Saved","bundle_this_item":"This item","bundle_warning":"Add at least 1 item to build your bundle","bundle_items_added":"The products in the bundle are added to the cart.","qty_discount_title":"{item_count} item(s) get {discount_value} OFF","qty_discount_note":"on each product","prepurchase_title":"Frequently bought with \"{product_title}\"","prepurchase_added":"You just added","incart_title":"Customers also bought with \"{product_title}\"","sizechart_button":"Size chart","field_name":"Enter your name","field_email":"Enter your email","field_birthday":"Date of birth","discount_noti":"* Discount will be calculated and applied at checkout","fox_discount_noti":"* You are entitled to 1 discount offer of \u003cspan\u003e{price}\u003c\/span\u003e (\u003cspan\u003e{discount_title}\u003c\/span\u003e). This offer \u003cb\u003ecan't be combined\u003c\/b\u003e with any other discount you add here!","bis_open":"Notify me when available","bis_heading":"Back in stock alert 📬","bis_desc":"We will send you a notification as soon as this product is available again.","bis_submit":"Notify me","bis_email":"Your email","bis_name":"Your name","bis_phone":"Your phone number","bis_note":"Your note","bis_signup":"Email me with news and offers","bis_thankyou":"Thank you! We'll send you an email when this product is available!","preorder_discount_title":"🎁 Preorder now to get \u003cstrong\u003e{discount_value} OFF\u003c\/strong\u003e","preorder_shipping_note":"🚚 Item will be delivered on or before \u003cstrong\u003e{eta}\u003c\/strong\u003e","preorder_button":"Pre-order","preorder_badge":"Pre-Order","preorder_end_note":"🔥 Preorder will end at \u003cstrong\u003e{end_time}\u003c\/strong\u003e","required_fields":"Please fill all the required fields(*) before Add to cart!","view_cart":"View cart","shipping_label":"Shipping","item_added_to_cart":"{product_title} is added to cart!","email_used":"Email has already been used!","missing_fields":"Please fill all the required fields(*)","invalid_email":"Email is not valid","copy_button":"Copy","copied_button":"Copied"}};
+
+  FoxKitAssets = {
+    sizechart: "https:\/\/cdn.shopify.com\/extensions\/019eb061-541d-7393-af2c-b227a05abdbe\/foxkit-upsell-bundles-465\/assets\/size-chart.js",
+    preorder: "https:\/\/cdn.shopify.com\/extensions\/019eb061-541d-7393-af2c-b227a05abdbe\/foxkit-upsell-bundles-465\/assets\/preorder.js",
+    preorderBadge: "https:\/\/cdn.shopify.com\/extensions\/019eb061-541d-7393-af2c-b227a05abdbe\/foxkit-upsell-bundles-465\/assets\/preorder-badge.js",
+    prePurchase: "https:\/\/cdn.shopify.com\/extensions\/019eb061-541d-7393-af2c-b227a05abdbe\/foxkit-upsell-bundles-465\/assets\/pre-purchase.js",
+    prePurchaseStyle: "https:\/\/cdn.shopify.com\/extensions\/019eb061-541d-7393-af2c-b227a05abdbe\/foxkit-upsell-bundles-465\/assets\/pre-purchase.css",
+    inCart: "https:\/\/cdn.shopify.com\/extensions\/019eb061-541d-7393-af2c-b227a05abdbe\/foxkit-upsell-bundles-465\/assets\/incart.js",
+    inCartStyle: "https:\/\/cdn.shopify.com\/extensions\/019eb061-541d-7393-af2c-b227a05abdbe\/foxkit-upsell-bundles-465\/assets\/incart.css",
+    productCountdown: "https:\/\/cdn.shopify.com\/extensions\/019eb061-541d-7393-af2c-b227a05abdbe\/foxkit-upsell-bundles-465\/assets\/product-countdown.css"
+  }
+  FoxKitPlugins.popUpLock = false
+  FoxKitPlugins.luckyWheelLock = false
+
+  
+  
+    FoxKitPlugins.Countdown = Object.values({}).filter(entry => entry.active).map(entry => ({...(entry || {}), locales: !FoxKitSettings.primaryLocale && entry?.locales?.[Shopify.locale]}))
+    FoxKitPlugins.PreOrder = Object.values({}).filter(entry => entry.active)
+    FoxKitPlugins.PrePurchase = Object.values({}).filter(entry => entry.active)
+    FoxKitPlugins.InCart = Object.values({}).filter(entry => entry.active)
+    FoxKitPlugins.QuantityDiscount = Object.values({}).filter(entry => entry.active).map(entry => ({...(entry || {}), locales: !FoxKitSettings.primaryLocale && entry?.locales?.[Shopify.locale]}))
+    FoxKitPlugins.Bundle = Object.values({}).filter(entry => entry.active).map(entry => ({...(entry || {}), locales: !FoxKitSettings.primaryLocale && entry?.locales?.[Shopify.locale]}));
+    FoxKitPlugins.Menus = Object.values({});
+    FoxKitPlugins.Menus = FoxKitPlugins.Menus?.map((item) => {
+      if (typeof item === 'string') return JSON.parse(item);
+      return item;
+    });
+    FoxKitPlugins.MenuData = Object.values({});
+    FoxKitPlugins.MenuData = FoxKitPlugins.MenuData?.map((item) => {
+      if (typeof item === 'string') return JSON.parse(item);
+      return item;
+    });
+
+    
+
+  
+
+  
+  FoxKitPlugins.StockCountdown = {"target_collections":[],"target_products":[],"deleted":false,"_id":"68d6ba2d1714f7b3261415e4","shop":"eeb865.myshopify.com","active":true,"applies_to":"all_products","countdown_type":"use_quantity","from":5,"message":"Only {{stock_number}} items left in stock!","to":10,"productHandles":[]};
+  if(FoxKitPlugins.StockCountdown) FoxKitPlugins.StockCountdown.locales = !FoxKitSettings.primaryLocale && FoxKitPlugins.StockCountdown?.locales?.[Shopify.locale];
+
+  
+
+  
+  
+</script>
+
+<link href="/preethiwear/cdn/extensions/019eb061-541d-7393-af2c-b227a05abdbe/foxkit-upsell-bundles-465/assets/main.css" rel="stylesheet" type="text/css" media="all" />
+<script src='/preethiwear/cdn/extensions/019eb061-541d-7393-af2c-b227a05abdbe/foxkit-upsell-bundles-465/assets/vendor.js' defer='defer' fetchpriority='high'></script>
+<script src='/preethiwear/cdn/extensions/019eb061-541d-7393-af2c-b227a05abdbe/foxkit-upsell-bundles-465/assets/main.js' defer='defer' fetchpriority='high'></script>
+<script src='/preethiwear/cdn/extensions/019eb061-541d-7393-af2c-b227a05abdbe/foxkit-upsell-bundles-465/assets/global.js' defer='defer' fetchpriority='low'></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- END app block --><!-- BEGIN app block: shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8 --><!-- Start of Judge.me Core -->
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="https://cdn.judge.me">
+<link rel="dns-prefetch" href="https://cdn1.judge.me">
+<link rel="dns-prefetch" href="https://api.judge.me">
+
+<script data-cfasync='false' class='jdgm-settings-script'>window.jdgmSettings={"pagination":5,"disable_web_reviews":false,"badge_no_review_text":"No reviews","badge_n_reviews_text":"{{ n }} review/reviews","hide_badge_preview_if_no_reviews":true,"badge_hide_text":false,"enforce_center_preview_badge":false,"widget_title":"Customer Reviews","widget_open_form_text":"Write a review","widget_close_form_text":"Cancel review","widget_refresh_page_text":"Refresh page","widget_summary_text":"Based on {{ number_of_reviews }} review/reviews","widget_no_review_text":"Be the first to write a review","widget_name_field_text":"Display name","widget_verified_name_field_text":"Verified Name (public)","widget_name_placeholder_text":"Display name","widget_required_field_error_text":"This field is required.","widget_email_field_text":"Email address","widget_verified_email_field_text":"Verified Email (private, can not be edited)","widget_email_placeholder_text":"Your email address","widget_email_field_error_text":"Please enter a valid email address.","widget_rating_field_text":"Rating","widget_review_title_field_text":"Review Title","widget_review_title_placeholder_text":"Give your review a title","widget_review_body_field_text":"Review content","widget_review_body_placeholder_text":"Start writing here...","widget_pictures_field_text":"Picture/Video (optional)","widget_submit_review_text":"Submit Review","widget_submit_verified_review_text":"Submit Verified Review","widget_submit_success_msg_with_auto_publish":"Thank you! Please refresh the page in a few moments to see your review. You can remove or edit your review by logging into \u003ca href='https://judge.me/login' target='_blank' rel='nofollow noopener'\u003eJudge.me\u003c/a\u003e","widget_submit_success_msg_no_auto_publish":"Thank you! Your review will be published as soon as it is approved by the shop admin. You can remove or edit your review by logging into \u003ca href='https://judge.me/login' target='_blank' rel='nofollow noopener'\u003eJudge.me\u003c/a\u003e","widget_show_default_reviews_out_of_total_text":"Showing {{ n_reviews_shown }} out of {{ n_reviews }} reviews.","widget_show_all_link_text":"Show all","widget_show_less_link_text":"Show less","widget_author_said_text":"{{ reviewer_name }} said:","widget_days_text":"{{ n }} days ago","widget_weeks_text":"{{ n }} week/weeks ago","widget_months_text":"{{ n }} month/months ago","widget_years_text":"{{ n }} year/years ago","widget_yesterday_text":"Yesterday","widget_today_text":"Today","widget_replied_text":"\u003e\u003e {{ shop_name }} replied:","widget_read_more_text":"Read more","widget_reviewer_name_as_initial":"","widget_rating_filter_color":"#fbcd0a","widget_rating_filter_see_all_text":"See all reviews","widget_sorting_most_recent_text":"Most Recent","widget_sorting_highest_rating_text":"Highest Rating","widget_sorting_lowest_rating_text":"Lowest Rating","widget_sorting_with_pictures_text":"Only Pictures","widget_sorting_most_helpful_text":"Most Helpful","widget_open_question_form_text":"Ask a question","widget_reviews_subtab_text":"Reviews","widget_questions_subtab_text":"Questions","widget_question_label_text":"Question","widget_answer_label_text":"Answer","widget_question_placeholder_text":"Write your question here","widget_submit_question_text":"Submit Question","widget_question_submit_success_text":"Thank you for your question! We will notify you once it gets answered.","verified_badge_text":"Verified","verified_badge_bg_color":"","verified_badge_text_color":"","verified_badge_placement":"left-of-reviewer-name","widget_review_max_height":"","widget_hide_border":false,"widget_social_share":true,"widget_thumb":false,"widget_review_location_show":true,"widget_location_format":"","all_reviews_include_out_of_store_products":true,"all_reviews_out_of_store_text":"(out of store)","all_reviews_pagination":100,"all_reviews_product_name_prefix_text":"about","enable_review_pictures":true,"enable_question_anwser":false,"widget_theme":"leex","review_date_format":"mm/dd/yyyy","default_sort_method":"most-recent","widget_product_reviews_subtab_text":"Product Reviews","widget_shop_reviews_subtab_text":"Shop Reviews","widget_other_products_reviews_text":"Reviews for other products","widget_store_reviews_subtab_text":"Store reviews","widget_product_variant_reference_text":"Review for","widget_no_store_reviews_text":"This store hasn't received any reviews yet","widget_web_restriction_product_reviews_text":"This product hasn't received any reviews yet","widget_no_items_text":"No items found","widget_show_more_text":"Show more","widget_write_a_store_review_text":"Write a Store Review","widget_product_and_store_reviews_text":"Product and store reviews","widget_reviews_in_collection_text":"Reviews in this collection","widget_other_languages_heading":"Reviews in Other Languages","widget_translate_review_text":"Translate review to {{ language }}","widget_translating_review_text":"Translating...","widget_show_original_translation_text":"Show original ({{ language }})","widget_translate_review_failed_text":"Review couldn't be translated.","widget_translate_review_retry_text":"Retry","widget_translate_review_try_again_later_text":"Try again later","show_product_url_for_grouped_product":false,"widget_sorting_pictures_first_text":"Pictures First","show_pictures_on_all_rev_page_mobile":false,"show_pictures_on_all_rev_page_desktop":false,"floating_tab_hide_mobile_install_preference":false,"floating_tab_button_name":"★ Reviews","floating_tab_title":"Let customers speak for us","floating_tab_button_color":"","floating_tab_button_background_color":"","floating_tab_url":"","floating_tab_url_enabled":false,"floating_tab_tab_style":"text","all_reviews_text_badge_text":"Customers rate us {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }}/5 based on {{ shop.metafields.judgeme.all_reviews_count }} reviews.","all_reviews_text_badge_text_branded_style":"{{ shop.metafields.judgeme.all_reviews_rating | round: 1 }} out of 5 stars based on {{ shop.metafields.judgeme.all_reviews_count }} reviews","is_all_reviews_text_badge_a_link":false,"show_stars_for_all_reviews_text_badge":false,"all_reviews_text_badge_url":"","all_reviews_text_style":"branded","all_reviews_text_color_style":"judgeme_brand_color","all_reviews_text_color":"#108474","all_reviews_text_show_jm_brand":false,"featured_carousel_show_header":false,"featured_carousel_title":"Let customers speak for us","testimonials_carousel_title":"Customers are saying","videos_carousel_title":"Real customer stories","cards_carousel_title":"Customers are saying","featured_carousel_count_text":"from {{ n }} reviews","featured_carousel_add_link_to_all_reviews_page":true,"featured_carousel_url":"","featured_carousel_show_images":true,"featured_carousel_autoslide_interval":3,"featured_carousel_arrows_on_the_sides":true,"featured_carousel_height":300,"featured_carousel_width":100,"featured_carousel_image_size":500,"featured_carousel_image_height":250,"featured_carousel_arrow_color":"#eeeeee","verified_count_badge_style":"branded","verified_count_badge_orientation":"horizontal","verified_count_badge_color_style":"judgeme_brand_color","verified_count_badge_color":"#108474","is_verified_count_badge_a_link":false,"verified_count_badge_url":"","verified_count_badge_show_jm_brand":true,"widget_rating_preset_default":5,"widget_first_sub_tab":"product-reviews","widget_show_histogram":true,"widget_histogram_use_custom_color":false,"widget_pagination_use_custom_color":false,"widget_star_use_custom_color":false,"widget_verified_badge_use_custom_color":false,"widget_write_review_use_custom_color":false,"picture_reminder_submit_button":"Upload Pictures","enable_review_videos":true,"mute_video_by_default":false,"widget_sorting_videos_first_text":"Videos First","widget_review_pending_text":"Pending","featured_carousel_items_for_large_screen":3,"social_share_options_order":"Facebook,Twitter,Pinterest,LinkedIn","remove_microdata_snippet":true,"disable_json_ld":false,"enable_json_ld_products":false,"preview_badge_show_question_text":false,"preview_badge_no_question_text":"No questions","preview_badge_n_question_text":"{{ number_of_questions }} question/questions","qa_badge_show_icon":false,"qa_badge_position":"same-row","remove_judgeme_branding":true,"widget_add_search_bar":false,"widget_search_bar_placeholder":"Search","widget_sorting_verified_only_text":"Verified only","featured_carousel_theme":"gallery","featured_carousel_show_rating":true,"featured_carousel_show_title":true,"featured_carousel_show_body":true,"featured_carousel_show_date":true,"featured_carousel_show_reviewer":true,"featured_carousel_show_product":true,"featured_carousel_header_background_color":"#108474","featured_carousel_header_text_color":"#ffffff","featured_carousel_name_product_separator":"reviewed","featured_carousel_full_star_background":"#A37121","featured_carousel_empty_star_background":"#dadada","featured_carousel_vertical_theme_background":"#f9fafb","featured_carousel_verified_badge_enable":true,"featured_carousel_verified_badge_color":"#108474","featured_carousel_border_style":"round","featured_carousel_review_line_length_limit":3,"featured_carousel_more_reviews_button_text":"Read more reviews","featured_carousel_view_product_button_text":"View product","all_reviews_page_load_reviews_on":"button_click","all_reviews_page_load_more_text":"Read More","disable_fb_tab_reviews":false,"enable_ajax_cdn_cache":false,"widget_advanced_speed_features":5,"widget_public_name_text":"displayed publicly like","default_reviewer_name":"Parkash Mishra","default_reviewer_name_has_non_latin":true,"widget_reviewer_anonymous":"Anonymous","medals_widget_title":"Judge.me Review Medals","medals_widget_background_color":"#f9fafb","medals_widget_position":"footer_all_pages","medals_widget_border_color":"#f9fafb","medals_widget_verified_text_position":"left","medals_widget_use_monochromatic_version":false,"medals_widget_elements_color":"#108474","show_reviewer_avatar":true,"widget_invalid_yt_video_url_error_text":"Not a YouTube video URL","widget_max_length_field_error_text":"Please enter no more than {0} characters.","widget_show_country_flag":true,"widget_show_collected_via_shop_app":true,"widget_verified_by_shop_badge_style":"light","widget_verified_by_shop_text":"Verified by Shop","widget_show_photo_gallery":true,"widget_load_with_code_splitting":true,"widget_ugc_install_preference":false,"widget_ugc_title":"Made by us, Shared by you","widget_ugc_subtitle":"Tag us to see your picture featured in our page","widget_ugc_arrows_color":"#ffffff","widget_ugc_primary_button_text":"Buy Now","widget_ugc_primary_button_background_color":"#108474","widget_ugc_primary_button_text_color":"#ffffff","widget_ugc_primary_button_border_width":"0","widget_ugc_primary_button_border_style":"none","widget_ugc_primary_button_border_color":"#108474","widget_ugc_primary_button_border_radius":"25","widget_ugc_secondary_button_text":"Load More","widget_ugc_secondary_button_background_color":"#ffffff","widget_ugc_secondary_button_text_color":"#108474","widget_ugc_secondary_button_border_width":"2","widget_ugc_secondary_button_border_style":"solid","widget_ugc_secondary_button_border_color":"#108474","widget_ugc_secondary_button_border_radius":"25","widget_ugc_reviews_button_text":"View Reviews","widget_ugc_reviews_button_background_color":"#ffffff","widget_ugc_reviews_button_text_color":"#108474","widget_ugc_reviews_button_border_width":"2","widget_ugc_reviews_button_border_style":"solid","widget_ugc_reviews_button_border_color":"#108474","widget_ugc_reviews_button_border_radius":"25","widget_ugc_reviews_button_link_to":"judgeme-reviews-page","widget_ugc_show_post_date":true,"widget_ugc_max_width":"800","widget_rating_metafield_value_type":true,"widget_primary_color":"#A37121","widget_enable_secondary_color":false,"widget_secondary_color":"#edf5f5","widget_summary_average_rating_text":"{{ average_rating }} out of 5","widget_media_grid_title":"Customer photos \u0026 videos","widget_media_grid_see_more_text":"See more","widget_round_style":true,"widget_show_product_medals":true,"widget_verified_by_judgeme_text":"Verified by Judge.me","widget_show_store_medals":true,"widget_verified_by_judgeme_text_in_store_medals":"Verified by Judge.me","widget_media_field_exceed_quantity_message":"Sorry, we can only accept {{ max_media }} for one review.","widget_media_field_exceed_limit_message":"{{ file_name }} is too large, please select a {{ media_type }} less than {{ size_limit }}MB.","widget_review_submitted_text":"Review Submitted!","widget_question_submitted_text":"Question Submitted!","widget_close_form_text_question":"Cancel","widget_write_your_answer_here_text":"Write your answer here","widget_enabled_branded_link":true,"widget_show_collected_by_judgeme":false,"widget_reviewer_name_color":"","widget_write_review_text_color":"","widget_write_review_bg_color":"","widget_collected_by_judgeme_text":"collected by Judge.me","widget_pagination_type":"standard","widget_load_more_text":"Load More","widget_load_more_color":"#108474","widget_full_review_text":"Full Review","widget_read_more_reviews_text":"Read More Reviews","widget_read_questions_text":"Read Questions","widget_questions_and_answers_text":"Questions \u0026 Answers","widget_verified_by_text":"Verified by","widget_verified_text":"Verified","widget_number_of_reviews_text":"{{ number_of_reviews }} reviews","widget_back_button_text":"Back","widget_next_button_text":"Next","widget_custom_forms_filter_button":"Filters","custom_forms_style":"horizontal","widget_show_review_information":false,"how_reviews_are_collected":"How reviews are collected?","widget_show_review_keywords":false,"widget_gdpr_statement":"How we use your data: We'll only contact you about the review you left, and only if necessary. By submitting your review, you agree to Judge.me's \u003ca href='https://judge.me/terms' target='_blank' rel='nofollow noopener'\u003eterms\u003c/a\u003e, \u003ca href='https://judge.me/privacy' target='_blank' rel='nofollow noopener'\u003eprivacy\u003c/a\u003e and \u003ca href='https://judge.me/content-policy' target='_blank' rel='nofollow noopener'\u003econtent\u003c/a\u003e policies.","widget_multilingual_sorting_enabled":false,"widget_translate_review_content_enabled":false,"widget_translate_review_content_method":"manual","popup_widget_review_selection":"automatically_with_pictures","popup_widget_round_border_style":true,"popup_widget_show_title":true,"popup_widget_show_body":true,"popup_widget_show_reviewer":false,"popup_widget_show_product":true,"popup_widget_show_pictures":true,"popup_widget_use_review_picture":true,"popup_widget_show_on_home_page":true,"popup_widget_show_on_product_page":true,"popup_widget_show_on_collection_page":true,"popup_widget_show_on_cart_page":true,"popup_widget_position":"bottom_left","popup_widget_first_review_delay":5,"popup_widget_duration":5,"popup_widget_interval":5,"popup_widget_review_count":5,"popup_widget_hide_on_mobile":true,"review_snippet_widget_round_border_style":true,"review_snippet_widget_card_color":"#FFFFFF","review_snippet_widget_slider_arrows_background_color":"#FFFFFF","review_snippet_widget_slider_arrows_color":"#000000","review_snippet_widget_star_color":"#108474","show_product_variant":false,"all_reviews_product_variant_label_text":"Variant: ","widget_show_verified_branding":false,"widget_ai_summary_title":"Customers say","widget_ai_summary_disclaimer":"AI-powered review summary based on recent customer reviews","widget_show_ai_summary":false,"widget_show_ai_summary_bg":false,"write_review_button_visibility":"everyone","store_summary_widget_heading":"Customers rate this store","store_summary_widget_button_text":"View customer reviews","store_summary_widget_button_theme_text":"See AI reviews summary","widget_show_review_title_input":true,"redirect_reviewers_invited_via_email":"external_form","request_store_review_after_product_review":true,"request_review_other_products_in_order":true,"review_form_color_scheme":"default","review_form_corner_style":"square","review_form_star_color":{},"review_form_text_color":"#333333","review_form_background_color":"#ffffff","review_form_field_background_color":"#fafafa","review_form_button_color":{},"review_form_button_text_color":"#ffffff","review_form_modal_overlay_color":"#000000","review_content_screen_title_text":"How would you rate this product?","review_content_introduction_text":"We would love it if you would share a bit about your experience.","store_review_form_title_text":"How would you rate this store?","store_review_form_introduction_text":"We would love it if you would share a bit about your experience.","show_review_guidance_text":true,"one_star_review_guidance_text":"Poor","five_star_review_guidance_text":"Great","customer_information_screen_title_text":"About you","customer_information_introduction_text":"Please tell us more about you.","custom_questions_screen_title_text":"Your experience in more detail","custom_questions_introduction_text":"Here are a few questions to help us understand more about your experience.","review_submitted_screen_title_text":"Thanks for your review!","review_submitted_screen_thank_you_text":"We are processing it and it will appear on the store soon.","review_submitted_screen_email_verification_text":"Please confirm your email by clicking the link we just sent you. This helps us keep reviews authentic.","confirm_email_screen_title_text":"Confirm your email","confirm_email_screen_message_text":"To help keep reviews authentic, we'll send you a secure link to continue writing your review. It only takes a moment.","check_email_screen_title_text":"Check your email","check_email_screen_message_text":"We sent you an email to {{ email }}. Click the button on the email to continue.","check_email_screen_resend_message_text":"Email resent!","check_email_resend_hint_text":"Didn't get the email? Check your spam folder or [resend the email].","verification_email_rate_limit_error_text":"You've reached the limit for review attempts on this product. Please check your inbox or try again later.","review_submitted_request_store_review_text":"Would you like to share your experience of shopping with us?","review_submitted_review_other_products_text":"Would you like to review these products?","store_review_screen_title_text":"Would you like to share your experience of shopping with us?","store_review_introduction_text":"We value your feedback and use it to improve. Please share any thoughts or suggestions you have.","reviewer_media_screen_title_picture_text":"Share a picture","reviewer_media_introduction_picture_text":"Upload a photo to support your review.","reviewer_media_screen_title_video_text":"Share a video","reviewer_media_introduction_video_text":"Upload a video to support your review.","reviewer_media_screen_title_picture_or_video_text":"Share a picture or video","reviewer_media_introduction_picture_or_video_text":"Upload a photo or video to support your review.","reviewer_media_youtube_url_text":"Paste your Youtube URL here","advanced_settings_next_step_button_text":"Next","advanced_settings_close_review_button_text":"Close","modal_write_review_flow":false,"write_review_flow_required_text":"Required","write_review_flow_privacy_message_text":"We respect your privacy.","write_review_flow_anonymous_text":"Post review as anonymous","write_review_flow_visibility_text":"This won't be visible to other customers.","write_review_flow_multiple_selection_help_text":"Select as many as you like","write_review_flow_single_selection_help_text":"Select one option","write_review_flow_required_field_error_text":"This field is required","write_review_flow_invalid_email_error_text":"Please enter a valid email address","write_review_flow_max_length_error_text":"Max. {{ max_length }} characters.","write_review_flow_media_upload_text":"\u003cb\u003eClick to upload\u003c/b\u003e or drag and drop","write_review_flow_gdpr_statement":"We'll only contact you about your review if necessary. By submitting your review, you agree to our \u003ca href='https://judge.me/terms' target='_blank' rel='nofollow noopener'\u003eterms and conditions\u003c/a\u003e and \u003ca href='https://judge.me/privacy' target='_blank' rel='nofollow noopener'\u003eprivacy policy\u003c/a\u003e.","rating_only_reviews_enabled":true,"show_negative_reviews_help_screen":false,"new_review_flow_help_screen_rating_threshold":3,"negative_review_resolution_screen_title_text":"Tell us more","negative_review_resolution_text":"Your experience matters to us. If there were issues with your purchase, we're here to help. Feel free to reach out to us, we'd love the opportunity to make things right.","negative_review_resolution_button_text":"Contact us","negative_review_resolution_proceed_with_review_text":"Leave a review","negative_review_resolution_subject":"Issue with purchase from {{ shop_name }}.{{ order_name }}","preview_badge_collection_page_install_status":false,"widget_review_custom_css":"","preview_badge_custom_css":"","preview_badge_stars_count":"5-stars","featured_carousel_custom_css":".jdgm-carousel__right-arrow{\nmargin-right:10px !important;\n}\n.jdgm-carousel__left-arrow{\nmargin-left:10px !important;\n}\n.jdgm-carousel__more-reviews-button {\n    display: none !important;\n}","floating_tab_custom_css":"","all_reviews_widget_custom_css":"","medals_widget_custom_css":"","verified_badge_custom_css":"","all_reviews_text_custom_css":"","transparency_badges_collected_via_store_invite":false,"transparency_badges_from_another_provider":false,"transparency_badges_collected_from_store_visitor":false,"transparency_badges_collected_by_verified_review_provider":false,"transparency_badges_earned_reward":false,"transparency_badges_collected_via_store_invite_text":"Review collected via store invitation","transparency_badges_from_another_provider_text":"Review collected from another provider","transparency_badges_collected_from_store_visitor_text":"Review collected from a store visitor","transparency_badges_written_in_google_text":"Review written in Google","transparency_badges_written_in_etsy_text":"Review written in Etsy","transparency_badges_written_in_shop_app_text":"Review written in Shop App","transparency_badges_earned_reward_text":"Review earned a reward for future purchase","product_review_widget_per_page":10,"widget_store_review_label_text":"Review about the store","checkout_comment_extension_title_on_product_page":"Customer Comments","checkout_comment_extension_num_latest_comment_show":5,"checkout_comment_extension_format":"name_and_timestamp","checkout_comment_customer_name":"last_initial","checkout_comment_comment_notification":true,"preview_badge_collection_page_install_preference":false,"preview_badge_home_page_install_preference":false,"preview_badge_product_page_install_preference":false,"review_widget_install_preference":"","review_carousel_install_preference":false,"floating_reviews_tab_install_preference":"none","verified_reviews_count_badge_install_preference":false,"all_reviews_text_install_preference":false,"review_widget_best_location":false,"judgeme_medals_install_preference":false,"review_widget_revamp_enabled":false,"review_widget_qna_enabled":false,"review_widget_header_theme":"minimal","review_widget_widget_title_enabled":true,"review_widget_header_text_size":"medium","review_widget_header_text_weight":"regular","review_widget_average_rating_style":"compact","review_widget_bar_chart_enabled":true,"review_widget_bar_chart_type":"numbers","review_widget_bar_chart_style":"standard","review_widget_expanded_media_gallery_enabled":false,"review_widget_show_review_highlights":false,"review_widget_show_review_keywords_in_gray":false,"review_widget_reviews_section_theme":"standard","review_widget_image_style":"thumbnails","review_widget_review_image_ratio":"square","review_widget_stars_size":"medium","review_widget_verified_badge":"standard_text","review_widget_review_title_text_size":"medium","review_widget_review_text_size":"medium","review_widget_review_text_length":"medium","review_widget_number_of_columns_desktop":3,"review_widget_carousel_transition_speed":5,"review_widget_custom_questions_answers_display":"always","review_widget_card_section_size":"small","review_widget_button_text_color":"#FFFFFF","review_widget_text_color":"#000000","review_widget_lighter_text_color":"#7B7B7B","review_widget_corner_styling":"soft","review_widget_review_word_singular":"review","review_widget_review_word_plural":"reviews","review_widget_voting_label":"Helpful?","review_widget_shop_reply_label":"Reply from {{ shop_name }}:","review_widget_filters_title":"Filters","review_widget_filter_rating_title":"Rating","review_widget_filter_keyword_title":"Keyword","review_widget_clear_filters_text":"Clear filters","review_widget_expand_more_text":"More","review_widget_review_highlights_title":"Review highlights","qna_widget_question_word_singular":"Question","qna_widget_question_word_plural":"Questions","qna_widget_answer_reply_label":"Answer from {{ answerer_name }}:","qna_content_screen_title_text":"Ask a question about this product","qna_widget_question_required_field_error_text":"Please enter your question.","qna_widget_flow_gdpr_statement":"We'll only contact you about your question if necessary. By submitting your question, you agree to our \u003ca href='https://judge.me/terms' target='_blank' rel='nofollow noopener'\u003eterms and conditions\u003c/a\u003e and \u003ca href='https://judge.me/privacy' target='_blank' rel='nofollow noopener'\u003eprivacy policy\u003c/a\u003e.","qna_widget_question_submitted_text":"Thanks for your question!","qna_widget_close_form_text_question":"Close","qna_widget_question_submit_success_text":"We’ll notify you by email when your question is answered.","all_reviews_widget_v2025_enabled":false,"all_reviews_widget_v2025_header_theme":"default","all_reviews_widget_v2025_widget_title_enabled":true,"all_reviews_widget_v2025_header_text_size":"medium","all_reviews_widget_v2025_header_text_weight":"regular","all_reviews_widget_v2025_average_rating_style":"compact","all_reviews_widget_v2025_bar_chart_enabled":true,"all_reviews_widget_v2025_bar_chart_type":"numbers","all_reviews_widget_v2025_bar_chart_style":"standard","all_reviews_widget_v2025_expanded_media_gallery_enabled":false,"all_reviews_widget_v2025_show_store_medals":true,"all_reviews_widget_v2025_show_photo_gallery":true,"all_reviews_widget_v2025_show_review_keywords":false,"all_reviews_widget_v2025_show_ai_summary":false,"all_reviews_widget_v2025_show_ai_summary_bg":false,"all_reviews_widget_v2025_show_review_highlights":false,"all_reviews_widget_v2025_show_review_keywords_in_gray":false,"all_reviews_widget_v2025_add_search_bar":false,"all_reviews_widget_v2025_default_sort_method":"most-recent","all_reviews_widget_v2025_reviews_per_page":10,"all_reviews_widget_v2025_reviews_section_theme":"default","all_reviews_widget_v2025_image_style":"thumbnails","all_reviews_widget_v2025_review_image_ratio":"square","all_reviews_widget_v2025_stars_size":"medium","all_reviews_widget_v2025_verified_badge":"standard_text","all_reviews_widget_v2025_review_title_text_size":"medium","all_reviews_widget_v2025_review_text_size":"medium","all_reviews_widget_v2025_review_text_length":"medium","all_reviews_widget_v2025_number_of_columns_desktop":3,"all_reviews_widget_v2025_carousel_transition_speed":5,"all_reviews_widget_v2025_custom_questions_answers_display":"always","all_reviews_widget_v2025_review_dates":false,"all_reviews_widget_v2025_card_section_size":"small","all_reviews_widget_v2025_show_product_variant":false,"all_reviews_widget_v2025_show_reviewer_avatar":true,"all_reviews_widget_v2025_reviewer_name_as_initial":"","all_reviews_widget_v2025_review_location_show":false,"all_reviews_widget_v2025_location_format":"","all_reviews_widget_v2025_show_country_flag":false,"all_reviews_widget_v2025_widget_thumb":false,"all_reviews_widget_v2025_verified_by_shop_badge_style":"light","all_reviews_widget_v2025_social_share":false,"all_reviews_widget_v2025_social_share_options_order":"Facebook,Twitter,LinkedIn,Pinterest","all_reviews_widget_v2025_pagination_type":"standard","all_reviews_widget_v2025_button_text_color":"#FFFFFF","all_reviews_widget_v2025_text_color":"#000000","all_reviews_widget_v2025_lighter_text_color":"#7B7B7B","all_reviews_widget_v2025_corner_styling":"soft","all_reviews_widget_v2025_title":"Customer reviews","all_reviews_widget_v2025_ai_summary_title":"Customers say about this store","all_reviews_widget_v2025_no_review_text":"Be the first to write a review","all_reviews_widget_v2025_review_highlights_title":"Review highlights","reviews_grid_widget_show_sample_reviews":false,"reviews_grid_widget_review_selection":"all","reviews_grid_widget_select_products":[],"reviews_grid_widget_show_media_only":false,"reviews_grid_widget_display_order":"media_first","reviews_grid_widget_columns_desktop":3,"reviews_grid_widget_rows_desktop":3,"reviews_grid_widget_columns_mobile":2,"reviews_grid_widget_rows_mobile":6,"reviews_grid_widget_show_stars":true,"reviews_grid_widget_show_reviewer_name":true,"reviews_grid_widget_show_review_title_on_hover_desktop":true,"reviews_grid_widget_corner_styling":"soft","reviews_grid_widget_card_spacing":"medium","reviews_grid_widget_header_text_color":"#000000","reviews_grid_widget_star_and_reviewer_name_color":"#F9F9F9","reviews_grid_widget_overlay_and_background_color":"#000000","reviews_grid_widget_content_color":"#F9F9F9","reviews_grid_widget_header_text":"From our customers","reviews_grid_widget_show_average_rating":true,"platform":"shopify","branding_url":"https://app.judge.me/reviews","branding_text":"Powered by Judge.me","locale":"en","reply_name":"The Maternity Store by Preethiwear","widget_version":"3.0","footer":true,"autopublish":true,"review_dates":true,"enable_custom_form":false,"shop_locale":"en","enable_multi_locales_translations":false,"show_review_title_input":true,"review_verification_email_status":"always","require_verification_before_submit":false,"customer_account_validation_enabled":true,"can_be_branded":false,"reply_name_text":"The Maternity Store by Preethiwear"};</script> <style class='jdgm-settings-style'>.jdgm-xx{left:0}:root{--jdgm-primary-color: #A37121;--jdgm-secondary-color: rgba(163,113,33,0.1);--jdgm-star-color: #A37121;--jdgm-write-review-text-color: white;--jdgm-write-review-bg-color: #A37121;--jdgm-paginate-color: #A37121;--jdgm-border-radius: 10;--jdgm-reviewer-name-color: #A37121}.jdgm-histogram__bar-content{background-color:#A37121}.jdgm-rev[data-verified-buyer=true] .jdgm-rev__icon.jdgm-rev__icon:after,.jdgm-rev__buyer-badge.jdgm-rev__buyer-badge{color:white;background-color:#A37121}.jdgm-review-widget--small .jdgm-gallery.jdgm-gallery .jdgm-gallery__thumbnail-link:nth-child(8) .jdgm-gallery__thumbnail-wrapper.jdgm-gallery__thumbnail-wrapper:before{content:"See more"}@media only screen and (min-width: 768px){.jdgm-gallery.jdgm-gallery .jdgm-gallery__thumbnail-link:nth-child(8) .jdgm-gallery__thumbnail-wrapper.jdgm-gallery__thumbnail-wrapper:before{content:"See more"}}.jdgm-prev-badge[data-average-rating='0.00']{display:none !important}.jdgm-author-all-initials{display:none !important}.jdgm-author-last-initial{display:none !important}.jdgm-rev-widg__title{visibility:hidden}.jdgm-rev-widg__summary-text{visibility:hidden}.jdgm-prev-badge__text{visibility:hidden}.jdgm-rev__prod-link-prefix:before{content:'about'}.jdgm-rev__variant-label:before{content:'Variant: '}.jdgm-rev__out-of-store-text:before{content:'(out of store)'}@media only screen and (min-width: 768px){.jdgm-rev__pics .jdgm-rev_all-rev-page-picture-separator,.jdgm-rev__pics .jdgm-rev__product-picture{display:none}}@media only screen and (max-width: 768px){.jdgm-rev__pics .jdgm-rev_all-rev-page-picture-separator,.jdgm-rev__pics .jdgm-rev__product-picture{display:none}}.jdgm-preview-badge[data-template="product"]{display:none !important}.jdgm-preview-badge[data-template="collection"]{display:none !important}.jdgm-preview-badge[data-template="index"]{display:none !important}.jdgm-review-widget[data-from-snippet="true"]{display:none !important}.jdgm-verified-count-badget[data-from-snippet="true"]{display:none !important}.jdgm-carousel-wrapper[data-from-snippet="true"]{display:none !important}.jdgm-all-reviews-text[data-from-snippet="true"]{display:none !important}.jdgm-medals-section[data-from-snippet="true"]{display:none !important}.jdgm-ugc-media-wrapper[data-from-snippet="true"]{display:none !important}.jdgm-rev__transparency-badge[data-badge-type="review_collected_via_store_invitation"]{display:none !important}.jdgm-rev__transparency-badge[data-badge-type="review_collected_from_another_provider"]{display:none !important}.jdgm-rev__transparency-badge[data-badge-type="review_collected_from_store_visitor"]{display:none !important}.jdgm-rev__transparency-badge[data-badge-type="review_written_in_etsy"]{display:none !important}.jdgm-rev__transparency-badge[data-badge-type="review_written_in_google_business"]{display:none !important}.jdgm-rev__transparency-badge[data-badge-type="review_written_in_shop_app"]{display:none !important}.jdgm-rev__transparency-badge[data-badge-type="review_earned_for_future_purchase"]{display:none !important}.jdgm-review-snippet-widget .jdgm-rev-snippet-widget__cards-container .jdgm-rev-snippet-card{border-radius:8px;background:#fff}.jdgm-review-snippet-widget .jdgm-rev-snippet-widget__cards-container .jdgm-rev-snippet-card__rev-rating .jdgm-star{color:#108474}.jdgm-review-snippet-widget .jdgm-rev-snippet-widget__prev-btn,.jdgm-review-snippet-widget .jdgm-rev-snippet-widget__next-btn{border-radius:50%;background:#fff}.jdgm-review-snippet-widget .jdgm-rev-snippet-widget__prev-btn>svg,.jdgm-review-snippet-widget .jdgm-rev-snippet-widget__next-btn>svg{fill:#000}.jdgm-full-rev-modal.rev-snippet-widget .jm-mfp-container .jm-mfp-content,.jdgm-full-rev-modal.rev-snippet-widget .jm-mfp-container .jdgm-full-rev__icon,.jdgm-full-rev-modal.rev-snippet-widget .jm-mfp-container .jdgm-full-rev__pic-img,.jdgm-full-rev-modal.rev-snippet-widget .jm-mfp-container .jdgm-full-rev__reply{border-radius:8px}.jdgm-full-rev-modal.rev-snippet-widget .jm-mfp-container .jdgm-full-rev[data-verified-buyer="true"] .jdgm-full-rev__icon::after{border-radius:8px}.jdgm-full-rev-modal.rev-snippet-widget .jm-mfp-container .jdgm-full-rev .jdgm-rev__buyer-badge{border-radius:calc( 8px / 2 )}.jdgm-full-rev-modal.rev-snippet-widget .jm-mfp-container .jdgm-full-rev .jdgm-full-rev__replier::before{content:'The Maternity Store by Preethiwear'}.jdgm-full-rev-modal.rev-snippet-widget .jm-mfp-container .jdgm-full-rev .jdgm-full-rev__product-button{border-radius:calc( 8px * 6 )}
+</style> <style class='jdgm-settings-style'></style>
+
+  
+  
+  
+  <style class='jdgm-miracle-styles'>
+  @-webkit-keyframes jdgm-spin{0%{-webkit-transform:rotate(0deg);-ms-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(359deg);-ms-transform:rotate(359deg);transform:rotate(359deg)}}@keyframes jdgm-spin{0%{-webkit-transform:rotate(0deg);-ms-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(359deg);-ms-transform:rotate(359deg);transform:rotate(359deg)}}@font-face{font-family:'JudgemeStar';src:url("data:application/x-font-woff;charset=utf-8;base64,d09GRgABAAAAAAScAA0AAAAABrAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAEgAAAABoAAAAcbyQ+3kdERUYAAARgAAAAHgAAACAAMwAGT1MvMgAAAZgAAABGAAAAVi+vS9xjbWFwAAAB8AAAAEAAAAFKwBMjvmdhc3AAAARYAAAACAAAAAj//wADZ2x5ZgAAAkAAAAEJAAABdH33LXtoZWFkAAABMAAAAC0AAAA2BroQKWhoZWEAAAFgAAAAHAAAACQD5QHQaG10eAAAAeAAAAAPAAAAFAYAAABsb2NhAAACMAAAAA4AAAAOAO4AeG1heHAAAAF8AAAAHAAAACAASgAvbmFtZQAAA0wAAADeAAABkorWfVZwb3N0AAAELAAAACkAAABEp3ubLXgBY2BkYADhPPP4OfH8Nl8ZuJkYQODS2fRrCPr/aSYGxq1ALgcDWBoAO60LkwAAAHgBY2BkYGDc+v80gx4TAwgASaAICmABAFB+Arl4AWNgZGBgYGPQYWBiAAIwyQgWc2AAAwAHVQB6eAFjYGRiYJzAwMrAwejDmMbAwOAOpb8ySDK0MDAwMbByMsCBAAMCBKS5pjA4PGB4wMR44P8BBj3GrQymQGFGkBwAjtgK/gAAeAFjYoAAEA1jAwAAZAAHAHgB3crBCcAwDEPRZydkih567CDdf4ZskmLwFBV8xBfCaC4BXkOUmx4sU0h2ngNb9V0vQCxaRKIAevT7fGWuBrEAAAAAAAAAAAA0AHgAugAAeAF9z79Kw1AUx/FzTm7un6QmJtwmQ5Bg1abgEGr/BAqlU6Gju+Cgg1MkQ/sA7Vj7BOnmO/gUvo2Lo14NqIO6/IazfD8HEODtmQCfoANwNsyp2/GJt3WKQrd1NLiYYWx2PBqOsmJMEOznPOTzfSCrhAtbbLdmeFLJV9eKd63WLrZcIcuaEVdssWCKM6pLCfTVOYbz/0pNSMSZKLIZpvh78sAUH6PlMrreTCabP9r+Z/puPZ2ur/RqpQHgh+MIegCnXeM4MRAPjYN//5tj4ZtTjkFqEdmeMShlEJ7tVAly2TAkx6R68Fl4E/aVvn8JqHFQ4JS1434gXKcuL31dDhzs3YbsEOAd/IU88gAAAHgBfY4xTgMxEEVfkk0AgRCioKFxQYd2ZRtpixxgRU2RfhU5q5VWseQ4JdfgAJyBlmNwAM7ABRhZQ0ORwp7nr+eZAa54YwYg9zm3ynPOeFRe8MCrciXOh/KSS76UV5L/iDmrLiS5AeU519wrL3jmSbkS5115yR2fyivJv9kx0ZMZ2RLZw27q87iNQi8EBo5FSPIMw3HqBboi5lKTGAGDp8FKXWP+t9TU01Lj5His1Ba6uM9dTEMwvrFmbf5GC/q2drW3ruXUhhsCiQOjznFlCzYhHUZp4xp76vsvQh89CQAAeAFjYGJABowM6IANLMrEyMTIzMjCXpyRWJBqZshWXJJYBKOMAFHFBucAAAAAAAAB//8AAngBY2BkYGDgA2IJBhBgAvKZGViBJAuYxwAABJsAOgAAeAFjYGBgZACCk535hiD60tn0azAaAEqpB6wAAA==") format("woff");font-weight:normal;font-style:normal}.jdgm-star{font-family:'JudgemeStar';display:inline !important;text-decoration:none !important;padding:0 4px 0 0 !important;margin:0 !important;font-weight:bold;opacity:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.jdgm-star:hover{opacity:1}.jdgm-star:last-of-type{padding:0 !important}.jdgm-star.jdgm--on:before{content:"\e000"}.jdgm-star.jdgm--off:before{content:"\e001"}.jdgm-star.jdgm--half:before{content:"\e002"}.jdgm-widget *{margin:0;line-height:1.4;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;-webkit-overflow-scrolling:touch}.jdgm-hidden{display:none !important;visibility:hidden !important}.jdgm-temp-hidden{display:none}.jdgm-spinner{width:40px;height:40px;margin:auto;border-radius:50%;border-top:2px solid #eee;border-right:2px solid #eee;border-bottom:2px solid #eee;border-left:2px solid #ccc;-webkit-animation:jdgm-spin 0.8s infinite linear;animation:jdgm-spin 0.8s infinite linear}.jdgm-spinner:empty{display:block}.jdgm-prev-badge{display:block !important}
+
+</style>
+
+
+  
+  
+   
+
+
+
+  
+    
+    
+    
+      <script id="judgeme_widget_leex_js" data-cfasync="false" type="text/javascript" async src="/preethiwear/cdn/extensions/019ee010-adc7-76bc-a9e6-daa1d1cc25ff/judgeme-580/assets/shopify_v2_leex.js"></script>
+    
+  
+    
+    
+    
+      <link id="judgeme_widget_leex_css" rel="stylesheet" type="text/css" media="nope!" onload="this.media='all'" href="/preethiwear/cdn/extensions/019ee010-adc7-76bc-a9e6-daa1d1cc25ff/judgeme-580/assets/widget_v3_theme_leex.css">
+    
+  
+
+
+<script data-cfasync='false' class='jdgm-script'>
+!function(e){window.jdgm=window.jdgm||{},jdgm.CDN_HOST="https://cdnwidget.judge.me/",jdgm.CDN_HOST_ALT="https://cdn2.judge.me/cdn/widget_frontend/",jdgm.API_HOST="https://api.judge.me/",jdgm.CDN_BASE_URL="/preethiwear/cdn/extensions/019ee010-adc7-76bc-a9e6-daa1d1cc25ff/judgeme-580/assets/",jdgm.CDN_API_HOST="https://cdn.judge.me/",
+jdgm.docReady=function(d){(e.attachEvent?"complete"===e.readyState:"loading"!==e.readyState)?
+setTimeout(d,0):e.addEventListener("DOMContentLoaded",d)},jdgm.loadCSS=function(d,t,o,a){
+!o&&jdgm.loadCSS.requestedUrls.indexOf(d)>=0||(jdgm.loadCSS.requestedUrls.push(d),
+(a=e.createElement("link")).rel="stylesheet",a.class="jdgm-stylesheet",a.media="nope!",
+a.href=d,a.onload=function(){this.media="all",t&&setTimeout(t)},e.body.appendChild(a))},
+jdgm.loadCSS.requestedUrls=[],jdgm.loadJS=function(e,d){var t=new XMLHttpRequest;
+t.onreadystatechange=function(){4===t.readyState&&(Function(t.response)(),d&&d(t.response))},
+t.open("GET",e),t.onerror=function(){if(e.indexOf(jdgm.CDN_HOST)===0&&jdgm.CDN_HOST_ALT!==jdgm.CDN_HOST){var f=e.replace(jdgm.CDN_HOST,jdgm.CDN_HOST_ALT);jdgm.loadJS(f,d)}},t.send()},jdgm.docReady((function(){(window.jdgmLoadCSS||e.querySelectorAll(
+".jdgm-widget, .jdgm-all-reviews-page").length>0)&&(jdgmSettings.widget_load_with_code_splitting?
+parseFloat(jdgmSettings.widget_version)>=3?jdgm.loadCSS(jdgm.CDN_BASE_URL+"widget_v3_base.css"):
+jdgm.loadCSS(jdgm.CDN_BASE_URL+"widget_base.css"):jdgm.loadCSS(jdgm.CDN_BASE_URL+"shopify_v2.css")
+)}))}(document);
+</script>
+<noscript><link rel="stylesheet" type="text/css" media="all" href="/preethiwear/cdn/extensions/019ee010-adc7-76bc-a9e6-daa1d1cc25ff/judgeme-580/assets/shopify_v2.css"></noscript>
+
+<!-- BEGIN app snippet: theme_fix_tags --><script>
+  (function() {
+    var jdgmThemeFixes = null;
+    if (!jdgmThemeFixes) return;
+    var thisThemeFix = jdgmThemeFixes[Shopify.theme.id];
+    if (!thisThemeFix) return;
+
+    if (thisThemeFix.html) {
+      document.addEventListener("DOMContentLoaded", function() {
+        var htmlDiv = document.createElement('div');
+        htmlDiv.classList.add('jdgm-theme-fix-html');
+        htmlDiv.innerHTML = thisThemeFix.html;
+        document.body.append(htmlDiv);
+      });
+    };
+
+    if (thisThemeFix.css) {
+      var styleTag = document.createElement('style');
+      styleTag.classList.add('jdgm-theme-fix-style');
+      styleTag.innerHTML = thisThemeFix.css;
+      document.head.append(styleTag);
+    };
+
+    if (thisThemeFix.js) {
+      var scriptTag = document.createElement('script');
+      scriptTag.classList.add('jdgm-theme-fix-script');
+      scriptTag.innerHTML = thisThemeFix.js;
+      document.head.append(scriptTag);
+    };
+  })();
+</script>
+<!-- END app snippet -->
+<!-- End of Judge.me Core -->
+
+
+
+<!-- END app block --><!-- BEGIN app block: shopify://apps/microsoft-clarity/blocks/clarity_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea -->
+<script type="text/javascript">
+  (function (c, l, a, r, i, t, y) {
+    c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+    t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i + "?ref=shopify";
+    y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+
+    c.Shopify.loadFeatures([{ name: "consent-tracking-api", version: "0.1" }], error => {
+      if (error) {
+        console.error("Error loading Shopify features:", error);
+        return;
+      }
+
+      c[a]('consentv2', {
+        ad_Storage: c.Shopify.customerPrivacy.marketingAllowed() ? "granted" : "denied",
+        analytics_Storage: c.Shopify.customerPrivacy.analyticsProcessingAllowed() ? "granted" : "denied",
+        source: 101,
+      });
+    });
+
+    l.addEventListener("visitorConsentCollected", function (e) {
+      c[a]('consentv2', {
+        ad_Storage: e.detail.marketingAllowed ? "granted" : "denied",
+        analytics_Storage: e.detail.analyticsAllowed ? "granted" : "denied",
+        source: 101,
+      });
+    });
+  })(window, document, "clarity", "script", "lxgoftc4j1");
+</script>
+
+
+
+<!-- END app block --><script src="/preethiwear/cdn/extensions/019ee010-adc7-76bc-a9e6-daa1d1cc25ff/judgeme-580/assets/loader.js" type="text/javascript" defer="defer"></script>
+<script src="/preethiwear/cdn/extensions/019e86ee-c368-7ef7-a952-7c8916465a9d/product-options-35-648/assets/app-embed.js" type="text/javascript" defer="defer"></script>
+<link href="/preethiwear/cdn/extensions/019e86ee-c368-7ef7-a952-7c8916465a9d/product-options-35-648/assets/common.css" rel="stylesheet" type="text/css" media="all">
+<link href="https://monorail-edge.shopifysvc.com" rel="dns-prefetch">
+<script>(function(){if ("sendBeacon" in navigator && "performance" in window) {try {var session_token_from_headers = performance.getEntriesByType('navigation')[0].serverTiming.find(x => x.name == '_s').description;} catch {var session_token_from_headers = undefined;}var session_cookie_matches = document.cookie.match(/_shopify_s=([^;]*)/);var session_token_from_cookie = session_cookie_matches && session_cookie_matches.length === 2 ? session_cookie_matches[1] : "";var session_token = session_token_from_headers || session_token_from_cookie || "";function handle_abandonment_event(e) {var entries = performance.getEntries().filter(function(entry) {return /monorail-edge.shopifysvc.com/.test(entry.name);});if (!window.abandonment_tracked && entries.length === 0) {window.abandonment_tracked = true;var currentMs = Date.now();var navigation_start = performance.timing.navigationStart;var payload = {shop_id: 80773349662,url: window.location.href,navigation_start,duration: currentMs - navigation_start,session_token,page_type: "page"};window.navigator.sendBeacon("https://monorail-edge.shopifysvc.com/v1/produce", JSON.stringify({schema_id: "online_store_buyer_site_abandonment/1.1",payload: payload,metadata: {event_created_at_ms: currentMs,event_sent_at_ms: currentMs}}));}}window.addEventListener('pagehide', handle_abandonment_event);}}());</script>
+<script>
+  window.__TREKKIE_SHIM_QUEUE = window.__TREKKIE_SHIM_QUEUE || [];
+</script>
+<script id="web-pixels-manager-setup">(function(){var wpmLoader=function(){"use strict";return function(e,d,r,n){var o=arguments.length>4&&void 0!==arguments[4]?arguments[4]:{};if(!Boolean(null==(i=null==(a=window.Shopify)?void 0:a.analytics)?void 0:i.replayQueue)){var a,i;window.Shopify=window.Shopify||{};var t=window.Shopify;t.analytics=t.analytics||{};var s=t.analytics;s.replayQueue=[],s.publish=function(e,d,r){return s.replayQueue.push([e,d,r]),!0};try{self.performance.mark("wpm:start")}catch(e){}var l,u,c,m,p,f,h,g,y,w,v,b,S,P=(u=(l={modern:/Edge?\/(1{2}[4-9]|1[2-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Firefox\/(1{2}[4-9]|1[2-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Chrom(ium|e)\/(9{2}|\d{3,})\.\d+(\.\d+|)|(Maci|X1{2}).+ Version\/(15\.\d+|(1[6-9]|[2-9]\d|\d{3,})\.\d+)([,.]\d+|)( \(\w+\)|)( Mobile\/\w+|) Safari\/|Chrome.+OPR\/(9{2}|\d{3,})\.\d+\.\d+|(CPU[ +]OS|iPhone[ +]OS|CPU[ +]iPhone|CPU IPhone OS|CPU iPad OS)[ +]+(15[._]\d+|(1[6-9]|[2-9]\d|\d{3,})[._]\d+)([._]\d+|)|Android:?[ /-](13[3-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})(\.\d+|)(\.\d+|)|Android.+Firefox\/(13[5-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+Chrom(ium|e)\/(13[3-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|SamsungBrowser\/([2-9]\d|\d{3,})\.\d+/,legacy:/Edge?\/(1[6-9]|[2-9]\d|\d{3,})\.\d+(\.\d+|)|Firefox\/(5[4-9]|[6-9]\d|\d{3,})\.\d+(\.\d+|)|Chrom(ium|e)\/(5[1-9]|[6-9]\d|\d{3,})\.\d+(\.\d+|)([\d.]+$|.*Safari\/(?![\d.]+ Edge\/[\d.]+$))|(Maci|X1{2}).+ Version\/(10\.\d+|(1[1-9]|[2-9]\d|\d{3,})\.\d+)([,.]\d+|)( \(\w+\)|)( Mobile\/\w+|) Safari\/|Chrome.+OPR\/(3[89]|[4-9]\d|\d{3,})\.\d+\.\d+|(CPU[ +]OS|iPhone[ +]OS|CPU[ +]iPhone|CPU IPhone OS|CPU iPad OS)[ +]+(10[._]\d+|(1[1-9]|[2-9]\d|\d{3,})[._]\d+)([._]\d+|)|Android:?[ /-](13[3-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})(\.\d+|)(\.\d+|)|Mobile Safari.+OPR\/([89]\d|\d{3,})\.\d+\.\d+|Android.+Firefox\/(13[5-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+Chrom(ium|e)\/(13[3-9]|1[4-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+(UC? ?Browser|UCWEB|U3)[ /]?(15\.([5-9]|\d{2,})|(1[6-9]|[2-9]\d|\d{3,})\.\d+)\.\d+|SamsungBrowser\/(5\.\d+|([6-9]|\d{2,})\.\d+)|Android.+MQ{2}Browser\/(14(\.(9|\d{2,})|)|(1[5-9]|[2-9]\d|\d{3,})(\.\d+|))(\.\d+|)|K[Aa][Ii]OS\/(3\.\d+|([4-9]|\d{2,})\.\d+)(\.\d+|)/}).modern,c=l.legacy,(m=navigator.userAgent).match(u)?"modern":m.match(c)?"legacy":"unknown"),C="modern"===P?"modern":"legacy",_=(null!=n?n:{modern:"",legacy:""})[C],O=[(p={baseUrl:d,hashVersion:r,buildTarget:C}).baseUrl,"/wpm","/b",p.hashVersion,"modern"===p.buildTarget?"m":"l",".js"].join(""),U=(f={version:r,bundleTarget:P,surface:e.surface,pageUrl:self.location.href,monorailEndpoint:e.monorailEndpoint},h=f.version,g=f.bundleTarget,y=f.surface,w=f.pageUrl,v=f.monorailEndpoint,{emit:function(e){var d=e.status,r=e.errorMsg,n=(new Date).getTime(),o=JSON.stringify({metadata:{event_sent_at_ms:n},events:[{schema_id:"web_pixels_manager_load/3.1",payload:{version:h,bundle_target:g,page_url:w,status:d,surface:y,error_msg:r},metadata:{event_created_at_ms:n}}]});if(!v)return console&&console.warn&&console.warn("[Web Pixels Manager] No Monorail endpoint provided, skipping logging."),!1;try{return self.navigator.sendBeacon.bind(self.navigator)(v,o)}catch(e){}var a=new XMLHttpRequest;try{return a.open("POST",v,!0),a.setRequestHeader("Content-Type","text/plain"),a.send(o),!0}catch(e){return console&&console.warn&&console.warn("[Web Pixels Manager] Got an unhandled error while logging to Monorail."),!1}}});try{o.browserTarget=P,function(e){var d=e.src,r=e.async,n=void 0===r||r,o=e.onload,a=e.onerror,i=e.sri,t=e.scriptDataAttributes,s=void 0===t?{}:t,l=document.createElement("script"),u=document.querySelector("head"),c=document.querySelector("body");if(l.async=n,l.src=d,i&&(l.integrity=i,l.crossOrigin="anonymous"),s)for(var m in s)if(Object.prototype.hasOwnProperty.call(s,m))try{l.dataset[m]=s[m]}catch(e){}if(o&&l.addEventListener("load",o),a&&l.addEventListener("error",a),u)u.appendChild(l);else{if(!c)throw new Error("Did not find a head or body element to append the script");c.appendChild(l)}}({src:O,async:!0,onload:function(){if(!function(){var e,d;return Boolean(null==(d=null==(e=window.Shopify)?void 0:e.analytics)?void 0:d.initialized)}()){var d=window.webPixelsManager.init(e)||void 0;if(d){var r=window.Shopify.analytics;r.replayQueue.forEach(function(e){var r=e[0],n=e[1],o=e[2];d.publishCustomEvent(r,n,o)}),r.replayQueue=[],r.publish=d.publishCustomEvent,r.visitor=d.visitor,r.initialized=!0}}},onerror:function(){return U.emit({status:"failed",errorMsg:"".concat(O," has failed to load")})},sri:(b=_,S=/^sha384-[A-Za-z0-9+/=]+$/,"string"==typeof b&&S.test(b)?_:""),scriptDataAttributes:o}),U.emit({status:"loading"})}catch(e){U.emit({status:"failed",errorMsg:(null==e?void 0:e.message)||"Unknown error"})}}}}();wpmLoader({shopId: 80773349662,storefrontBaseUrl: "https://preethiwear.in",extensionsBaseUrl: "https://extensions.shopifycdn.com/cdn/shopifycloud/web-pixels-manager",monorailEndpoint: "https://monorail-edge.shopifysvc.com/unstable/produce_batch",surface: "storefront-renderer",enabledBetaFlags: ["d5bdd5d0","2b8f910e"],webPixelsConfigList: [{"id":"3039953182","configuration":"{\"pixel_id\":\"265235106307885\",\"pixel_type\":\"facebook_pixel\"}","eventPayloadVersion":"v1","runtimeContext":"OPEN","scriptVersion":"abff2a8add143ccb04deb20f0ebd74a9","type":"APP","apiClientId":2329312,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"dataSharingAdjustments":{"protectedCustomerApprovalScopes":["read_customer_address","read_customer_email","read_customer_name","read_customer_personal_data","read_customer_phone"],"dataSharingControls":["share_all_events"]},"dataSharingState":"optimized","enabledFlags":["9a3ed68a"]},{"id":"2348712222","configuration":"{\"shopId\":\"eeb865.myshopify.com\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"b86194809e9bbe0b74334b13c8bf4709","type":"APP","apiClientId":2753413,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"dataSharingAdjustments":{"protectedCustomerApprovalScopes":["read_customer_address","read_customer_email","read_customer_name","read_customer_personal_data","read_customer_phone"],"dataSharingControls":["share_all_events"]},"dataSharingState":"optimized"},{"id":"2091745566","configuration":"{\"accountID\":\"82f25811-b8d7-463e-980a-687c6e4ebc88\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"d0369370d97f2cca6d5c273406637796","type":"APP","apiClientId":5433881,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"dataSharingAdjustments":{"protectedCustomerApprovalScopes":["read_customer_email","read_customer_name","read_customer_personal_data"],"dataSharingControls":["share_all_events"]},"dataSharingState":"optimized"},{"id":"1930428702","configuration":"{\"projectId\":\"lxgoftc4j1\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"4e27c3dfbb360ace43db5c8bd52813dd","type":"APP","apiClientId":240074326017,"privacyPurposes":[],"capabilities":["advanced_dom_events"],"dataSharingAdjustments":{"protectedCustomerApprovalScopes":["read_customer_personal_data"],"dataSharingControls":["share_all_events"]},"dataSharingState":"unrestricted"},{"id":"1481769246","configuration":"{\"webPixelName\":\"Judge.me\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"34ad157958823915625854214640f0bf","type":"APP","apiClientId":683015,"privacyPurposes":["ANALYTICS"],"dataSharingAdjustments":{"protectedCustomerApprovalScopes":["read_customer_email","read_customer_name","read_customer_personal_data","read_customer_phone"],"dataSharingControls":["share_all_events"]},"dataSharingState":"unrestricted"},{"id":"842105118","configuration":"{\"config\":\"{\\\"google_tag_ids\\\":[\\\"GT-5TJN3SZG\\\",\\\"GTM-WXNGDDWF\\\"],\\\"target_country\\\":\\\"IN\\\",\\\"gtag_events\\\":[{\\\"type\\\":\\\"search\\\",\\\"action_label\\\":[\\\"G-P0LHJC70JW\\\",\\\"AW-16563533362\\\/6aicCKbazMcbELLsjdo9\\\"]},{\\\"type\\\":\\\"begin_checkout\\\",\\\"action_label\\\":[\\\"G-P0LHJC70JW\\\",\\\"AW-16563533362\\\/5Z3iCJrazMcbELLsjdo9\\\"]},{\\\"type\\\":\\\"view_item\\\",\\\"action_label\\\":[\\\"G-P0LHJC70JW\\\",\\\"AW-16563533362\\\/Eu-bCKPazMcbELLsjdo9\\\",\\\"MC-51V40G52Y6\\\"]},{\\\"type\\\":\\\"purchase\\\",\\\"action_label\\\":[\\\"G-P0LHJC70JW\\\",\\\"AW-16563533362\\\/IWgiCJfazMcbELLsjdo9\\\",\\\"MC-51V40G52Y6\\\"]},{\\\"type\\\":\\\"page_view\\\",\\\"action_label\\\":[\\\"G-P0LHJC70JW\\\",\\\"AW-16563533362\\\/uOGTCKDazMcbELLsjdo9\\\",\\\"MC-51V40G52Y6\\\"]},{\\\"type\\\":\\\"add_payment_info\\\",\\\"action_label\\\":[\\\"G-P0LHJC70JW\\\",\\\"AW-16563533362\\\/KS3OCKnazMcbELLsjdo9\\\"]},{\\\"type\\\":\\\"add_to_cart\\\",\\\"action_label\\\":[\\\"G-P0LHJC70JW\\\",\\\"AW-16563533362\\\/LDd5CJ3azMcbELLsjdo9\\\"]}],\\\"enable_monitoring_mode\\\":false}\"}","eventPayloadVersion":"v1","runtimeContext":"OPEN","scriptVersion":"20a1a395175a780fd37f04940f5b4db5","type":"APP","apiClientId":1780363,"privacyPurposes":[],"dataSharingAdjustments":{"protectedCustomerApprovalScopes":["read_customer_address","read_customer_email","read_customer_name","read_customer_personal_data","read_customer_phone"],"dataSharingControls":["share_all_events"]},"dataSharingState":"optimized","enabledFlags":["9a3ed68a"]},{"id":"209289502","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"1","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"Ad Yogi Google Conversions"},{"id":"shopify-app-pixel","configuration":"{}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"0460","apiClientId":"shopify-pixel","type":"APP","privacyPurposes":["ANALYTICS","MARKETING"]},{"id":"shopify-custom-pixel","eventPayloadVersion":"v1","runtimeContext":"LAX","scriptVersion":"0460","apiClientId":"shopify-pixel","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING"]}],isMerchantRequest: false,initData: {"shop":{"name":"The Maternity Store by Preethiwear","paymentSettings":{"currencyCode":"INR"},"myshopifyDomain":"eeb865.myshopify.com","countryCode":"IN","storefrontUrl":"https:\/\/preethiwear.in"},"customer":null,"cart":null,"checkout":null,"productVariants":[],"products":[],"purchasingCompany":null,"page":{"pageType":"page","resourceId":141896483102}},},"/preethiwear/cdn","51e21febwa942380bp62323c67mbc21ae9e",{"modern":"","legacy":""},{"trekkieShim":true,"apiClientId":"580111","themeId":"186739589406","themeStoreId":"857","pageType":"page","resourceId":"141896483102","shopId":"80773349662","storefrontBaseUrl":"https:\/\/preethiwear.in","extensionBaseUrl":"https:\/\/extensions.shopifycdn.com\/cdn\/shopifycloud\/web-pixels-manager","surface":"storefront-renderer","enabledBetaFlags":"[\"d5bdd5d0\", \"2b8f910e\"]","isMerchantRequest":"false","hashVersion":"51e21febwa942380bp62323c67mbc21ae9e","publish":"custom","events":"[[\"page_viewed\",{}]]"});})();</script><script>
+  window.ShopifyAnalytics = window.ShopifyAnalytics || {};
+  window.ShopifyAnalytics.meta = window.ShopifyAnalytics.meta || {};
+  window.ShopifyAnalytics.meta.currency = 'INR';
+  var meta = {"page":{"pageType":"page","resourceType":"page","resourceId":141896483102,"requestId":"b4906bbc-3e49-45ab-8068-29bfec1b7690-1782142126"}};
+  for (var attr in meta) {
+    window.ShopifyAnalytics.meta[attr] = meta[attr];
+  }
+</script>
+<script class="analytics">
+  (function () {
+    var customDocumentWrite = function(content) {
+      var jquery = null;
+
+      if (window.jQuery) {
+        jquery = window.jQuery;
+      } else if (window.Checkout && window.Checkout.$) {
+        jquery = window.Checkout.$;
+      }
+
+      if (jquery) {
+        jquery('body').append(content);
+      }
+    };
+
+    var hasLoggedConversion = function(token) {
+      if (token) {
+        return document.cookie.indexOf('loggedConversion=' + token) !== -1;
+      }
+      return false;
+    }
+
+    var setCookieIfConversion = function(token) {
+      if (token) {
+        var twoMonthsFromNow = new Date(Date.now());
+        twoMonthsFromNow.setMonth(twoMonthsFromNow.getMonth() + 2);
+
+        document.cookie = 'loggedConversion=' + token + '; expires=' + twoMonthsFromNow;
+      }
+    }
+
+    var trekkie = window.ShopifyAnalytics.lib = window.trekkie = window.trekkie || [];
+    window.ShopifyAnalytics.lib.trekkie = window.trekkie;
+    if (trekkie.integrations) {
+      return;
+    }
+    trekkie.methods = [
+      'identify',
+      'page',
+      'ready',
+      'track',
+      'trackForm',
+      'trackLink'
+    ];
+    trekkie.factory = function(method) {
+      return function() {
+        var args = Array.prototype.slice.call(arguments);
+        args.unshift(method);
+        trekkie.push(args);
+        if (window.__TREKKIE_SHIM_QUEUE && (method == 'track' || method == 'page')) {
+          try {
+            window.__TREKKIE_SHIM_QUEUE.push({
+              from: 'trekkie-stub',
+              method: method,
+              args: args.slice(1)
+            });
+          } catch (e) {
+            // no-op
+          }
+        }
+        return trekkie;
+      };
+    };
+    for (var i = 0; i < trekkie.methods.length; i++) {
+      var key = trekkie.methods[i];
+      trekkie[key] = trekkie.factory(key);
+    }
+    trekkie.load = function(config) {
+      trekkie.config = config || {};
+      trekkie.config.initialDocumentCookie = document.cookie;
+      var first = document.getElementsByTagName('script')[0];
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.onerror = function(e) {
+  var scriptFallback = document.createElement('script');
+  scriptFallback.type = 'text/javascript';
+  scriptFallback.onerror = function(error) {
+          var Monorail = {
+      produce: function produce(monorailDomain, schemaId, payload) {
+        var currentMs = new Date().getTime();
+        var event = {
+          schema_id: schemaId,
+          payload: payload,
+          metadata: {
+            event_created_at_ms: currentMs,
+            event_sent_at_ms: currentMs
+          }
+        };
+        return Monorail.sendRequest("https://" + monorailDomain + "/v1/produce", JSON.stringify(event));
+      },
+      sendRequest: function sendRequest(endpointUrl, payload) {
+        // Try the sendBeacon API
+        if (window && window.navigator && typeof window.navigator.sendBeacon === 'function' && typeof window.Blob === 'function' && !Monorail.isIos12()) {
+          var blobData = new window.Blob([payload], {
+            type: 'text/plain'
+          });
+
+          if (window.navigator.sendBeacon(endpointUrl, blobData)) {
+            return true;
+          } // sendBeacon was not successful
+
+        } // XHR beacon
+
+        var xhr = new XMLHttpRequest();
+
+        try {
+          xhr.open('POST', endpointUrl);
+          xhr.setRequestHeader('Content-Type', 'text/plain');
+          xhr.send(payload);
+        } catch (e) {
+          console.log(e);
+        }
+
+        return false;
+      },
+      isIos12: function isIos12() {
+        return window.navigator.userAgent.lastIndexOf('iPhone; CPU iPhone OS 12_') !== -1 || window.navigator.userAgent.lastIndexOf('iPad; CPU OS 12_') !== -1;
+      }
+    };
+    Monorail.produce('monorail-edge.shopifysvc.com',
+      'trekkie_storefront_load_errors/1.1',
+      {shop_id: 80773349662,
+      theme_id: 186739589406,
+      app_name: "storefront",
+      context_url: window.location.href,
+      source_url: "/preethiwear/cdn/s/trekkie.storefront.370ef8ffef154dc56bb5a814fea4666724353464.min.js"});
+
+  };
+  scriptFallback.async = true;
+  scriptFallback.src = '/preethiwear/cdn/s/trekkie.storefront.370ef8ffef154dc56bb5a814fea4666724353464.min.js';
+  first.parentNode.insertBefore(scriptFallback, first);
+};
+script.async = true;
+script.src = '/preethiwear/cdn/s/trekkie.storefront.370ef8ffef154dc56bb5a814fea4666724353464.min.js';
+first.parentNode.insertBefore(script, first);
+
+    };
+    trekkie.load(
+      {"Trekkie":{"appName":"storefront","development":false,"defaultAttributes":{"shopId":80773349662,"isMerchantRequest":null,"themeId":186739589406,"themeCityHash":"10197947354787088423","contentLanguage":"en","currency":"INR","eventMetadataId":"8b6b983d-8a60-4984-9030-c123a31f6b1a"},"isServerSideCookieWritingEnabled":true,"monorailRegion":"shop_domain","enabledBetaFlags":["b5387b81","d5bdd5d0"]},"Session Attribution":{},"S2S":{"facebookCapiEnabled":true,"source":"trekkie-storefront-renderer","apiClientId":580111}}
+    );
+
+    var loaded = false;
+    trekkie.ready(function() {
+      if (loaded) return;
+      loaded = true;
+
+      window.ShopifyAnalytics.lib = window.trekkie;
+
+      var originalDocumentWrite = document.write;
+      document.write = customDocumentWrite;
+      try { window.ShopifyAnalytics.merchantGoogleAnalytics.call(this); } catch(error) {};
+      document.write = originalDocumentWrite;
+
+      window.ShopifyAnalytics.lib.page(null,{"pageType":"page","resourceType":"page","resourceId":141896483102,"requestId":"b4906bbc-3e49-45ab-8068-29bfec1b7690-1782142126","shopifyEmitted":true});
+
+      var match = window.location.pathname.match(/checkouts\/(.+)\/(thank_you|post_purchase)/)
+      var token = match? match[1]: undefined;
+      if (!hasLoggedConversion(token)) {
+        setCookieIfConversion(token);
+        
+      }
+    });
+
+    var eventsListenerScript = document.createElement('script');
+    eventsListenerScript.async = true;
+    eventsListenerScript.src = "/preethiwear/cdn/shopifycloud/storefront/assets/shop_events_listener-4e26a9ce.js";
+    document.getElementsByTagName('head')[0].appendChild(eventsListenerScript);
+})();</script>
+<script
+  defer
+  src="/preethiwear/cdn/shopifycloud/perf-kit/shopify-perf-kit-3.5.2.min.js"
+  data-application="storefront-renderer"
+  data-shop-id="80773349662"
+  data-render-region="gcp-asia-southeast1"
+  data-page-type="page"
+  data-theme-instance-id="186739589406"
+  data-theme-name="Impulse"
+  data-theme-version="8.0.0"
+  data-monorail-region="shop_domain"
+  data-resource-timing-sampling-rate="10"
+  data-shs="true"
+  data-shs-beacon="true"
+  data-shs-export-with-fetch="true"
+  data-shs-logs-sample-rate="1"
+  data-shs-beacon-endpoint="/preethiwear/api/collect"
+></script>
+</head>
+<body class="template- template-page collection- " data-center-text="true" data-button_style="round-slight" data-type_header_capitalize="false" data-type_headers_align_text="true" data-type_product_capitalize="false" data-swatch_style="round" >  
+
+  <a class="in-page-link visually-hidden skip-link" href="#MainContent">Skip to content</a>
+
+  <div id="PageContainer" class="page-container">
+    <div class="transition-body"><!-- BEGIN sections: header-group -->
+<div id="shopify-section-sections--26809584320798__announcement" class="shopify-section shopify-section-group-header-group"><style></style>
+  <div class="announcement-bar">
+    <div class="page-width">
+      <div class="slideshow-wrapper">
+        <button type="button" class="visually-hidden slideshow__pause" data-id="sections--26809584320798__announcement" aria-live="polite">
+          <span class="slideshow__pause-stop">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-pause" viewBox="0 0 10 13"><path d="M0 0h3v13H0zm7 0h3v13H7z" fill-rule="evenodd"/></svg>
+            <span class="icon__fallback-text">Pause slideshow</span>
+          </span>
+          <span class="slideshow__pause-play">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-play" viewBox="18.24 17.35 24.52 28.3"><path fill="#323232" d="M22.1 19.151v25.5l20.4-13.489-20.4-12.011z"/></svg>
+            <span class="icon__fallback-text">Play slideshow</span>
+          </span>
+        </button>
+
+        <div
+          id="AnnouncementSlider"
+          class="announcement-slider"
+          data-compact="true"
+          data-block-count="3"><div
+                id="AnnouncementSlide-announcement_YDPrVU"
+                class="announcement-slider__slide"
+                data-index="0"
+                
+              ><span class="announcement-text">AS SEEN ON STARTUP SINGAM SEASON 2 🐯</span></div><div
+                id="AnnouncementSlide-announcement_69yU8z"
+                class="announcement-slider__slide"
+                data-index="1"
+                
+              ><a class="announcement-link" href="/collections/sale"><span class="announcement-text">👗 FREE Shipping on orders above Rs.3499 👗</span></a></div><div
+                id="AnnouncementSlide-announcement-0"
+                class="announcement-slider__slide"
+                data-index="2"
+                
+              ><span class="announcement-text">Just add items to the cart, discount will be applied automatically ❤️</span></div></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<style> #shopify-section-sections--26809584320798__announcement {position: sticky; top: 0; width: 100%; z-index: 30;} </style></div><div id="shopify-section-sections--26809584320798__header" class="shopify-section shopify-section-group-header-group">
+
+<div id="NavDrawer" class="drawer drawer--left">
+  <div class="drawer__contents">
+    <div class="drawer__fixed-header">
+      <div class="drawer__header appear-animation appear-delay-1">
+        <div class="h2 drawer__title"></div>
+        <div class="drawer__close">
+          <button type="button" class="drawer__close-button js-drawer-close">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64"><title>icon-X</title><path d="m19 17.61 27.12 27.13m0-27.12L19 44.74"/></svg>
+            <span class="icon__fallback-text">Close menu</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="drawer__scrollable">
+      <ul class="mobile-nav mobile-nav--heading-style" role="navigation" aria-label="Primary"><li class="mobile-nav__item appear-animation appear-delay-2"><a href="/" class="mobile-link-Home mobile-nav__link mobile-nav__link--top-level">Home</a></li><li class="mobile-nav__item appear-animation appear-delay-3"><div class="mobile-nav__has-sublist"><a href="/collections"
+                    class="Categories mobile-nav__link mobile-nav__link--top-level"
+                    id="Label-collections2"
+                    >
+                    Categories
+                  </a>
+                  <div class="mobile-nav__toggle">
+                    <button type="button"
+                      aria-controls="Linklist-collections2"
+                      aria-labelledby="Label-collections2"
+                      class="collapsible-trigger collapsible--auto-height"><span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+  <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="m1.57 1.59 12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none"/></svg>
+</span>
+</button>
+                  </div></div><div id="Linklist-collections2"
+                class="mobile-nav__sublist collapsible-content collapsible-content--all"
+                >
+                <div class="collapsible-content__inner">
+                  <ul class="mobile-nav__sublist"><li class="mobile-nav__item">
+                        <div class="mobile-nav__child-item"><a href="/collections/budget-buy"
+                              class="mobile-nav__link"
+                              id="Sublabel-collections-budget-buy1"
+                              >
+                              Budget Buy
+                            </a></div></li><li class="mobile-nav__item">
+                        <div class="mobile-nav__child-item"><a href="/collections/maternity-cotton-wear"
+                              class="mobile-nav__link"
+                              id="Sublabel-collections-maternity-cotton-wear2"
+                              >
+                              Maternity Kurthis
+                            </a></div></li><li class="mobile-nav__item">
+                        <div class="mobile-nav__child-item"><a href="/collections/maternity-lounge-wear"
+                              class="mobile-nav__link"
+                              id="Sublabel-collections-maternity-lounge-wear3"
+                              >
+                              Maternity/Feeding Loungewear
+                            </a></div></li><li class="mobile-nav__item">
+                        <div class="mobile-nav__child-item"><a href="/collections/inner-wears"
+                              class="mobile-nav__link"
+                              id="Sublabel-collections-inner-wears4"
+                              >
+                              Maternity Intimate wears
+                            </a></div></li><li class="mobile-nav__item">
+                        <div class="mobile-nav__child-item"><a href="/collections/feeding-t-shirt"
+                              class="mobile-nav__link"
+                              id="Sublabel-collections-feeding-t-shirt5"
+                              >
+                              Feeding T-shirt
+                            </a></div></li><li class="mobile-nav__item">
+                        <div class="mobile-nav__child-item"><a href="/collections/feeding-pant-set"
+                              class="mobile-nav__link"
+                              id="Sublabel-collections-feeding-pant-set6"
+                              >
+                              Feeding Pant Set
+                            </a></div></li><li class="mobile-nav__item">
+                        <div class="mobile-nav__child-item"><a href="/collections/lounge-wear"
+                              class="mobile-nav__link"
+                              id="Sublabel-collections-lounge-wear7"
+                              >
+                              Loungewear
+                            </a></div></li><li class="mobile-nav__item">
+                        <div class="mobile-nav__child-item"><a href="/collections/top-picks-of-preethiwear"
+                              class="mobile-nav__link"
+                              id="Sublabel-collections-top-picks-of-preethiwear8"
+                              >
+                              Ethnic wear
+                            </a></div></li><li class="mobile-nav__item">
+                        <div class="mobile-nav__child-item"><a href="/collections/kurthis-dresses"
+                              class="mobile-nav__link"
+                              id="Sublabel-collections-kurthis-dresses9"
+                              >
+                              Non maternity - Kurthis &amp; Dresses
+                            </a></div></li><li class="mobile-nav__item">
+                        <div class="mobile-nav__child-item"><a href="/collections/infant"
+                              class="mobile-nav__link"
+                              id="Sublabel-collections-infant10"
+                              >
+                              Infant Clothing
+                            </a></div></li><li class="mobile-nav__item">
+                        <div class="mobile-nav__child-item"><a href="/collections/kids-clothing"
+                              class="mobile-nav__link"
+                              id="Sublabel-collections-kids-clothing11"
+                              >
+                              Kids clothing
+                            </a></div></li><li class="mobile-nav__item">
+                        <div class="mobile-nav__child-item"><a href="/collections/saree-shapewear"
+                              class="mobile-nav__link"
+                              id="Sublabel-collections-saree-shapewear12"
+                              >
+                              Saree Shapewear
+                            </a></div></li><li class="mobile-nav__item">
+                        <div class="mobile-nav__child-item"><a href="/collections/shimmer-saree-shape-wear"
+                              class="mobile-nav__link"
+                              id="Sublabel-collections-shimmer-saree-shape-wear13"
+                              >
+                              Shimmer SareeShapewear
+                            </a></div></li><li class="mobile-nav__item">
+                        <div class="mobile-nav__child-item"><a href="/collections/cotton-pants"
+                              class="mobile-nav__link"
+                              id="Sublabel-collections-cotton-pants14"
+                              >
+                              Cotton Pants
+                            </a></div></li></ul>
+                </div>
+              </div></li><li class="mobile-nav__item appear-animation appear-delay-4"><a href="/collections/sale" class="mobile-link-Buy2 Get2 Sale mobile-nav__link mobile-nav__link--top-level">Buy2 Get2 Sale</a></li><li class="mobile-nav__item appear-animation appear-delay-5"><a href="/pages/store-locator" class="mobile-link-Retail Outlets mobile-nav__link mobile-nav__link--top-level">Retail Outlets</a></li><li class="mobile-nav__item appear-animation appear-delay-6"><a href="/pages/franchise-enquiry" class="mobile-link-Franchise Enquiry mobile-nav__link mobile-nav__link--top-level">Franchise Enquiry</a></li><li class="mobile-nav__item appear-animation appear-delay-7"><a href="/pages/contact" class="mobile-link-Contact mobile-nav__link mobile-nav__link--top-level">Contact</a></li><li class="mobile-nav__item mobile-nav__item--secondary">
+            <div class="grid"><div class="grid__item one-half appear-animation appear-delay-8">
+                  <a href="/account" class="mobile-nav__link">Log in
+</a>
+                </div></div>
+          </li></ul><ul class="mobile-nav__social appear-animation appear-delay-9"><li class="mobile-nav__social-item">
+            <a target="_blank" rel="noopener" href="https://www.instagram.com/preethiwear.maternitystore/" title="The Maternity Store by Preethiwear on Instagram">
+              <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-instagram" viewBox="0 0 32 32"><title>instagram</title><path fill="#444" d="M16 3.094c4.206 0 4.7.019 6.363.094 1.538.069 2.369.325 2.925.544.738.287 1.262.625 1.813 1.175s.894 1.075 1.175 1.813c.212.556.475 1.387.544 2.925.075 1.662.094 2.156.094 6.363s-.019 4.7-.094 6.363c-.069 1.538-.325 2.369-.544 2.925-.288.738-.625 1.262-1.175 1.813s-1.075.894-1.813 1.175c-.556.212-1.387.475-2.925.544-1.663.075-2.156.094-6.363.094s-4.7-.019-6.363-.094c-1.537-.069-2.369-.325-2.925-.544-.737-.288-1.263-.625-1.813-1.175s-.894-1.075-1.175-1.813c-.212-.556-.475-1.387-.544-2.925-.075-1.663-.094-2.156-.094-6.363s.019-4.7.094-6.363c.069-1.537.325-2.369.544-2.925.287-.737.625-1.263 1.175-1.813s1.075-.894 1.813-1.175c.556-.212 1.388-.475 2.925-.544 1.662-.081 2.156-.094 6.363-.094zm0-2.838c-4.275 0-4.813.019-6.494.094-1.675.075-2.819.344-3.819.731-1.037.4-1.913.944-2.788 1.819S1.486 4.656 1.08 5.688c-.387 1-.656 2.144-.731 3.825-.075 1.675-.094 2.213-.094 6.488s.019 4.813.094 6.494c.075 1.675.344 2.819.731 3.825.4 1.038.944 1.913 1.819 2.788s1.756 1.413 2.788 1.819c1 .387 2.144.656 3.825.731s2.213.094 6.494.094 4.813-.019 6.494-.094c1.675-.075 2.819-.344 3.825-.731 1.038-.4 1.913-.944 2.788-1.819s1.413-1.756 1.819-2.788c.387-1 .656-2.144.731-3.825s.094-2.212.094-6.494-.019-4.813-.094-6.494c-.075-1.675-.344-2.819-.731-3.825-.4-1.038-.944-1.913-1.819-2.788s-1.756-1.413-2.788-1.819c-1-.387-2.144-.656-3.825-.731C20.812.275 20.275.256 16 .256z"/><path fill="#444" d="M16 7.912a8.088 8.088 0 0 0 0 16.175c4.463 0 8.087-3.625 8.087-8.088s-3.625-8.088-8.088-8.088zm0 13.338a5.25 5.25 0 1 1 0-10.5 5.25 5.25 0 1 1 0 10.5zM26.294 7.594a1.887 1.887 0 1 1-3.774.002 1.887 1.887 0 0 1 3.774-.003z"/></svg>
+              <span class="icon__fallback-text">Instagram</span>
+            </a>
+          </li></ul>
+    </div>
+  </div>
+</div>
+<div id="CartDrawer" class="drawer drawer--right">
+    <form id="CartDrawerForm" action="/cart" method="post" novalidate class="drawer__contents" data-location="cart-drawer">
+      <div class="drawer__fixed-header">
+        <div class="drawer__header appear-animation appear-delay-1">
+          <div class="h2 drawer__title">Cart</div>
+          <div class="drawer__close">
+            <button type="button" class="drawer__close-button js-drawer-close">
+              <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64"><title>icon-X</title><path d="m19 17.61 27.12 27.13m0-27.12L19 44.74"/></svg>
+              <span class="icon__fallback-text">Close cart</span>
+            </button>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="drawer__inner">
+        <div class="drawer__scrollable">
+          <div data-products class="appear-animation appear-delay-2"></div>
+
+          
+            <div class="appear-animation appear-delay-3">
+              <label for="CartNoteDrawer">Order note</label>
+              <textarea name="note" class="input-full cart-notes" id="CartNoteDrawer"></textarea>
+            </div>
+          
+        </div>
+
+        <div class="drawer__footer appear-animation appear-delay-4">
+          <div data-discounts>
+            
+          </div>
+
+          <div class="cart__item-sub cart__item-row">
+            <div class="ajaxcart__subtotal">Subtotal</div>
+            <div class="subtotal-price" data-subtotal>Rs. 0</div>
+          </div>
+
+          <div class="cart__item-row text-center">
+            <small>
+              
+              Shipping calculated at checkout
+            </small>
+          </div>
+
+          
+
+          <div class="cart__checkout-wrapper">
+             <button type="submit" name="checkout" data-terms-required="false "class="shopifycheckoutbtn btn cart__checkout">
+              Check out
+            </button>
+
+            
+
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="drawer__cart-empty appear-animation appear-delay-2">
+        <div class="drawer__scrollable">
+          Your cart is currently empty.
+        </div>
+      </div>
+    </form>
+  </div><style>
+  .site-nav__link,
+  .site-nav__dropdown-link:not(.site-nav__dropdown-link--top-level) {
+    font-size: 17px;
+  }
+  
+
+  
+
+  
+.site-header {
+      box-shadow: 0 0 1px rgba(0,0,0,0.2);
+    }
+
+    .toolbar + .header-sticky-wrapper .site-header {
+      border-top: 0;
+    }</style>
+
+<div data-section-id="sections--26809584320798__header" data-section-type="header"><div class="toolbar small--hide">
+  <div class="page-width">
+    <div class="toolbar__content"></div>
+
+  </div>
+</div>
+<div class="header-sticky-wrapper">
+    <div id="HeaderWrapper" class="header-wrapper "><header
+        id="SiteHeader"
+        class="site-header site-header--heading-style"
+        data-sticky="true"
+        data-overlay="false">
+        <div class="page-width">
+          <div
+            class="header-layout header-layout--left"
+            data-logo-align="left">
+            <div class="medium-up--hide header-items-left header-item header-item--icons"><div class="site-nav">
+  <div class="site-nav__icons"><a href="/search" class="site-search site-nav__link site-nav__link--icon js-search-header">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 64 64"><title>icon-search</title><path d="M47.16 28.58A18.58 18.58 0 1 1 28.58 10a18.58 18.58 0 0 1 18.58 18.58ZM54 54 41.94 42"/></svg>
+        <span class="icon__fallback-text">Search</span>
+      </a><button
+        type="button"
+        class="site-menu site-nav__link site-nav__link--icon js-drawer-open-nav medium-up--hide"
+        aria-controls="NavDrawer">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-hamburger" viewBox="0 0 64 64"><title>icon-hamburger</title><path d="M7 15h51M7 32h43M7 49h51"/></svg>
+        <span class="icon__fallback-text">Site navigation</span>
+      </button><a class="site-account site-nav__link site-nav__link--icon" href="/account">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-user" viewBox="0 0 64 64"><title>account</title><path d="M35 39.84v-2.53c3.3-1.91 6-6.66 6-11.41 0-7.63 0-13.82-9-13.82s-9 6.19-9 13.82c0 4.75 2.7 9.51 6 11.41v2.53c-10.18.85-18 6-18 12.16h42c0-6.19-7.82-11.31-18-12.16Z"/></svg>
+        <span class="icon__fallback-text">Log in
+</span>
+      </a><a href="/cart" class="site-cart site-nav__link site-nav__link--icon js-drawer-open-cart" aria-controls="CartDrawer" data-icon="cart">
+      <span class="cart-link"><svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-cart" viewBox="0 0 64 64"><path style="stroke-miterlimit:10" d="M14 17.44h46.79l-7.94 25.61H20.96l-9.65-35.1H3"/><circle cx="27" cy="53" r="2"/><circle cx="47" cy="53" r="2"/></svg><span class="icon__fallback-text">Cart</span>
+        <span class="cart-link__bubble"></span>
+      </span>
+    </a>
+  </div>
+</div>
+</div><div class="header-item header-item--logo"><style data-shopify>.header-item--logo,
+    .header-layout--left-center .header-item--logo,
+    .header-layout--left-center .header-item--icons {
+      -webkit-box-flex: 0 1 130px;
+      -ms-flex: 0 1 130px;
+      flex: 0 1 130px;
+    }
+
+    @media only screen and (min-width: 769px) {
+      .header-item--logo,
+      .header-layout--left-center .header-item--logo,
+      .header-layout--left-center .header-item--icons {
+        -webkit-box-flex: 0 0 180px;
+        -ms-flex: 0 0 180px;
+        flex: 0 0 180px;
+      }
+    }
+
+    .site-header__logo a {
+      width: 130px;
+    }
+    .is-light .site-header__logo .logo--inverted {
+      width: 130px;
+    }
+    @media only screen and (min-width: 769px) {
+      .site-header__logo a {
+        width: 180px;
+      }
+
+      .is-light .site-header__logo .logo--inverted {
+        width: 180px;
+      }
+    }</style><div class="h1 site-header__logo" itemscope itemtype="http://schema.org/Organization" >
+      <a
+        href="/"
+        itemprop="url"
+        class="site-header__logo-link logo--has-inverted"
+        style="padding-top: 20.79931241942415%">
+
+        
+
+
+
+
+
+<image-element data-aos="image-fade-in" data-aos-offset="150">
+
+
+  
+<img src="/preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_1_-02.svg?v=1754984047&amp;width=360" alt="" srcset="/preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_1_-02.svg?v=1754984047&amp;width=180 180w, /preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_1_-02.svg?v=1754984047&amp;width=360 360w" width="180" height="37.43876235496347" loading="eager" class="small--hide image-element" sizes="180px" itemprop="logo">
+  
+
+
+</image-element>
+
+
+
+
+<image-element data-aos="image-fade-in" data-aos-offset="150">
+
+
+  
+<img src="/preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_1_-02.svg?v=1754984047&amp;width=260" alt="" srcset="/preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_1_-02.svg?v=1754984047&amp;width=130 130w, /preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_1_-02.svg?v=1754984047&amp;width=260 260w" width="130" height="27.039106145251395" loading="eager" class="medium-up--hide image-element" sizes="130px">
+  
+
+
+</image-element>
+</a><a
+          href="/"
+          itemprop="url"
+          class="site-header__logo-link logo--inverted"
+          style="padding-top: 31.6003616636528%">
+
+          
+
+
+
+
+
+<image-element data-aos="image-fade-in" data-aos-offset="150">
+
+
+  
+<img src="/preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_1__Logo_Dark.svg?v=1754984047&amp;width=360" alt="" srcset="/preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_1__Logo_Dark.svg?v=1754984047&amp;width=180 180w, /preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_1__Logo_Dark.svg?v=1754984047&amp;width=360 360w" width="180" height="56.88065099457504" loading="eager" class="small--hide image-element" sizes="180px" itemprop="logo">
+  
+
+
+</image-element>
+
+
+
+
+<image-element data-aos="image-fade-in" data-aos-offset="150">
+
+
+  
+<img src="/preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_1__Logo_Dark.svg?v=1754984047&amp;width=260" alt="" srcset="/preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_1__Logo_Dark.svg?v=1754984047&amp;width=130 130w, /preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_1__Logo_Dark.svg?v=1754984047&amp;width=260 260w" width="130" height="41.08047016274864" loading="eager" class="medium-up--hide image-element" sizes="130px">
+  
+
+
+</image-element>
+</a></div></div><div class="header-item header-item--navigation" role="navigation" aria-label="Primary"><ul
+  class="site-nav site-navigation small--hide"
+><li class="lvl1-link-Home site-nav__item site-nav__expanded-item">
+      
+        <a
+          href="/"
+          class="site-nav__link site-nav__link--underline"
+        >
+          Home
+        </a>
+      
+
+    </li><li class="lvl1-link-Categories site-nav__item site-nav__expanded-item site-nav--has-dropdown">
+      
+        <details
+          data-hover="true"
+          id="site-nav-item--2"
+          class="site-nav__details"
+        >
+          <summary
+            data-link="/collections"
+            aria-expanded="false"
+            aria-controls="site-nav-item--2"
+            class="site-nav__link site-nav__link--underline site-nav__link--has-dropdown"
+          >
+            Categories <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="m1.57 1.59 12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none"/></svg>
+          </summary>
+      
+<ul class="site-nav__dropdown text-left"><li class="">
+                <a href="/collections/budget-buy" class="site-nav__dropdown-link site-nav__dropdown-link--second-level">
+                  Budget Buy
+</a></li><li class="">
+                <a href="/collections/maternity-cotton-wear" class="site-nav__dropdown-link site-nav__dropdown-link--second-level">
+                  Maternity Kurthis
+</a></li><li class="">
+                <a href="/collections/maternity-lounge-wear" class="site-nav__dropdown-link site-nav__dropdown-link--second-level">
+                  Maternity/Feeding Loungewear
+</a></li><li class="">
+                <a href="/collections/inner-wears" class="site-nav__dropdown-link site-nav__dropdown-link--second-level">
+                  Maternity Intimate wears
+</a></li><li class="">
+                <a href="/collections/feeding-t-shirt" class="site-nav__dropdown-link site-nav__dropdown-link--second-level">
+                  Feeding T-shirt
+</a></li><li class="">
+                <a href="/collections/feeding-pant-set" class="site-nav__dropdown-link site-nav__dropdown-link--second-level">
+                  Feeding Pant Set
+</a></li><li class="">
+                <a href="/collections/lounge-wear" class="site-nav__dropdown-link site-nav__dropdown-link--second-level">
+                  Loungewear
+</a></li><li class="">
+                <a href="/collections/top-picks-of-preethiwear" class="site-nav__dropdown-link site-nav__dropdown-link--second-level">
+                  Ethnic wear
+</a></li><li class="">
+                <a href="/collections/kurthis-dresses" class="site-nav__dropdown-link site-nav__dropdown-link--second-level">
+                  Non maternity - Kurthis &amp; Dresses
+</a></li><li class="">
+                <a href="/collections/infant" class="site-nav__dropdown-link site-nav__dropdown-link--second-level">
+                  Infant Clothing
+</a></li><li class="">
+                <a href="/collections/kids-clothing" class="site-nav__dropdown-link site-nav__dropdown-link--second-level">
+                  Kids clothing
+</a></li><li class="">
+                <a href="/collections/saree-shapewear" class="site-nav__dropdown-link site-nav__dropdown-link--second-level">
+                  Saree Shapewear
+</a></li><li class="">
+                <a href="/collections/shimmer-saree-shape-wear" class="site-nav__dropdown-link site-nav__dropdown-link--second-level">
+                  Shimmer SareeShapewear
+</a></li><li class="">
+                <a href="/collections/cotton-pants" class="site-nav__dropdown-link site-nav__dropdown-link--second-level">
+                  Cotton Pants
+</a></li></ul>
+        </details>
+      
+    </li><li class="lvl1-link-Buy2 Get2 Sale site-nav__item site-nav__expanded-item">
+      
+        <a
+          href="/collections/sale"
+          class="site-nav__link site-nav__link--underline"
+        >
+          Buy2 Get2 Sale
+        </a>
+      
+
+    </li><li class="lvl1-link-Retail Outlets site-nav__item site-nav__expanded-item">
+      
+        <a
+          href="/pages/store-locator"
+          class="site-nav__link site-nav__link--underline"
+        >
+          Retail Outlets
+        </a>
+      
+
+    </li><li class="lvl1-link-Franchise Enquiry site-nav__item site-nav__expanded-item">
+      
+        <a
+          href="/pages/franchise-enquiry"
+          class="site-nav__link site-nav__link--underline"
+        >
+          Franchise Enquiry
+        </a>
+      
+
+    </li><li class="lvl1-link-Contact site-nav__item site-nav__expanded-item">
+      
+        <a
+          href="/pages/contact"
+          class="site-nav__link site-nav__link--underline"
+        >
+          Contact
+        </a>
+      
+
+    </li></ul>
+</div><div class="header-item header-items-right header-item--icons"><div class="site-nav">
+  <div class="site-nav__icons"><a href="/search" class="site-search site-nav__link site-nav__link--icon js-search-header">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 64 64"><title>icon-search</title><path d="M47.16 28.58A18.58 18.58 0 1 1 28.58 10a18.58 18.58 0 0 1 18.58 18.58ZM54 54 41.94 42"/></svg>
+        <span class="icon__fallback-text">Search</span>
+      </a><button
+        type="button"
+        class="site-menu site-nav__link site-nav__link--icon js-drawer-open-nav medium-up--hide"
+        aria-controls="NavDrawer">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-hamburger" viewBox="0 0 64 64"><title>icon-hamburger</title><path d="M7 15h51M7 32h43M7 49h51"/></svg>
+        <span class="icon__fallback-text">Site navigation</span>
+      </button><a class="site-account site-nav__link site-nav__link--icon" href="/account">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-user" viewBox="0 0 64 64"><title>account</title><path d="M35 39.84v-2.53c3.3-1.91 6-6.66 6-11.41 0-7.63 0-13.82-9-13.82s-9 6.19-9 13.82c0 4.75 2.7 9.51 6 11.41v2.53c-10.18.85-18 6-18 12.16h42c0-6.19-7.82-11.31-18-12.16Z"/></svg>
+        <span class="icon__fallback-text">Log in
+</span>
+      </a><a href="/cart" class="site-cart site-nav__link site-nav__link--icon js-drawer-open-cart" aria-controls="CartDrawer" data-icon="cart">
+      <span class="cart-link"><svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-cart" viewBox="0 0 64 64"><path style="stroke-miterlimit:10" d="M14 17.44h46.79l-7.94 25.61H20.96l-9.65-35.1H3"/><circle cx="27" cy="53" r="2"/><circle cx="47" cy="53" r="2"/></svg><span class="icon__fallback-text">Cart</span>
+        <span class="cart-link__bubble"></span>
+      </span>
+    </a>
+  </div>
+</div>
+</div>
+          </div></div>
+        <div class="site-header__search-container">
+          <div class="site-header__search">
+            <div class="page-width">
+              <predictive-search data-context="header" data-enabled="true" data-dark="false">
+  <div class="predictive__screen" data-screen></div>
+  <form action="/search" method="get" role="search">
+    <label for="Search" class="hidden-label">Search</label>
+    <div class="search__input-wrap">
+      <input
+        class="search__input"
+        id="Search"
+        type="search"
+        name="q"
+        value=""
+        role="combobox"
+        aria-expanded="false"
+        aria-owns="predictive-search-results"
+        aria-controls="predictive-search-results"
+        aria-haspopup="listbox"
+        aria-autocomplete="list"
+        autocorrect="off"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+        placeholder="Search"
+        tabindex="0"
+      >
+      <input name="options[prefix]" type="hidden" value="last">
+      <button class="btn--search" type="submit">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 64 64"><defs><style>.cls-1{fill:none;stroke:#000;stroke-miterlimit:10;stroke-width:2px}</style></defs><path class="cls-1" d="M47.16 28.58A18.58 18.58 0 1 1 28.58 10a18.58 18.58 0 0 1 18.58 18.58zM54 54L41.94 42"/></svg>
+        <span class="icon__fallback-text">Search</span>
+      </button>
+    </div>
+
+    <button class="btn--close-search">
+      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64"><defs><style>.cls-1{fill:none;stroke:#000;stroke-miterlimit:10;stroke-width:2px}</style></defs><path class="cls-1" d="M19 17.61l27.12 27.13m0-27.13L19 44.74"/></svg>
+    </button>
+    <div id="predictive-search" class="search__results" tabindex="-1"></div>
+  </form>
+</predictive-search>
+
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+  </div>
+</div>
+
+
+<style> #shopify-section-sections--26809584320798__header header {border-top-width: 30px;} #shopify-section-sections--26809584320798__header .site-header--stuck {top: 35px;} #shopify-section-sections--26809584320798__header {position: sticky; top: 34px; z-index: 30;} @media (max-width: 768px) {#shopify-section-sections--26809584320798__header {top: 44px; }} </style></div>
+<!-- END sections: header-group --><!-- BEGIN sections: popup-group -->
+
+<!-- END sections: popup-group --><main class="main-content" id="MainContent">
+        <section id="shopify-section-template--26809589629214__main" class="shopify-section"><div class="page-width page-width--narrow page-content">
+<header class="section-header">
+    <h1 class="section-header__title">Exchange Policy</h1>
+  </header>
+
+  <div class="rte rte--nomargin">
+    <p> </p>
+<p><strong>Exchange Policy</strong></p>
+<p>We aim to provide a hassle-free exchange experience to ensure customer satisfaction. Please review the guidelines below for our exchange process:</p>
+<h3><strong>Customer Support</strong></h3>
+<ul>
+<li>
+<p><strong>Office Hours</strong>:<br>Monday to Saturday<br>10:00 AM to 1:00 PM and 2:00 PM to 6:00 PM</p>
+</li>
+<li>
+<p><strong>Customer Care Contacts</strong>:</p>
+<ul>
+<li>
+<strong>Calls</strong>: 7418325657</li>
+<li>
+<strong>WhatsApp</strong>: 9056656698</li>
+<li>
+<strong>Email</strong>: <a rel="noopener"><span>support</span><span>@preethiwear</span><span>.in</span></a>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Note</strong>:</p>
+<ul>
+<li>Queries received outside working hours will be addressed on the next working day.</li>
+<li>WhatsApp queries should only be sent to <strong>9056656698</strong>.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3><strong>Exchange Terms</strong></h3>
+<ol>
+<li>
+<p><strong>Eligibility for Exchange</strong>:</p>
+<ul>
+<li>Exchange requests must be submitted within <strong>3 days of delivery</strong>. Requests beyond 3 days will not be accepted.</li>
+<li>Submit your exchange request via <a href="https://preethiwear.ecoreturns.ai/apps/ecoreturnsai"><span>https</span><span>://preethiwear</span><span>.ecoreturns</span><span>.ai</span><span>/apps</span><span>/ecoreturnsai</span></a>.</li>
+<li>For hygiene and safety reasons, intimate wear items are not eligible for exchange or return.</li>
+<li>Each original order is eligible for only one exchange. Exchange requests for items that have already been exchanged once will not be accepted.</li>
+<li>Products purchased under mega sale, clearance sale, Buy 1 Get 1, or similar promotional offers are not eligible for exchange or return.<strong></strong>
+</li>
+<li>Customized products are not eligible for exchange or return.<strong></strong>
+</li>
+</ul>
+</li>
+<li>
+<strong>Applicable Scenarios for Exchange</strong>:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><strong>Reason</strong></th>
+<th><strong>Courier Charges</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wrong item shipped</strong></td>
+<td>₹200 will be refunded after placing the exchange request.</td>
+</tr>
+<tr>
+<td><strong>Defective item received</strong></td>
+<td>₹200 will be refunded after placing the exchange request.</td>
+</tr>
+<tr>
+<td><strong>Size issues (large/small)</strong></td>
+<td>₹200 is charged for reverse pickup + reinitiating from the warehouse.</td>
+</tr>
+<tr>
+<td><strong>Product quality issue</strong></td>
+<td>
+<meta charset="utf-8">
+<table>
+<tbody>
+<tr>
+<td>₹200 is charged for reverse pickup +<span> </span>reinitiating from the warehouse.</td>
+</tr>
+<tr></tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<h3><strong>Important Guidelines</strong></h3>
+<ul>
+<li>
+<p><strong>Unpacking Video</strong>:</p>
+<ul>
+<li>For <strong>damage or wrong item claims</strong>, a <strong>continuous unpacking video without cuts or edits</strong> is mandatory as proof.</li>
+<li>The video must clearly show the product and the weight of the parcel.</li>
+<li>Missing claims without a proper unpacking video will not be considered.</li>
+</ul>
+</li>
+<li>
+<p><strong>Reverse Pickup</strong>:</p>
+<ul>
+<li>We will arrange reverse pickup at the customer’s convenience. The parcel must be handed over on the mentioned date and time.</li>
+<li>Failing to return the parcel on the scheduled date will require manual return by the customer. Courier agents will not reattempt pickup.</li>
+</ul>
+</li>
+<li>
+<p><strong>Condition of Items</strong>:</p>
+<ul>
+<li>Returned items must be <strong>unused, unwashed, and free from odors</strong>, with tags intact. Items failing quality checks will not be eligible for exchange.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3><strong>Additional Notes</strong></h3>
+<ol>
+<li>Exchange is applicable across <strong>different categories</strong>.</li>
+<li>If the required replacement product is unavailable:
+<ul>
+<li>The customer will receive store credit equal to the product’s value.</li>
+<li>Alternatively, the customer can choose another product from the available collection.</li>
+</ul>
+</li>
+<li>
+<strong>Refund Policy</strong>:
+<ul>
+<li>Cash refunds are <strong>not provided</strong> for exchanges. Store credit will be issued instead.</li>
+</ul>
+</li>
+<li>Exchange shipping will commence <strong>only after the original item passes the quality check</strong>.</li>
+<li>Once an exchange request is placed, changes to the selected items cannot be made. We kindly request customers to review and confirm their selections carefully before submitting the request.</li>
+</ol>
+<p>For further clarifications, feel free to contact us at <strong><a rel="noopener"><span>support</span><span>@preethiwear</span><span>.in</span></a></strong>.</p>
+  </div>
+</div>
+
+
+</section>
+      </main><!-- BEGIN sections: footer-group -->
+<div id="shopify-section-sections--26809584025886__footer" class="shopify-section shopify-section-group-footer-group"><footer class="site-footer" data-section-id="sections--26809584025886__footer" data-section-type="footer-section">
+  <div class="page-width">
+
+    <div class="grid"><div  class="grid__item footer__item--footer-0" data-type="logo_social"><style data-shopify>@media only screen and (min-width: 769px) and (max-width: 959px) {
+              .footer__item--footer-0 {
+                width: 50%;
+                padding-top: 40px;
+              }
+              .footer__item--footer-0:nth-child(2n + 1) {
+                clear: left;
+              }
+            }
+            @media only screen and (min-width: 960px) {
+              .footer__item--footer-0 {
+                width: 25%;
+              }
+
+            }</style><style data-shopify>.footer__logo a {
+      height: 120px;
+    }</style><div class="footer__logo">
+    <a href="/">
+
+
+
+<image-element data-aos="image-fade-in" data-aos-offset="150">
+
+
+  
+<img src="/preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_NEW_Logo_White.svg?v=1754028505&amp;width=314" alt="" srcset="/preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_NEW_Logo_White.svg?v=1754028505&amp;width=157 157w, /preethiwear/cdn/shop/files/Preethiwear_logo_Dark_1_NEW_Logo_White.svg?v=1754028505&amp;width=314 314w" width="314.13612565445027" height="240.0" loading="lazy" class=" image-element" sizes="157.06806282722513px" style="max-width: 157.06806282722513px;max-height: 120px;">
+  
+
+
+</image-element>
+</a>
+    
+      
+    
+  </div>
+  <div class="follow">Follow Us on &nbsp;
+  <a target="_blank" rel="noopener" href="https://www.instagram.com/preethiwear.maternitystore/" title="The Maternity Store by Preethiwear on Instagram">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-instagram" viewBox="0 0 32 32"><title>instagram</title><path fill="#444" d="M16 3.094c4.206 0 4.7.019 6.363.094 1.538.069 2.369.325 2.925.544.738.287 1.262.625 1.813 1.175s.894 1.075 1.175 1.813c.212.556.475 1.387.544 2.925.075 1.662.094 2.156.094 6.363s-.019 4.7-.094 6.363c-.069 1.538-.325 2.369-.544 2.925-.288.738-.625 1.262-1.175 1.813s-1.075.894-1.813 1.175c-.556.212-1.387.475-2.925.544-1.663.075-2.156.094-6.363.094s-4.7-.019-6.363-.094c-1.537-.069-2.369-.325-2.925-.544-.737-.288-1.263-.625-1.813-1.175s-.894-1.075-1.175-1.813c-.212-.556-.475-1.387-.544-2.925-.075-1.663-.094-2.156-.094-6.363s.019-4.7.094-6.363c.069-1.537.325-2.369.544-2.925.287-.737.625-1.263 1.175-1.813s1.075-.894 1.813-1.175c.556-.212 1.388-.475 2.925-.544 1.662-.081 2.156-.094 6.363-.094zm0-2.838c-4.275 0-4.813.019-6.494.094-1.675.075-2.819.344-3.819.731-1.037.4-1.913.944-2.788 1.819S1.486 4.656 1.08 5.688c-.387 1-.656 2.144-.731 3.825-.075 1.675-.094 2.213-.094 6.488s.019 4.813.094 6.494c.075 1.675.344 2.819.731 3.825.4 1.038.944 1.913 1.819 2.788s1.756 1.413 2.788 1.819c1 .387 2.144.656 3.825.731s2.213.094 6.494.094 4.813-.019 6.494-.094c1.675-.075 2.819-.344 3.825-.731 1.038-.4 1.913-.944 2.788-1.819s1.413-1.756 1.819-2.788c.387-1 .656-2.144.731-3.825s.094-2.212.094-6.494-.019-4.813-.094-6.494c-.075-1.675-.344-2.819-.731-3.825-.4-1.038-.944-1.913-1.819-2.788s-1.756-1.413-2.788-1.819c-1-.387-2.144-.656-3.825-.731C20.812.275 20.275.256 16 .256z"/><path fill="#444" d="M16 7.912a8.088 8.088 0 0 0 0 16.175c4.463 0 8.087-3.625 8.087-8.088s-3.625-8.088-8.088-8.088zm0 13.338a5.25 5.25 0 1 1 0-10.5 5.25 5.25 0 1 1 0 10.5zM26.294 7.594a1.887 1.887 0 1 1-3.774.002 1.887 1.887 0 0 1 3.774-.003z"/></svg>
+        <span class="icon__fallback-text">Instagram</span>
+      </a>
+      </div></div><div  class="grid__item footer__item--footer-1" data-type="menu"><style data-shopify>@media only screen and (min-width: 769px) and (max-width: 959px) {
+              .footer__item--footer-1 {
+                width: 50%;
+                padding-top: 40px;
+              }
+              .footer__item--footer-1:nth-child(2n + 1) {
+                clear: left;
+              }
+            }
+            @media only screen and (min-width: 960px) {
+              .footer__item--footer-1 {
+                width: 25%;
+              }
+
+            }</style><h2 class="h4 footer__title small--hide">
+      Help
+    </h2>
+    <button type="button" class="h4 footer__title collapsible-trigger collapsible-trigger-btn medium-up--hide" aria-controls="Footer-footer-1">
+      Help
+<span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+  <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="m1.57 1.59 12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none"/></svg>
+</span>
+</button><div
+    
+      id="Footer-footer-1" class="collapsible-content collapsible-content--small"
+    >
+    <div class="collapsible-content__inner">
+      <div class="footer__collapsible">
+        <ul class="no-bullets site-footer__linklist"><li><a href="/">Home</a></li><li><a href="/collections">Catalog</a></li><li><a href="/pages/contact">Contact</a></li><li><a href="/pages/franchise-enquiry">Franchise Enquiry</a></li><li><a href="/preethiwear/a/Track-order">Track my order</a></li></ul>
+      </div>
+    </div>
+  </div></div><div  class="grid__item footer__item--menu_PGHqhP" data-type="menu"><style data-shopify>@media only screen and (min-width: 769px) and (max-width: 959px) {
+              .footer__item--menu_PGHqhP {
+                width: 50%;
+                padding-top: 40px;
+              }
+              .footer__item--menu_PGHqhP:nth-child(2n + 1) {
+                clear: left;
+              }
+            }
+            @media only screen and (min-width: 960px) {
+              .footer__item--menu_PGHqhP {
+                width: 25%;
+              }
+
+            }</style><h2 class="h4 footer__title small--hide">
+      Shop Info
+    </h2>
+    <button type="button" class="h4 footer__title collapsible-trigger collapsible-trigger-btn medium-up--hide" aria-controls="Footer-menu_PGHqhP">
+      Shop Info
+<span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+  <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="m1.57 1.59 12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none"/></svg>
+</span>
+</button><div
+    
+      id="Footer-menu_PGHqhP" class="collapsible-content collapsible-content--small"
+    >
+    <div class="collapsible-content__inner">
+      <div class="footer__collapsible">
+        <ul class="no-bullets site-footer__linklist"><li><a href="/pages/store-locator">Retail Outlets</a></li><li><a href="/blogs/news">Blogs</a></li><li><a href="/pages/about-us">About Us</a></li><li><a href="/preethiwear/pages/all-review-page">Read Reviews</a></li><li><a href="/pages/contact">Contact Information</a></li></ul>
+      </div>
+    </div>
+  </div></div><div  class="grid__item footer__item--menu_fiNtA9" data-type="menu"><style data-shopify>@media only screen and (min-width: 769px) and (max-width: 959px) {
+              .footer__item--menu_fiNtA9 {
+                width: 50%;
+                padding-top: 40px;
+              }
+              .footer__item--menu_fiNtA9:nth-child(2n + 1) {
+                clear: left;
+              }
+            }
+            @media only screen and (min-width: 960px) {
+              .footer__item--menu_fiNtA9 {
+                width: 25%;
+              }
+
+            }</style><h2 class="h4 footer__title small--hide">
+      Policies
+    </h2>
+    <button type="button" class="h4 footer__title collapsible-trigger collapsible-trigger-btn medium-up--hide" aria-controls="Footer-menu_fiNtA9">
+      Policies
+<span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+  <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="m1.57 1.59 12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none"/></svg>
+</span>
+</button><div
+    
+      id="Footer-menu_fiNtA9" class="collapsible-content collapsible-content--small"
+    >
+    <div class="collapsible-content__inner">
+      <div class="footer__collapsible">
+        <ul class="no-bullets site-footer__linklist"><li><a href="/policies/privacy-policy">Privacy Policy</a></li><li><a href="/policies/terms-of-service">Terms of Service</a></li><li><a href="/policies/shipping-policy">Shipping Policy</a></li><li><a href="/pages/exchange-policy">Exchange Policy</a></li><li><a href="/policies/refund-policy">Return/Refund Policy</a></li><li><a href="https://preethiwear.ecoreturns.ai/apps/ecoreturnsai/">Submit Exchange Request</a></li></ul>
+      </div>
+    </div>
+  </div></div></div><p class="footer__small-text">
+        
+Copyright 2025 Preethiwear (Formerly, Preethi Shapewear)<br>PREETHI DESIGNERS by PREETHI SHASHIKUMAR all right reserved
+</p>
+
+  </div>
+</footer>
+
+
+<style> #shopify-section-sections--26809584025886__footer .footer__item--footer-0 {padding: 0;} #shopify-section-sections--26809584025886__footer .footer__logo img {width: 100%;} #shopify-section-sections--26809584025886__footer .footer__small-text {margin-top: 40px;} @media only screen and (min-width: 769px) {#shopify-section-sections--26809584025886__footer .site-footer {padding-bottom: 30px; }} @media (max-width: 768px) {#shopify-section-sections--26809584025886__footer .grid__item {padding-left: 0px; }} </style></div>
+<!-- END sections: footer-group --></div>
+  </div><div id="VideoModal" class="modal modal--solid">
+  <div class="modal__inner">
+    <div class="modal__centered page-width text-center">
+      <div class="modal__centered-content">
+        <div class="video-wrapper video-wrapper--modal">
+          <div id="VideoHolder"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="modal__close js-modal-close text-link">
+    <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64"><title>icon-X</title><path d="m19 17.61 27.12 27.13m0-27.12L19 44.74"/></svg>
+    <span class="icon__fallback-text">"Close (esc)"</span>
+  </button>
+</div>
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="pswp__bg"></div>
+  <div class="pswp__scroll-wrap">
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+
+    <div class="pswp__ui pswp__ui--hidden">
+      <button class="btn btn--body btn--circle pswp__button pswp__button--arrow--left" title="Previous">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-chevron-left" viewBox="0 0 284.49 498.98"><path d="M249.49 0a35 35 0 0 1 24.75 59.75L84.49 249.49l189.75 189.74a35.002 35.002 0 1 1-49.5 49.5L10.25 274.24a35 35 0 0 1 0-49.5L224.74 10.25A34.89 34.89 0 0 1 249.49 0Z"/></svg>
+      </button>
+
+      <button class="btn btn--body btn--circle btn--large pswp__button pswp__button--close" title="Close (esc)">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64"><title>icon-X</title><path d="m19 17.61 27.12 27.13m0-27.12L19 44.74"/></svg>
+      </button>
+
+      <button class="btn btn--body btn--circle pswp__button pswp__button--arrow--right" title="Next">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-chevron-right" viewBox="0 0 284.49 498.98"><title>icon-chevron</title><path d="M35 498.98a35 35 0 0 1-24.75-59.75l189.74-189.74L10.25 59.75a35.002 35.002 0 0 1 49.5-49.5l214.49 214.49a35 35 0 0 1 0 49.5L59.75 488.73A34.89 34.89 0 0 1 35 498.98Z"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<tool-tip data-tool-tip="">
+  <div class="tool-tip__inner" data-tool-tip-inner>
+    <button class="tool-tip__close" data-tool-tip-close=""><svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64"><title>icon-X</title><path d="m19 17.61 27.12 27.13m0-27.12L19 44.74"/></svg></button>
+    <div data-tool-tip-title>Exchange Policy</div>
+    <div class="tool-tip__content" data-tool-tip-content>
+    </div>
+  </div>
+</tool-tip>
+
+  <template id="naturalImageMarkup">
+    <div class="image-wrap" style="height: 0;">
+      <image-element data-aos="image-fade-in" data-aos-offset="150">
+        <img class="grid-product__image image-element" width height src srcset loading="lazy" alt>
+      </image-element>
+    </div>
+  </template>
+  <template id="fixedRatioImageMarkup">
+    <div class="grid__image-ratio">
+      <image-element data-aos="image-fade-in" data-aos-offset="150">
+        <img class="image-element" width height src srcset loading="lazy" alt>
+      </image-element>
+    </div>
+  </template>
+
+
+  
+  
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if we're on a collection page (not product page)
+  if (window.location.pathname.includes('/collections/') && !window.location.pathname.includes('/products/')) {
+    const url = new URL(window.location.href);
+
+    // Add availability filter if missing
+    if (!url.searchParams.has('filter.v.availability')) {
+      url.searchParams.set('filter.v.availability', '1');
+      window.history.replaceState({}, "", url); // Update URL without reload
+    }
+  }
+});
+</script> 
+
+
+<script>
+  // Add this to your existing script or create a new file
+document.addEventListener('DOMContentLoaded', function() {
+  
+  // Fix any existing URLs with + in parameter names
+  function fixFilterParamEncoding() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let needsRedirect = false;
+    const newParams = new URLSearchParams();
+    
+    for (const [key, value] of urlParams) {
+      if (key.includes('+')) {
+        // Replace + with %20 in parameter names
+        const fixedKey = key.replace(/\+/g, '%20');
+        newParams.append(fixedKey, value);
+        needsRedirect = true;
+      } else {
+        newParams.append(key, value);
+      }
+    }
+    
+    if (needsRedirect) {
+      const newUrl = window.location.pathname + '?' + decodeURIComponent(newParams.toString());
+      window.location.replace(newUrl);
+      return true;
+    }
+    return false;
+  }
+
+  // Encode filter links properly
+  function encodeFilterLinks() {
+    const filterLinks = document.querySelectorAll('a[href*="filter.v.option"]');
+    filterLinks.forEach(link => {
+      let href = link.getAttribute('href');
+      if (href.includes('filter.v.option.')) {
+        // Fix parameter names in href
+        href = href.replace(/(filter\.v\.option\.[^&=]+)/g, function(match) {
+          return encodeURIComponent(match);
+        });
+        link.setAttribute('href', href);
+      }
+    });
+  }
+
+  // Run the fixes
+  fixFilterParamEncoding();
+  encodeFilterLinks();
+});
+</script>
+<style> .btn--secondary.btn--small {color: #;} a.btn--secondary {background-color: #a97521; color: #ffffff; border-radius: 7px;} </style>
+<div id="shopify-block-ATU1SSkI0OWVtalBYQ__2497517740430320072" class="shopify-block shopify-app-block">
+
+
+
+
+
+<link rel='stylesheet' href='/preethiwear/cdn/extensions/019e86ee-c368-7ef7-a952-7c8916465a9d/product-options-35-648/assets/multi-select.css'>
+
+
+
+<style>
+  .ef__product-option-root .ef__option-title{font-size:16px;font-weight:400}.ef__product-option-root .ef__option-values{font-weight:500}.ef__product-option-root input[type='text']{font-weight:500}.ef__product-option-root input[type='number']{font-weight:500}.ef__product-option-root input[type='date']{font-weight:500}.ef__product-option-root textarea{font-weight:500}.ef__product-option-root .ef__option-title {
+    font-size: 16px;
+    font-weight: 400;
+    padding-bottom: 10px;
+}
+#product-options-ho4ed2r6cwo > p:last-child {
+
+display: none !important;
+
+}
+.ef__option-value-button input[type="radio"] + label {
+  padding: 10px 27px !important;
+  line-height: 1 !important;
+  font-size: 13px !important;
+  height: auto !important;
+  display: inline-block !important;
+  border-radius: 0px !important;
+  border: solid 2px !important;
+}
+/* Remove fill color and set selected border to solid black */
+.ef__option-value-button input[type="radio"]:checked + label {
+  background-color: transparent !important;
+  color: black !important;
+  border: 2px solid black !important;
+}
+
+/* Set border color for unselected (default) buttons */
+.ef__option-value-button input[type="radio"] + label {
+  border: 1px solid #ccc !important; /* grey */
+  background-color: transparent !important;
+  border-radius: 4px; /* optional for rounded buttons */
+  transition: border-color 0.2s ease; /* smooth change */
+}
+</style>
+
+<style id="ef__hide-addon-field-styles">
+  .ef__product-option-root .ef__option-title{font-size:16px;font-weight:400}.ef__product-option-root .ef__option-values{font-weight:500}.ef__product-option-root input[type='text']{font-weight:500}.ef__product-option-root input[type='number']{font-weight:500}.ef__product-option-root input[type='date']{font-weight:500}.ef__product-option-root textarea{font-weight:500}.ef__product-option-root .ef__option-title {
+    font-size: 16px;
+    font-weight: 400;
+    padding-bottom: 10px;
+}
+#product-options-ho4ed2r6cwo > p:last-child {
+
+display: none !important;
+
+}
+.ef__option-value-button input[type="radio"] + label {
+  padding: 10px 27px !important;
+  line-height: 1 !important;
+  font-size: 13px !important;
+  height: auto !important;
+  display: inline-block !important;
+  border-radius: 0px !important;
+  border: solid 2px !important;
+}
+/* Remove fill color and set selected border to solid black */
+.ef__option-value-button input[type="radio"]:checked + label {
+  background-color: transparent !important;
+  color: black !important;
+  border: 2px solid black !important;
+}
+
+/* Set border color for unselected (default) buttons */
+.ef__option-value-button input[type="radio"] + label {
+  border: 1px solid #ccc !important; /* grey */
+  background-color: transparent !important;
+  border-radius: 4px; /* optional for rounded buttons */
+  transition: border-color 0.2s ease; /* smooth change */
+}
+</style>
+
+<div
+  id='product-options-ho4ed2r6cwo-embed'
+  class='ef__product-option-root'
+  style='display: none;'
+
+  data-product-base-price=''
+  data-product-compare-at-price=''
+>
+  <form>
+    
+  </form>
+
+  <p class='ef__option-total-price ef__options-addon-total'>
+    
+
+    
+
+    Total add-ons: <span class="ef__options-addon-total-amount ef__addon-amount"></span>
+  </p>
+
+  
+    <p>
+      Created by
+      <a
+        href='https://apps.shopify.com/product-options-4'
+        target='_blank'
+        style='text-decoration: none; color: blue;'
+      >
+        EasyFlow Product Options
+      </a>
+    </p>
+  
+</div>
+
+
+<script
+  type='application/json'
+  id='ef__product-option-rules'
+
+  
+>
+  []
+</script>
+
+
+
+
+
+  <script type='application/json' id='ef__product-variant-data'>
+    {
+      "options": null,
+      "variants": []
+    }
+  </script>
+
+
+
+<script type='application/json' id='ef__product-option-customizations'>
+  
+    {"appEmbedPlacementSelector":"","cartLineSelector":"","quantityAndRemoveButtonSelector":"","regularPriceItemSelector":"","compareAtPriceItemSelector":"","isGetPricesOnStorefront":false,"dropdownPlaceholder":"Choose %option-title%","fileUploadButtonText":"Choose file","dragAndDropText":"or drop files to upload","uploadLoadingText":"Uploading...","fileTypeErrorText":"Only %file-types% files allowed.","fileSizeErrorText":"File needs to be smaller than %max-file-size%.","fileUploadErrorText":"Failed to upload file: %reason%","requiredOptionErrorText":"\"%option-title%\" is required.","minimumSelectionErrorText":"\"%option-title%\" requires at least %min-selection-limit% selections.","maximumSelectionErrorText":"\"%option-title%\" allows only %max-selection-limit% selections.","mimumCharacterErrorText":"\"%option-title%\" requires at least %min-char-limit% characters.","isMatchAddonQuantity":false,"isBuyNowIntegrationDisabled":false,"isEnableRemoveAddonFromCart":false,"isEnableOpenAddonProductPage":false,"isChangeBaseProductPriceDisabled":false,"isShowTotalPrice":true,"storefrontFooterText":"Total add-ons:"}
+  
+</script>
+
+<div class="easyflow-script-origin" data-origin="app-embed"></div>
+
+
+<script src='/preethiwear/cdn/extensions/019e86ee-c368-7ef7-a952-7c8916465a9d/product-options-35-648/assets/multi-select.min.js' defer></script>
+
+
+<script src='/preethiwear/cdn/extensions/019e86ee-c368-7ef7-a952-7c8916465a9d/product-options-35-648/assets/public.js'></script>
+
+
+<script src='/preethiwear/cdn/extensions/019e86ee-c368-7ef7-a952-7c8916465a9d/product-options-35-648/assets/common.js' defer data-origin="app-embed"></script>
+
+<div id="easyflow-common-js-url" data-common-url="/preethiwear/cdn/extensions/019e86ee-c368-7ef7-a952-7c8916465a9d/product-options-35-648/assets/common.js"></div>
+<div id="easyflow-cart-info" data-cart-type="drawer" data-cart-url="/cart"></div>
+<div class="easyflow-script-origin" data-origin="app-embed"></div>
+</div><script src="/preethiwear/cdn/storefront/standard-actions.js" type="module" data-source-attribution="shopify.standard_actions"></script>
+</body>
+</html>

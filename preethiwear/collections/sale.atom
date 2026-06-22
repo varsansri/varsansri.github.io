@@ -1,0 +1,1828 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en" xmlns="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:s="http://jadedpixel.com/-/spec/shopify">
+  <id>https://preethiwear.in/collections/all.atom</id>
+  <link rel="alternate" type="text/html" href="https://preethiwear.in/collections/all"/>
+  <link rel="self" type="application/atom+xml" href="https://preethiwear.in/collections/sale.atom"/>
+  <title>The Maternity Store by Preethiwear</title>
+  <updated>2026-06-18T16:28:01+05:30</updated>
+  <author>
+    <name>The Maternity Store by Preethiwear</name>
+  </author>
+  <entry>
+    <id>https://preethiwear.in/products/9863812612382</id>
+    <published>2026-06-18T16:28:01+05:30</published>
+    <updated>2026-06-18T16:28:01+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/17-16-maternity-dress"/>
+    <title>Nixcy Maternity Dress</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/PD23_211_of_221_ac86548d-1630-43ca-a26c-5ddc0f2b1636.jpg?v=1759294725"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            2299.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><span>Zip: 2 Invisible zips</span><br><span>Bottom wear: No</span><br></p>
+<p> </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>SEA</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/9863812612382</id>
+      <title>S / Silk cotton | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">2299.00</s:price>
+      <s:sku>MK12192-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9863812612382</id>
+      <title>M / Silk cotton | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">2299.00</s:price>
+      <s:sku>MK12192-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9863812612382</id>
+      <title>L / Silk cotton | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">2299.00</s:price>
+      <s:sku>MK12192-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9863812612382</id>
+      <title>XL / Silk cotton | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">2299.00</s:price>
+      <s:sku>MK12192-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9863812612382</id>
+      <title>XXL / Silk cotton | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">2299.00</s:price>
+      <s:sku>MK12192-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9863812612382</id>
+      <title>3XL / Silk cotton | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">2299.00</s:price>
+      <s:sku>MK12192-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/10039531929886</id>
+    <published>2026-06-16T09:37:18+05:30</published>
+    <updated>2026-06-16T09:37:18+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/9-maternity-dress-21"/>
+    <title>Shikha Maternity Dress</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/FPS00117_jpg.jpg?v=1774435828"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            2199.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>Zip : 2 Invisible zips<br>Bottom wear : No </p>
+<p> </p>
+<p><br><span></span></p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>SEA</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/10039531929886</id>
+      <title>S / Pure Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2199.00</s:price>
+      <s:sku>MK12806-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10039531929886</id>
+      <title>M / Pure Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2199.00</s:price>
+      <s:sku>MK12806-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10039531929886</id>
+      <title>L / Pure Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2199.00</s:price>
+      <s:sku>MK12806-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10039531929886</id>
+      <title>XL / Pure Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2199.00</s:price>
+      <s:sku>MK12806-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10039531929886</id>
+      <title>XXL / Pure Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2199.00</s:price>
+      <s:sku>MK12806-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10039531929886</id>
+      <title>3XL / Pure Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2199.00</s:price>
+      <s:sku>MK12806-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/9817946947870</id>
+    <published>2026-06-12T12:25:01+05:30</published>
+    <updated>2026-06-12T12:25:01+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/562-21-maternity-dress"/>
+    <title>Harshitha Maternity Dress with center Zip</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/VKI_3383.jpg?v=1769401870"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            1549.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>Bottom wear: No </p>
+<p> </p>
+<p> </p>
+<p> </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>SEA</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/9817946947870</id>
+      <title>S / Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1549.00</s:price>
+      <s:sku>MK11988-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9817946947870</id>
+      <title>M / Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1549.00</s:price>
+      <s:sku>MK11988-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9817946947870</id>
+      <title>L / Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1549.00</s:price>
+      <s:sku>MK11988-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9817946947870</id>
+      <title>XL / Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1549.00</s:price>
+      <s:sku>MK11988-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9817946947870</id>
+      <title>XXL / Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1549.00</s:price>
+      <s:sku>MK11988-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9817946947870</id>
+      <title>3XL / Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1549.00</s:price>
+      <s:sku>MK11988-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/9794043871518</id>
+    <published>2026-06-11T11:29:14+05:30</published>
+    <updated>2026-06-11T11:29:14+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/2806-7-maternity-dress-with-center-zip"/>
+    <title>Sowmiya3 Maternity Kurthi with center Zip</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>Preethi Shapewear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/BDS4240.jpg?v=1752992819"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Preethi Shapewear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            1749.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>Fabric: Handloom Cotton <br><span>Components: Top and Pant</span><br></p>
+<p><br></p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>SEA</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/9794043871518</id>
+      <title>S / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1749.00</s:price>
+      <s:sku>MK11792-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9794043871518</id>
+      <title>M / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1749.00</s:price>
+      <s:sku>MK11792-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9794043871518</id>
+      <title>L / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1749.00</s:price>
+      <s:sku>MK11792-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9794043871518</id>
+      <title>XL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1749.00</s:price>
+      <s:sku>MK11792-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9794043871518</id>
+      <title>XXL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1749.00</s:price>
+      <s:sku>MK11792-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9794043871518</id>
+      <title>3XL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1749.00</s:price>
+      <s:sku>MK11792-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/8562019565854</id>
+    <published>2026-06-11T10:49:05+05:30</published>
+    <updated>2026-06-11T10:49:05+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/navy-blue-shimmer-ankle-leggings"/>
+    <title>NavyBlue Shimmer Ankle  Leggings</title>
+    <s:type>Shimmer Ankle Leggings</s:type>
+    <s:vendor>Preethishapewear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/products/NavyBlueShimmerAnkleLeggings_2.png?v=1692382042"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Preethishapewear<br>
+        <strong>Type: </strong>Shimmer Ankle Leggings<br>
+        <strong>Price: </strong>
+            499.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><ul>
+<li>
+<img src="https://cdn.shopify.com/s/files/1/0753/4536/3221/files/SizeGuide_480x480.png?v=1686379113" alt="" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0753/4536/3221/files/SizeGuide_480x480.png?v=1686379113"><img src="https://cdn.shopify.com/s/files/1/0753/4536/3221/files/SizechartLegginscopy_480x480.jpg?v=1686379100" alt="" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0753/4536/3221/files/SizechartLegginscopy_480x480.jpg?v=1686379100">Care Instructions : Hand Wash, Do not bleach, Machine wash.</li>
+<li>Stretchable waistband for providing support throughout the day.</li>
+<li>Targeted compression for smoothening out your tummy, hips and thighs</li>
+<li>Ideal companion to wear with kurthis and tops.</li>
+<li>Material composition: Shimmer Lycra</li>
+</ul></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>VV</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019565854</id>
+      <title>S / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>AB1056</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019565854</id>
+      <title>M / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>AB1056</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019565854</id>
+      <title>L / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>AB1056</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019565854</id>
+      <title>XL / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>AB1056</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019565854</id>
+      <title>XXL / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>AB1056</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/8562019631390</id>
+    <published>2026-06-11T10:37:14+05:30</published>
+    <updated>2026-06-11T10:37:14+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/pistagreen-shimmer-ankle-leggings"/>
+    <title>Pistagreen Shimmer Ankle  Leggings</title>
+    <s:type>Shimmer Ankle Leggings</s:type>
+    <s:vendor>Preethishapewear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/products/PistagreenShimmerAnkleLeggings.png?v=1692382048"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Preethishapewear<br>
+        <strong>Type: </strong>Shimmer Ankle Leggings<br>
+        <strong>Price: </strong>
+            499.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><ul>
+<li>
+<img src="https://cdn.shopify.com/s/files/1/0753/4536/3221/files/SizeGuide_480x480.png?v=1686379113" alt="" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0753/4536/3221/files/SizeGuide_480x480.png?v=1686379113"><img src="https://cdn.shopify.com/s/files/1/0753/4536/3221/files/SizechartLegginscopy_480x480.jpg?v=1686379100" alt="" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0753/4536/3221/files/SizechartLegginscopy_480x480.jpg?v=1686379100">Care Instructions : Hand Wash, Do not bleach, Machine wash.</li>
+<li>Stretchable waistband for providing support throughout the day.</li>
+<li>Targeted compression for smoothening out your tummy, hips and thighs</li>
+<li>Ideal companion to wear with kurthis and tops.</li>
+<li>Material composition: Shimmer Lycra</li>
+</ul></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>VV</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019631390</id>
+      <title>S / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>SALG0001</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019631390</id>
+      <title>M / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>SALG0006</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019631390</id>
+      <title>L / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>SALG00011</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019631390</id>
+      <title>XL / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>SALG00016</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019631390</id>
+      <title>XXL / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>SALG00021</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/8562019762462</id>
+    <published>2026-06-11T10:28:11+05:30</published>
+    <updated>2026-06-11T10:28:11+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/rani-pink-shimmer-ankle-leggings"/>
+    <title>RaniPink Shimmer Ankle  Leggings</title>
+    <s:type>Shimmer Ankle Leggings</s:type>
+    <s:vendor>Preethishapewear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/products/RaniPinkShimmerAnkleLeggings.png?v=1692382054"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Preethishapewear<br>
+        <strong>Type: </strong>Shimmer Ankle Leggings<br>
+        <strong>Price: </strong>
+            499.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><ul>
+<li>
+<img src="https://cdn.shopify.com/s/files/1/0753/4536/3221/files/SizeGuide_480x480.png?v=1686379113" alt="" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0753/4536/3221/files/SizeGuide_480x480.png?v=1686379113"><img src="https://cdn.shopify.com/s/files/1/0753/4536/3221/files/SizechartLegginscopy_480x480.jpg?v=1686379100" alt="" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0753/4536/3221/files/SizechartLegginscopy_480x480.jpg?v=1686379100">Care Instructions : Hand Wash, Do not bleach, Machine wash.</li>
+<li>Stretchable waistband for providing support throughout the day.</li>
+<li>Targeted compression for smoothening out your tummy, hips and thighs</li>
+<li>Ideal companion to wear with kurthis and tops.</li>
+<li>Material composition: Shimmer Lycra</li>
+</ul></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>VV</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019762462</id>
+      <title>S / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>AB1057</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019762462</id>
+      <title>M / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>AB1057</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019762462</id>
+      <title>L / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>AB1057</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019762462</id>
+      <title>XL / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>AB1057</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/8562019762462</id>
+      <title>XXL / Shimmer Lycra</title>
+      <s:price currency="INR">499.00</s:price>
+      <s:sku>AB1057</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/9979929329950</id>
+    <published>2026-06-04T11:18:48+05:30</published>
+    <updated>2026-06-04T11:18:48+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/14-6-maternity-dress"/>
+    <title>Hanisha  Maternity Dress with center Zip</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/FPS00161_5b57eab5-e6e9-4820-8c3f-ec5d78adeb01.jpg?v=1771676665"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            3199.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>Bottom wear : No </p>
+<p> </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>SEA</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/9979929329950</id>
+      <title>S / Silk cotton | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">3199.00</s:price>
+      <s:sku>MK12575-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9979929329950</id>
+      <title>M / Silk cotton | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">3199.00</s:price>
+      <s:sku>MK12575-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9979929329950</id>
+      <title>L / Silk cotton | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">3199.00</s:price>
+      <s:sku>MK12575-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9979929329950</id>
+      <title>XL / Silk cotton | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">3199.00</s:price>
+      <s:sku>MK12575-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9979929329950</id>
+      <title>XXL / Silk cotton | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">3199.00</s:price>
+      <s:sku>MK12575-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9979929329950</id>
+      <title>3XL / Silk cotton | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">3199.00</s:price>
+      <s:sku>MK12575-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/9780948402462</id>
+    <published>2026-06-04T10:37:48+05:30</published>
+    <updated>2026-06-04T10:37:48+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/3b-maternity-dress"/>
+    <title>Deepika5 Maternity Dress</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/IMG_4635_8afa026c-0c14-4ece-9178-8d87536c1322.heic?v=1749474101"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            1899.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>Zip : 2 invisible zip<br>Bottomwear: No Bottomwear</p>
+<p> </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>Bai</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/9780948402462</id>
+      <title>S / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1899.00</s:price>
+      <s:sku>MK11705-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9780948402462</id>
+      <title>M / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1899.00</s:price>
+      <s:sku>MK11705-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9780948402462</id>
+      <title>L / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1899.00</s:price>
+      <s:sku>MK11705-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9780948402462</id>
+      <title>XL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1899.00</s:price>
+      <s:sku>MK11705-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9780948402462</id>
+      <title>XXL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1899.00</s:price>
+      <s:sku>MK11705-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9780948402462</id>
+      <title>3XL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">1899.00</s:price>
+      <s:sku>MK11705-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/9638731219230</id>
+    <published>2026-05-22T15:37:56+05:30</published>
+    <updated>2026-05-22T15:37:56+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/20-maternity-kurthi"/>
+    <title>Alan Maternity Dress</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/DSC07193-2.jpg?v=1744028231"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            1599.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>Zip: 2 Invisible zips<br>Bottom wear: No</p>
+<p> </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>SEA</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/9638731219230</id>
+      <title>S / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1599.00</s:price>
+      <s:sku>MK10615-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9638731219230</id>
+      <title>M / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1599.00</s:price>
+      <s:sku>MK10615-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9638731219230</id>
+      <title>L / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1599.00</s:price>
+      <s:sku>MK10615-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9638731219230</id>
+      <title>XL / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1599.00</s:price>
+      <s:sku>MK10615-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9638731219230</id>
+      <title>XXL / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1599.00</s:price>
+      <s:sku>MK10615-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9638731219230</id>
+      <title>3XL / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1599.00</s:price>
+      <s:sku>MK10615-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/9941648343326</id>
+    <published>2026-05-22T13:00:14+05:30</published>
+    <updated>2026-05-22T13:00:14+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/6-1-softcotton-full-length-maternity-loungewear"/>
+    <title>Yasha SoftCotton Calf Length Maternity Loungewear</title>
+    <s:type>Maternity Loungewear</s:type>
+    <s:vendor>Preethishapewear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/IMG_4155.jpg?v=1765973033"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Preethishapewear<br>
+        <strong>Type: </strong>Maternity Loungewear<br>
+        <strong>Price: </strong>
+            899.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>Description :<br></p>
+<p><span data-mce-fragment="1"> ✅Breathable, stretchable, non-transparent<br data-mce-fragment="1"> ✅It has a pocket (right side)<br data-mce-fragment="1"> ✅It is zipless<br data-mce-fragment="1"> ✅Lift the flap and nurse the baby<br data-mce-fragment="1"> ✅Has knotes at the back to adjust the size according to the growing bump</span></p>
+<p><span data-mce-fragment="1">Instructions : Hand Wash, Do not bleach, Machine wash.<br data-mce-fragment="1">Fit Type: Relaxed<br data-mce-fragment="1">Sleeve Type: Half Sleeve<br data-mce-fragment="1">Neck Type: Round Neck Night Suit set one piece Nightwear.<br data-mce-fragment="1">Purpose: Maternity, Night Dress , Sleepwear - Loungewear - Home wear<br data-mce-fragment="1">Material composition: SoftCotton</span></p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>VV</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/9941648343326</id>
+      <title>S / SoftCotton / Calf Length - Midi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLW15157-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9941648343326</id>
+      <title>M / SoftCotton / Calf Length - Midi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLW15157-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9941648343326</id>
+      <title>L / SoftCotton / Calf Length - Midi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLW15157-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9941648343326</id>
+      <title>XL / SoftCotton / Calf Length - Midi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLW15157-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9941648343326</id>
+      <title>XXL / SoftCotton / Calf Length - Midi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLW15157-2XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/10005790130462</id>
+    <published>2026-05-21T17:05:05+05:30</published>
+    <updated>2026-05-21T17:05:05+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/12-11-maternity-dress-1"/>
+    <title>Lina Maternity Dress</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/IMG_6031_53677fbe-9f04-40e6-b208-7e2919308848.jpg?v=1771418362"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            2999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><br><span>Zip : 2 invisible zip</span><br><span>3 PIECE SET</span><br></p>
+<p> </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>MS</s:tag>
+    <s:tag>PC</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005790130462</id>
+      <title>S / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1011-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005790130462</id>
+      <title>M / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1011-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005790130462</id>
+      <title>L / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1011-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005790130462</id>
+      <title>XL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1011-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005790130462</id>
+      <title>XXL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1011-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005790130462</id>
+      <title>3XL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1011-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/10005789868318</id>
+    <published>2026-05-21T15:26:54+05:30</published>
+    <updated>2026-05-21T15:26:54+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/12-9-maternity-dress-1"/>
+    <title>Zella Maternity Dress with center Zip</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/IMG_6550_a8357f97-723f-4df6-b976-6407031979ce.jpg?v=1771418152"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            2999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><br><span>3 PIECE SET</span><br></p>
+<p> </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>MS</s:tag>
+    <s:tag>PC</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005789868318</id>
+      <title>S / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1009-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005789868318</id>
+      <title>M / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1009-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005789868318</id>
+      <title>L / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1009-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005789868318</id>
+      <title>XL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1009-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005789868318</id>
+      <title>XXL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1009-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005789868318</id>
+      <title>3XL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1009-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/10005793603870</id>
+    <published>2026-05-21T14:17:52+05:30</published>
+    <updated>2026-05-21T14:17:52+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/12-31-maternity-dress"/>
+    <title>Hermia Maternity Dress</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/IMG_6086.jpg?v=1770898201"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            2999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><br><span>Zip : 2 invisible zip</span><br><span>TOP&amp;PANT</span><br></p>
+<p> </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>MS</s:tag>
+    <s:tag>PC</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793603870</id>
+      <title>S / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1031-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793603870</id>
+      <title>M / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1031-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793603870</id>
+      <title>L / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1031-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793603870</id>
+      <title>XL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1031-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793603870</id>
+      <title>XXL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1031-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793603870</id>
+      <title>3XL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1031-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/10005793079582</id>
+    <published>2026-05-21T13:40:36+05:30</published>
+    <updated>2026-05-21T13:40:36+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/12-23-maternity-dress"/>
+    <title>Hazel1  Maternity Dress</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/IMG_6011.jpg?v=1770897052"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            2999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><br><span>Zip : 2 invisible zip</span><br><span>3 PIECE SET</span><br></p>
+<p> </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>MS</s:tag>
+    <s:tag>PC</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793079582</id>
+      <title>S / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1023-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793079582</id>
+      <title>M / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1023-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793079582</id>
+      <title>L / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1023-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793079582</id>
+      <title>XL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1023-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793079582</id>
+      <title>XXL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1023-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793079582</id>
+      <title>3XL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1023-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/10005793014046</id>
+    <published>2026-05-21T12:26:44+05:30</published>
+    <updated>2026-05-21T12:26:44+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/12-22-maternity-dress"/>
+    <title>Gracie Maternity Dress</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/IMG_6138_e47ce29e-6574-4e3f-9c5c-bc2d361c6348.jpg?v=1770896995"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            2999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><br><span>Zip : 2 invisible zip</span><br><span>3 PIECE SET</span><br></p>
+<p> </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>MS</s:tag>
+    <s:tag>PC</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793014046</id>
+      <title>S / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1022-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793014046</id>
+      <title>M / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1022-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793014046</id>
+      <title>L / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1022-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793014046</id>
+      <title>XL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1022-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793014046</id>
+      <title>XXL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1022-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005793014046</id>
+      <title>3XL / Handloom Cotton / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1022-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/10005790425374</id>
+    <published>2026-05-21T11:39:22+05:30</published>
+    <updated>2026-05-21T11:39:22+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/12-17-maternity-dress"/>
+    <title>Amaya Maternity Dress with center Zip</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/IMG_6196_e0301900-0ac5-4a34-ac93-354e03e7f1f3.jpg?v=1770896428"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            2999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><br><span>3 PIECE SET</span><br></p>
+<p> </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>MS</s:tag>
+    <s:tag>PC</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005790425374</id>
+      <title>S / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1017-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005790425374</id>
+      <title>M / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1017-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005790425374</id>
+      <title>L / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1017-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005790425374</id>
+      <title>XL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1017-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005790425374</id>
+      <title>XXL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1017-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005790425374</id>
+      <title>3XL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1017-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/10005788918046</id>
+    <published>2026-05-18T13:55:45+05:30</published>
+    <updated>2026-05-18T13:55:45+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/12-3-maternity-dress-1"/>
+    <title>Kiran2 Maternity Dress with center Zip</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/IMG_6122_-_Copy.jpg?v=1770891002"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            2999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><br><span>3 PIECE SET</span><br></p>
+<p> </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>MS</s:tag>
+    <s:tag>PC</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005788918046</id>
+      <title>S / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1003-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005788918046</id>
+      <title>M / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1003-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005788918046</id>
+      <title>L / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1003-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005788918046</id>
+      <title>XL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1003-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005788918046</id>
+      <title>XXL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1003-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005788918046</id>
+      <title>3XL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1003-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/10005786263838</id>
+    <published>2026-05-18T13:53:00+05:30</published>
+    <updated>2026-05-18T13:53:00+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/12-1-maternity-dress-1"/>
+    <title>Tara2 Maternity Dress with center Zip</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/IMG_6163_bf8d5de1-2897-4482-ae4a-1b72387a3b9d.jpg?v=1770890830"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            2999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p><br><span>3 PIECE SET</span><br></p>
+<p> </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>MS</s:tag>
+    <s:tag>PC</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005786263838</id>
+      <title>S / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1001-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005786263838</id>
+      <title>M / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1001-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005786263838</id>
+      <title>L / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1001-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005786263838</id>
+      <title>XL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1001-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005786263838</id>
+      <title>XXL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1001-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10005786263838</id>
+      <title>3XL / Jamdani / Ready to dispatch</title>
+      <s:price currency="INR">2999.00</s:price>
+      <s:sku>PRMK1001-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/9689761710366</id>
+    <published>2026-05-11T17:11:39+05:30</published>
+    <updated>2026-05-11T17:11:39+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/2-maternity-dress-20"/>
+    <title>Joyel1 Maternity Dress with Center Zip</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>Preethi Shapewear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/IMG_5122.heic?v=1741775768"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Preethi Shapewear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            1699.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>Fabric: Georgette <br>Zip: Center Zip<br>Sleeve: 3/4th Sleeves<br>Bottom wear: No </p>
+<p><br></p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>SEA</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/9689761710366</id>
+      <title>S / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK10692-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9689761710366</id>
+      <title>M / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK10692-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9689761710366</id>
+      <title>L / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK10692-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9689761710366</id>
+      <title>XL / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK10692-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9689761710366</id>
+      <title>XXL / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK10692-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9689761710366</id>
+      <title>3XL / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK10692-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/10065693868318</id>
+    <published>2026-05-08T16:40:02+05:30</published>
+    <updated>2026-05-08T16:40:02+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/29-s-maternity-dress"/>
+    <title>Mamtha Maternity Dress</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/FPS00062_f2719385-4f04-4aeb-aa6c-610de45e1639.jpg?v=1778584682"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            1699.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>Zip : 2 Invisible zips<br>Bottom wear : No </p>
+<p> </p>
+<p><br><span></span></p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>SEA</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/10065693868318</id>
+      <title>S / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK12982-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10065693868318</id>
+      <title>M / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK12982-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10065693868318</id>
+      <title>L / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK12982-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10065693868318</id>
+      <title>XL / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK12982-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10065693868318</id>
+      <title>XXL / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK12982-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10065693868318</id>
+      <title>3XL / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK12982-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/10065693802782</id>
+    <published>2026-05-08T16:39:37+05:30</published>
+    <updated>2026-05-08T16:39:37+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/28-s-maternity-dress"/>
+    <title>Shreyaa Maternity Dress</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/FPS00035_b6af84b5-c9dc-4684-bd0e-0e81f819bcaf.jpg?v=1778231299"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            1699.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>Zip : 2 Invisible zips<br>Bottom wear : No </p>
+<p> </p>
+<p><br><span></span></p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>SEA</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/10065693802782</id>
+      <title>S / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK12981-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10065693802782</id>
+      <title>M / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK12981-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10065693802782</id>
+      <title>L / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK12981-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10065693802782</id>
+      <title>XL / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK12981-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10065693802782</id>
+      <title>XXL / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK12981-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10065693802782</id>
+      <title>3XL / Soft Georgette | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1699.00</s:price>
+      <s:sku>MK12981-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/9959331070238</id>
+    <published>2026-05-04T17:03:58+05:30</published>
+    <updated>2026-05-04T17:03:58+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/31-4-maternity-dress-1"/>
+    <title>Kanika  Maternity Dress</title>
+    <s:type>Maternity Kurthi</s:type>
+    <s:vendor>The Maternity Store by Preethiwear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/VKI_9428.jpg?v=1769407222"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>The Maternity Store by Preethiwear<br>
+        <strong>Type: </strong>Maternity Kurthi<br>
+        <strong>Price: </strong>
+            1999.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>Zip: 2 Invisible zips<br>Bottom wear: No </p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>PC</s:tag>
+    <s:tag>SF</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/9959331070238</id>
+      <title>S / Raw Silk | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1999.00</s:price>
+      <s:sku>MK12521-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9959331070238</id>
+      <title>M / Raw Silk | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1999.00</s:price>
+      <s:sku>MK12521-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9959331070238</id>
+      <title>L / Raw Silk | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1999.00</s:price>
+      <s:sku>MK12521-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9959331070238</id>
+      <title>XL / Raw Silk | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1999.00</s:price>
+      <s:sku>MK12521-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9959331070238</id>
+      <title>XXL / Raw Silk | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1999.00</s:price>
+      <s:sku>MK12521-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/9959331070238</id>
+      <title>3XL / Raw Silk | Full Lining / Ready to dispatch</title>
+      <s:price currency="INR">1999.00</s:price>
+      <s:sku>MK12521-3XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/10087024886046</id>
+    <published>2026-04-29T18:13:10+05:30</published>
+    <updated>2026-04-29T18:13:10+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/28-13-softcotton-full-length-maternity-loungewear"/>
+    <title>Hinduja SoftCotton Full Length Maternity Loungewear</title>
+    <s:type>Maternity Loungewear</s:type>
+    <s:vendor>Preethishapewear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/IMG_9318_f0a3bff6-b905-4909-8f32-b827cec8fc59.jpg?v=1777543216"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Preethishapewear<br>
+        <strong>Type: </strong>Maternity Loungewear<br>
+        <strong>Price: </strong>
+            899.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>Description :<br></p>
+<p><span data-mce-fragment="1"> ✅Breathable, stretchable, non-transparent<br data-mce-fragment="1"> ✅It has a pocket (Right side)<br data-mce-fragment="1"> ✅It is zipless<br data-mce-fragment="1"> ✅Lift the flap and nurse the baby<br data-mce-fragment="1"> ✅Has knots at the back to adjust the size according to the growing bump</span></p>
+<p><span data-mce-fragment="1">Instructions : Hand Wash, Do not bleach, Machine wash.<br data-mce-fragment="1">Fit Type : Relaxed<br data-mce-fragment="1">Sleeve Type : Half Sleeve<br data-mce-fragment="1">Neck Type : Round Neck Night Suit set one piece Nightwear.<br data-mce-fragment="1">Purpose : Maternity, Night Dress , Sleepwear - Loungewear - Home wear<br data-mce-fragment="1">Material composition : Soft Cotton</span></p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>BB</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/10087024886046</id>
+      <title>S / SoftCotton / Full Length - Maxi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLWF15635-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10087024886046</id>
+      <title>M / SoftCotton / Full Length - Maxi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLWF15635-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10087024886046</id>
+      <title>L / SoftCotton / Full Length - Maxi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLWF15635-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10087024886046</id>
+      <title>XL / SoftCotton / Full Length - Maxi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLWF15635-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10087024886046</id>
+      <title>XXL / SoftCotton / Full Length - Maxi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLWF15635-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+  <entry>
+    <id>https://preethiwear.in/products/10087024558366</id>
+    <published>2026-04-29T18:10:36+05:30</published>
+    <updated>2026-04-29T18:10:36+05:30</updated>
+    <link rel="alternate" type="text/html" href="https://preethiwear.in/products/28-11-softcotton-full-length-maternity-loungewear"/>
+    <title>Jhala SoftCotton Full Length Maternity Loungewear</title>
+    <s:type>Maternity Loungewear</s:type>
+    <s:vendor>Preethishapewear</s:vendor>
+    <summary type="html">
+      <![CDATA[<table border="0">
+  <tr>
+    <td width="200"><img width="200" src="https://cdn.shopify.com/s/files/1/0807/7334/9662/files/IMG_9311_8ea9c4f2-4ef0-48aa-a6a5-2be3bcb93b02.jpg?v=1777543117"></td>
+    <td valign="bottom">
+      <p>
+
+        <strong>Vendor: </strong>Preethishapewear<br>
+        <strong>Type: </strong>Maternity Loungewear<br>
+        <strong>Price: </strong>
+            899.00
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>Description :<br></p>
+<p><span data-mce-fragment="1"> ✅Breathable, stretchable, non-transparent<br data-mce-fragment="1"> ✅It has a pocket (Right side)<br data-mce-fragment="1"> ✅It is zipless<br data-mce-fragment="1"> ✅Lift the flap and nurse the baby<br data-mce-fragment="1"> ✅Has knots at the back to adjust the size according to the growing bump</span></p>
+<p><span data-mce-fragment="1">Instructions : Hand Wash, Do not bleach, Machine wash.<br data-mce-fragment="1">Fit Type : Relaxed<br data-mce-fragment="1">Sleeve Type : Half Sleeve<br data-mce-fragment="1">Neck Type : Round Neck Night Suit set one piece Nightwear.<br data-mce-fragment="1">Purpose : Maternity, Night Dress , Sleepwear - Loungewear - Home wear<br data-mce-fragment="1">Material composition : Soft Cotton</span></p></td>
+  </tr>
+</table>
+]]>
+    </summary>
+    <s:tag>BB</s:tag>
+    <s:variant>
+      <id>https://preethiwear.in/products/10087024558366</id>
+      <title>S / SoftCotton / Full Length - Maxi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLWF15633-S</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10087024558366</id>
+      <title>M / SoftCotton / Full Length - Maxi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLWF15633-M</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10087024558366</id>
+      <title>L / SoftCotton / Full Length - Maxi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLWF15633-L</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10087024558366</id>
+      <title>XL / SoftCotton / Full Length - Maxi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLWF15633-XL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+    <s:variant>
+      <id>https://preethiwear.in/products/10087024558366</id>
+      <title>XXL / SoftCotton / Full Length - Maxi</title>
+      <s:price currency="INR">899.00</s:price>
+      <s:sku>MLWF15633-XXL</s:sku>
+      <s:grams>0</s:grams>
+    </s:variant>
+  </entry>
+</feed>
