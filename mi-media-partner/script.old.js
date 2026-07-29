@@ -1,0 +1,4 @@
+const days=['Sign up & registration','Company name selection','Logo design','Website theme selection','Social media creations','GST registration','Product knowledge training','Order management training','Marketing channels training','Branding training','Digital marketing training','Enquiry handling SOPs','Process templates','Bank account opening','Marketing kit e-version','Website backend training','Marketing plan','Training evaluation','Feedback','Business live'];
+document.querySelector('#timeline').innerHTML=days.map((day,i)=>`<div class="day"><b>DAY ${String(i+1).padStart(2,'0')}</b><span>${day}</span></div>`).join('');
+document.querySelector('.menu').addEventListener('click',()=>document.querySelector('.nav').classList.toggle('open'));
+document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.nav').classList.remove('open')));
